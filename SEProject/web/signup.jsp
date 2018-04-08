@@ -25,7 +25,8 @@
     </div>
     <div class="form-group">
 
-        <div id="error" class=<%= request.getAttribute("error_message") != null ? "show" : "hide"%>>>
+        <div id="error" class=<%= request.getAttribute("error_message") != null ? "show" : "hide"%>
+        >
             <span id="123">
                 <%=request.getAttribute("error_message")%>
             </span>
@@ -59,7 +60,7 @@
             <label class="control-label col-sm-offset-3">Password: </label>
         </div>
         <div class="col-sm-6">
-            <input type="text" class="form-control" placeholder="Enter your password here" name="password" autofocus
+            <input type="password" class="form-control" placeholder="Enter your password here" name="password" autofocus
                    value="<%=
                 request.getAttribute("password")!=null?request.getAttribute("password"):""
             %>">
@@ -72,7 +73,7 @@
             <label class="control-label col-sm-offset-3">Confirm Password: </label>
         </div>
         <div class="col-sm-6">
-            <input type="text" class="form-control" placeholder="Enter your password again" name="confirmpassword"
+            <input type="password" class="form-control" placeholder="Enter your password again" name="confirmpassword"
                    autofocus value="<%=
                 request.getAttribute("confirm_password")!=null?request.getAttribute("confirm_password"):""
             %>"> <br>
