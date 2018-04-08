@@ -1,0 +1,56 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+label {
+    text-align: right;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.btn {
+    width: 30%;
+    padding: 10px 20px;
+    margin: 30px 10px 10px 0;
+}
+
+
+.hide {
+    display: none;
+}
+
+
+.show {
+    !important;
+    margin-left: 30%;
+    margin-right: 30%;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: block;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+}

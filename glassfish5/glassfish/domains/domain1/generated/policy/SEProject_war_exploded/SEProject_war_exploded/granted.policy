@@ -1,0 +1,18 @@
+/* AUTOMATICALLY GENERATED ON Sun Apr 08 16:57:45 ICT 2018*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.WebResourcePermission "/";
+  permission javax.security.jacc.WebUserDataPermission "/";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "**";
+  permission javax.security.jacc.WebRoleRefPermission "", "**";
+  permission javax.security.jacc.WebRoleRefPermission "home", "**";
+  permission javax.security.jacc.WebRoleRefPermission "login", "**";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "signup", "**";
+  permission javax.security.jacc.WebRoleRefPermission "default", "**";
+};
+
