@@ -29,7 +29,7 @@ public class validation {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "SELECT * FROM user WHERE email=\"" + user_name + "\" AND password=\"" + password + "\"";
+            sql = "SELECT * FROM user_info WHERE email=\"" + user_name + "\" AND password=\"" + password + "\"";
             ResultSet rs = stmt.executeQuery(sql);
             if (!rs.next()) {
                 returnValue = false;
@@ -111,7 +111,7 @@ public class validation {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "SELECT * FROM user WHERE email=\"" + email + "\"";
+            sql = "SELECT * FROM user_info WHERE email=\"" + email + "\"";
             ResultSet rs = stmt.executeQuery(sql);
             if (!rs.next()) {
                 returnValue = true;

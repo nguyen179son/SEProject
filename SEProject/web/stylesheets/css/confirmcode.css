@@ -1,0 +1,49 @@
+@charset "UTF-8";
+/* CSS Document */
+.navbar-brand{
+	margin:0;
+	padding:0;
+}
+
+.logo{
+	height:50px;
+	padding-left: 15px;
+	padding-right:5px;
+}
+
+.navbar-inverse{
+	height: 65px;
+	padding-top: 5px;
+	border-color: antiquewhite;
+	background-color: antiquewhite;
+}
+
+p>navbar-text{
+	margin:10px;
+	font-size: 20px;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+}
+
+#confirmcode{
+	margin:40px;
+	text-align: center;
+	font-size: 30px;
+}
+
+#txtcode{
+	margin:10px;
+	width:20%;
+	height:10%;
+}
+
+.btn-primary{
+	padding: 10px;
+	margin:10px;
+	width:30%;
+}
+
+#resend{
+	margin:5px;
+	text-align: center;
+	font-size: 15px;
+}

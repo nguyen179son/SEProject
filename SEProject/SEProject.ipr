@@ -13,6 +13,7 @@
             <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
             <element id="library" level="project" name="gson-2.2.2" />
             <element id="library" level="project" name="java-json" />
+            <element id="library" level="project" name="javax.websocket-api" />
           </element>
         </element>
       </root>
@@ -278,6 +279,13 @@
       <SOURCES>
         <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
       </SOURCES>
+    </library>
+    <library name="javax.websocket-api">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/term6/java/test/glassfish5/glassfish/modules/javax.websocket-api.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
     </library>
     <library name="mysql-connector-java-5.1.46-bin">
       <CLASSES>
