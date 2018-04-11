@@ -63,7 +63,7 @@ public class User {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "INSERT into user VALUES (\"" + email + "\",\"" + password + "\",\"" + name +
+            sql = "INSERT into user_info (email, password, user_name) VALUES (\"" + email + "\",\"" + password + "\",\"" + name +
                     "\")";
             int rs = stmt.executeUpdate(sql);
 
