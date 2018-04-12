@@ -2,13 +2,13 @@
   <security-configurations>
     <authentication-service default="true" name="adminAuth" use-password-credential="true">
       <security-provider provider-name="adminSpc" name="spcrealm" type="LoginModule">
-        <login-module-config control-flag="sufficient" module-class="com.sun.enterprise.admin.util.AdminLoginModule" name="adminSpecialLM">
+        <login-module-config module-class="com.sun.enterprise.admin.util.AdminLoginModule" control-flag="sufficient" name="adminSpecialLM">
           <property name="config" value="server-config"></property>
           <property name="auth-realm" value="admin-realm"></property>
         </login-module-config>
       </security-provider>
       <security-provider provider-name="adminFile" name="filerealm" type="LoginModule">
-        <login-module-config control-flag="sufficient" module-class="com.sun.enterprise.security.auth.login.FileLoginModule" name="adminFileLM">
+        <login-module-config module-class="com.sun.enterprise.security.auth.login.FileLoginModule" control-flag="sufficient" name="adminFileLM">
           <property name="config" value="server-config"></property>
           <property name="auth-realm" value="admin-realm"></property>
         </login-module-config>
@@ -37,7 +37,7 @@
       <property name="DatabaseName" value="sun-appserv-samples"></property>
       <property name="connectionAttributes" value=";create=true"></property>
     </jdbc-connection-pool>
-    <connector-connection-pool max-pool-size="250" resource-adapter-name="jmsra" steady-pool-size="1" name="jms/__defaultConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
+    <connector-connection-pool resource-adapter-name="jmsra" max-pool-size="250" steady-pool-size="1" name="jms/__defaultConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
     <connector-resource pool-name="jms/__defaultConnectionFactory-Connection-Pool" object-type="system-all-req" jndi-name="jms/__defaultConnectionFactory"></connector-resource>
     <managed-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedExecutorService"></managed-executor-service>
     <managed-scheduled-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedScheduledExecutorService"></managed-scheduled-executor-service>
@@ -86,7 +86,7 @@
       <batch-runtime-configuration></batch-runtime-configuration>
       <cdi-service></cdi-service>
       <jms-service default-jms-host="default_JMS_host" type="EMBEDDED">
-        <jms-host port="${JMS_PROVIDER_PORT}" host="localhost" name="default_JMS_host"></jms-host>
+        <jms-host port="${JMS_PROVIDER_PORT}" name="default_JMS_host" host="localhost"></jms-host>
       </jms-service>
       <web-container>
         <session-config>
@@ -159,7 +159,7 @@
         </message-security-config>
         <property name="default-digest-algorithm" value="SHA-256"></property>
       </security-service>
-      <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,address=9009,server=n,suspend=y" java-home="/usr/lib/jvm/java-1.8.0-openjdk-amd64" system-classpath="">
+      <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,address=9009,server=n,suspend=y" java-home="C:\Program Files\Java\jdk1.8.0_131" system-classpath="">
         <jvm-options>-XX:MaxPermSize=192m</jvm-options>
         <jvm-options>-client</jvm-options>
         <jvm-options>-Djava.awt.headless=true</jvm-options>
@@ -222,7 +222,7 @@
         </transports>
       </network-config>
       <thread-pools>
-        <thread-pool name="admin-thread-pool" max-thread-pool-size="50" max-queue-size="256"></thread-pool>
+        <thread-pool name="admin-thread-pool" max-queue-size="256" max-thread-pool-size="50"></thread-pool>
         <thread-pool name="http-thread-pool"></thread-pool>
         <thread-pool name="thread-pool-1" max-thread-pool-size="200"></thread-pool>
       </thread-pools>
@@ -272,7 +272,7 @@
       </ejb-container>
       <mdb-container></mdb-container>
       <jms-service addresslist-behavior="priority" default-jms-host="default_JMS_host" type="EMBEDDED">
-        <jms-host port="${JMS_PROVIDER_PORT}" name="default_JMS_host" host="localhost"></jms-host>
+        <jms-host port="${JMS_PROVIDER_PORT}" host="localhost" name="default_JMS_host"></jms-host>
       </jms-service>
       <log-service file="${com.sun.aas.instanceRoot}/logs/server.log" log-rotation-limit-in-bytes="2000000">
         <module-log-levels></module-log-levels>
@@ -439,7 +439,7 @@
   </secure-admin>
   <clusters></clusters>
   <applications>
-    <application context-root="/kurono_war_exploded" object-type="user" name="kurono_war_exploded" directory-deployed="true" location="file:/home/chihiro/term6/java/gs-rest-service/kurono/out/artifacts/kurono_war_exploded/">
+    <application context-root="/kurono_war_exploded" object-type="user" directory-deployed="true" name="kurono_war_exploded" location="file:/home/chihiro/term6/java/gs-rest-service/kurono/out/artifacts/kurono_war_exploded/">
       <property name="appLocation" value="file:/home/chihiro/term6/java/gs-rest-service/kurono/out/artifacts/kurono_war_exploded/"></property>
       <property name="archiveType" value="war"></property>
       <property name="defaultAppName" value="kurono_war_exploded"></property>
@@ -448,8 +448,8 @@
         <engine sniffer="web"></engine>
       </module>
     </application>
-    <application context-root="/SEProject_war_exploded" object-type="user" name="SEProject_war_exploded" directory-deployed="true" location="file:/home/chihiro/SEProject/out/artifacts/SEProject_war_exploded/">
-      <property name="appLocation" value="file:/home/chihiro/SEProject/out/artifacts/SEProject_war_exploded/"></property>
+    <application context-root="/SEProject_war_exploded" object-type="user" name="SEProject_war_exploded" directory-deployed="true" location="file:/D:/Java%20workspace/SEProject/SEProject/out/artifacts/SEProject_war_exploded/">
+      <property name="appLocation" value="file:/D:/Java%20workspace/SEProject/SEProject/out/artifacts/SEProject_war_exploded/"></property>
       <property name="archiveType" value="war"></property>
       <property name="defaultAppName" value="SEProject_war_exploded"></property>
       <module name="SEProject_war_exploded">
