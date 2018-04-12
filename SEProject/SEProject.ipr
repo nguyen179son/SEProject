@@ -259,6 +259,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="libraryTable">
+    <library name="activation">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../jar file/activation.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="gson-2.2.2">
       <CLASSES />
       <JAVADOC />
@@ -291,6 +298,13 @@
     <library name="javax.websocket-api">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/javax.websocket-api.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="mail">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../jar file/mail.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
