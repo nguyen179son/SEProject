@@ -9,12 +9,7 @@
           <element id="directory" name="classes">
             <element id="module-output" name="SEProject" />
           </element>
-          <element id="directory" name="lib">
-            <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
-            <element id="library" level="project" name="gson-2.2.2" />
-            <element id="library" level="project" name="java-json" />
-            <element id="library" level="project" name="javax.websocket-api" />
-          </element>
+          <element id="directory" name="lib" />
         </element>
       </root>
     </artifact>
@@ -264,32 +259,59 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="libraryTable">
-    <library name="gson-2.2.2">
+    <library name="activation">
       <CLASSES>
-        <root url="jar://$USER_HOME$/gson-2.2.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../jar file/activation.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="gson-2.2.2">
+      <CLASSES />
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Java EE 6-Java EE 6">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.annotation.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.persistence.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.jms.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.ejb.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.transaction.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jsp.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.resource.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jsp.jstl.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="java-json">
       <CLASSES>
-        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
+        <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/java-json.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
+        <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/java-json.jar!/" />
       </SOURCES>
     </library>
     <library name="javax.websocket-api">
       <CLASSES>
-        <root url="jar://$USER_HOME$/term6/java/test/glassfish5/glassfish/modules/javax.websocket-api.jar!/" />
+        <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/javax.websocket-api.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="mail">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../jar file/mail.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="mysql-connector-java-5.1.46-bin">
       <CLASSES>
-        <root url="jar://$USER_HOME$/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar!/" />
+        <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/mysql-connector-java-5.1.46-bin.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

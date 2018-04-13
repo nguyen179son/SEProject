@@ -6,14 +6,22 @@ import org.json.JSONObject;
 
 import Helper.Convertor;
 import java.sql.*;
+import Helper.EmailSender;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class User {
     private String email;
     private String password;
     private String name;
+    private String confirmationCode;
+    private String token;
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/SEProject";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/SEProject?useSSL=false";
 
     //  Database credentials
     static final String USER = "root";
@@ -23,6 +31,8 @@ public class User {
         this.setEmail(email);
         this.setName(name);
         this.setPassword(password);
+        this.confirmationCode = EmailSender.generateConfirmationCode(12);
+        this.token = EmailSender.generateConfirmationCode(12);
     }
 
     public String getEmail() {
@@ -50,25 +60,22 @@ public class User {
     }
 
     public void save() {
-        Connection conn = null;
+        //Connection conn = null;
+        Connection conn = DatabaseConnection.getConnection();
         Statement stmt = null;
         boolean returnValue = false;
-        try {
-            //STEP 2: Register JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
 
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        try {
 
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "INSERT into user_info (email, password, user_name) VALUES (\"" + email + "\",\"" + password + "\",\"" + name +
+            sql = "INSERT into user_info (email, password, user_name, confirm_code, token, confirm)" +
+                    " VALUES (\"" + email + "\",\"" + password + "\",\"" + name + "\",\"" + confirmationCode + "\",\"" + token + "\",\"" + "0" +
                     "\")";
             int rs = stmt.executeUpdate(sql);
-
+            EmailSender.send(email, confirmationCode);
 
             stmt.close();
             conn.close();

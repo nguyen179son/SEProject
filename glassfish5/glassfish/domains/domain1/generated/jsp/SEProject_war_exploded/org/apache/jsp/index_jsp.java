@@ -42,46 +42,46 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       _jspx_out = out;
       _jspx_resourceInjector = (org.glassfish.jsp.api.ResourceInjector) application.getAttribute("com.sun.appserv.jsp.resource.injector");
 
-      out.write("<!DOCTYPE html>\n");
-      out.write("<html lang=\"en\">\n");
-      out.write("<head>\n");
-      out.write("  <meta charset=\"UTF-8\">\n");
-      out.write("  <title>Chat</title>\n");
-      out.write("</head>\n");
-      out.write("<body style=\"margin:0;\">\n");
-      out.write("\n");
+      out.write("<!DOCTYPE html>\r\n");
+      out.write("<html lang=\"en\">\r\n");
+      out.write("<head>\r\n");
+      out.write("  <meta charset=\"UTF-8\">\r\n");
+      out.write("  <title>Chat</title>\r\n");
+      out.write("</head>\r\n");
+      out.write("<body style=\"margin:0;\">\r\n");
+      out.write("\r\n");
 
   if (session.getAttribute("user_name") == null) {
       response.sendRedirect("/SEProject_war_exploded/home");
   }
 
-      out.write("\n");
-      out.write("\n");
-      out.write("<textarea title=\"Chat Log\" id=\"log\" readonly\n");
-      out.write("          style=\"display: block; width: 100%; height: 600px; resize: none; margin: 0; padding: 0; border: 0;\"></textarea>\n");
-      out.write("<input title=\"Chat Input\" id=\"input\" type=\"text\" style=\"display: block; width: 100%; border-width: 1px 0 1px 0;\"\n");
-      out.write("       autofocus/>\n");
-      out.write("<script>\n");
-      out.write("    var ws = new WebSocket(\"ws://localhost:8080/SEProject_war_exploded/ws\");\n");
-      out.write("    ws.onmessage = function (event) {\n");
-      out.write("        console.log(event.data);\n");
-      out.write("        document.getElementById(\"log\").value += \"[\" + timestamp() + \"] \" + event.data + \"\\n\";\n");
-      out.write("    };\n");
-      out.write("\n");
-      out.write("    document.getElementById(\"input\").addEventListener(\"keyup\", function (event) {\n");
-      out.write("        if (event.keyCode === 13) {\n");
-      out.write("            ws.send(event.target.value);\n");
-      out.write("            event.target.value = \"\";\n");
-      out.write("        }\n");
-      out.write("    });\n");
-      out.write("\n");
-      out.write("    function timestamp() {\n");
-      out.write("        var d = new Date(), minutes = d.getMinutes();\n");
-      out.write("        if (minutes < 10) minutes = '0' + minutes;\n");
-      out.write("        return d.getHours() + ':' + minutes;\n");
-      out.write("    }\n");
-      out.write("</script>\n");
-      out.write("</body>\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("<textarea title=\"Chat Log\" id=\"log\" readonly\r\n");
+      out.write("          style=\"display: block; width: 100%; height: 600px; resize: none; margin: 0; padding: 0; border: 0;\"></textarea>\r\n");
+      out.write("<input title=\"Chat Input\" id=\"input\" type=\"text\" style=\"display: block; width: 100%; border-width: 1px 0 1px 0;\"\r\n");
+      out.write("       autofocus/>\r\n");
+      out.write("<script>\r\n");
+      out.write("    var ws = new WebSocket(\"ws://localhost:8080/SEProject_war_exploded/ws\");\r\n");
+      out.write("    ws.onmessage = function (event) {\r\n");
+      out.write("        console.log(event.data);\r\n");
+      out.write("        document.getElementById(\"log\").value += \"[\" + timestamp() + \"] \" + event.data + \"\\n\";\r\n");
+      out.write("    };\r\n");
+      out.write("\r\n");
+      out.write("    document.getElementById(\"input\").addEventListener(\"keyup\", function (event) {\r\n");
+      out.write("        if (event.keyCode === 13) {\r\n");
+      out.write("            ws.send(event.target.value);\r\n");
+      out.write("            event.target.value = \"\";\r\n");
+      out.write("        }\r\n");
+      out.write("    });\r\n");
+      out.write("\r\n");
+      out.write("    function timestamp() {\r\n");
+      out.write("        var d = new Date(), minutes = d.getMinutes();\r\n");
+      out.write("        if (minutes < 10) minutes = '0' + minutes;\r\n");
+      out.write("        return d.getHours() + ':' + minutes;\r\n");
+      out.write("    }\r\n");
+      out.write("</script>\r\n");
+      out.write("</body>\r\n");
       out.write("</html>");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
