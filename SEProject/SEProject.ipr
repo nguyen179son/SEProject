@@ -263,6 +263,15 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="libraryTable">
+    <library name="java-json">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/java-json.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/java-json.jar!/" />
+      </SOURCES>
+    </library>
     <library name="javax.servlet">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jar!/" />
