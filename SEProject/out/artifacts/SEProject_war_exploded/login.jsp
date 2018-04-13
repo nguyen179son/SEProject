@@ -18,9 +18,9 @@
 
 
 <div class="container-fluid text-center">
-    <form action="home" method="post">
+    <form action="login" method="get">
 
-        <input type="hidden" name="ReturnUrl" value='${requestScope["javax.servlet.forward.request_uri"]}' />
+
         <input type="text" class="form-control" placeholder="User name here" name="user_name" required autofocus
                value="<%=request.getAttribute("user_name")!=null?request.getAttribute("user_name"):""%>"/>
         <br>
