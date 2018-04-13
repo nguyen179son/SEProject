@@ -14,6 +14,7 @@ public class User {
     private String confirmationCode;
     private String token;
 
+
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/SEProject?useSSL=false";
 
