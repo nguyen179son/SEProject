@@ -11,15 +11,16 @@ $(document).ready(function () {
                 data: condition,
                 success: function (responseText) {
                     var result = $.parseJSON(responseText);
-                    console.log(result[0]['email']);
-                    console.log(result[1]['user_name']);
+                    console.log(typeof result[2]['phone_number'] == "undefined");
+                    console.log(result[2]['phone_number']);
+
                     $("#email").text(result[0]['email']);
 
                     $("#nick-name").text(result[1]['user_name']);
 
-                    $("#phone").text(result[2]['phone_number']);
+                    $("#phone").text(typeof result[2]['phone_number'] != "undefined"? result[2]['phone_number'] : "Not added");
 
-                    $("#dob").text(result[3]['DOB']);
+                    $("#dob").text(typeof result[3]['DOB'] != "undefined" ? result[3]['DOB'] : "Not added");
                 }
             })
         };
