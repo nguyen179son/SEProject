@@ -159,7 +159,7 @@
         </message-security-config>
         <property name="default-digest-algorithm" value="SHA-256"></property>
       </security-service>
-      <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,address=9009,server=n,suspend=y" java-home="/usr/lib/jvm/java-1.8.0-openjdk-amd64" system-classpath="">
+      <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,address=9009,server=n,suspend=y" java-home="C:\Program Files\Java\jdk1.8.0_131" system-classpath="">
         <jvm-options>-XX:MaxPermSize=192m</jvm-options>
         <jvm-options>-client</jvm-options>
         <jvm-options>-Djava.awt.headless=true</jvm-options>
@@ -448,8 +448,8 @@
         <engine sniffer="web"></engine>
       </module>
     </application>
-    <application context-root="/SEProject_war_exploded" object-type="user" name="SEProject_war_exploded" directory-deployed="true" location="file:/home/chihiro/SEProject/out/artifacts/SEProject_war_exploded/">
-      <property name="appLocation" value="file:/home/chihiro/SEProject/out/artifacts/SEProject_war_exploded/"></property>
+    <application context-root="/SEProject_war_exploded" object-type="user" name="SEProject_war_exploded" directory-deployed="true" location="file:/D:/Java%20workspace/SEProject/SEProject/out/artifacts/SEProject_war_exploded/">
+      <property name="appLocation" value="file:/D:/Java%20workspace/SEProject/SEProject/out/artifacts/SEProject_war_exploded/"></property>
       <property name="archiveType" value="war"></property>
       <property name="defaultAppName" value="SEProject_war_exploded"></property>
       <module name="SEProject_war_exploded">
