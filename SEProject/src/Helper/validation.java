@@ -1,32 +1,21 @@
 package Helper;
 
+import Model.DatabaseConnection;
+
 import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class validation {
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/SEProject";
 
-    //  Database credentials
-    static final String USER = "root";
-    static final String PASS = "root";
 
     public boolean UserLoginValidation(String user_name, String password) {
-        Connection conn = null;
+        //Connection conn = null;
+        Connection conn = DatabaseConnection.getConnection();
         Statement stmt = null;
         boolean returnValue = false;
         try {
-            //STEP 2: Register JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
-
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
             sql = "SELECT * FROM user_info WHERE email=\"" + user_name + "\" AND password=\"" + password + "\"";
@@ -90,25 +79,17 @@ public class validation {
             Validation_result+="Confirm password does not match";
         }
         if (!this.UniqueEmailValidation(email)){
-            Validation_result+="Registed email";
+            Validation_result+="Email already existed";
         }
         return Validation_result;
     }
 
     public boolean UniqueEmailValidation(String email) {
-        Connection conn = null;
+        //Connection conn = null;
+        Connection conn = DatabaseConnection.getConnection();
         Statement stmt = null;
         boolean returnValue = false;
         try {
-            //STEP 2: Register JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
-
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
             sql = "SELECT * FROM user_info WHERE email=\"" + email + "\"";
