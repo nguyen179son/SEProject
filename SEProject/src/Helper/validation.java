@@ -10,7 +10,7 @@ public class validation {
     // JDBC driver name and database URL
 
 
-    public boolean UserLoginValidation(String user_name, String password) {
+    public static boolean UserLoginValidation(String user_name, String password) {
         //Connection conn = null;
         Connection conn = DatabaseConnection.getConnection();
         Statement stmt = null;
@@ -28,21 +28,14 @@ public class validation {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (
-                SQLException se)
-
+        } catch (SQLException se)
         {
             //Handle errors for JDBC
             se.printStackTrace();
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        } finally
-
-        {
+        } finally {
             //finally block used to close resources
             try {
                 if (stmt != null)
@@ -102,21 +95,13 @@ public class validation {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (
-                SQLException se)
-
-        {
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        } finally
-
-        {
+        } finally {
             //finally block used to close resources
             try {
                 if (stmt != null)

@@ -24,7 +24,6 @@ public class signup extends HttpServlet {
         if (validation_result.equals("")) {
             User user = new User(email, password, nickname);
             user.save();
-
             response.sendRedirect("/SEProject_war_exploded");
         } else {
             request.setAttribute("error_message", validation_result);
