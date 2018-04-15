@@ -13,6 +13,7 @@
 <body>
 <%
     if (session.getAttribute("user_name") == null) {
+        session.setAttribute("returnUrl", request.getAttribute("currentUrl"));
         response.sendRedirect("/SEProject_war_exploded/home");
     }
 %>

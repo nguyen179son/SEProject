@@ -17,11 +17,11 @@ public class home extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String user_name = request.getParameter("user_name");
         String password = request.getParameter("password");
-
         if (valid.UserLoginValidation(user_name, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user_name", user_name);
-            response.sendRedirect("/SEProject_war_exploded/");
+            response.sendRedirect(session.getAttribute("returnUrl")==null?
+                    "/SEProject_war_exploded/":session.getAttribute("returnUrl").toString());
         } else {
             request.setAttribute("error_message", "Wrong email or password");
             request.setAttribute("user_name", user_name);

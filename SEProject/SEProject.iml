@@ -30,11 +30,10 @@
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - RESTful Web Service" level="application_server_libraries" />
     <orderEntry type="library" name="gson-2.2.2" level="project" />
-    <orderEntry type="library" name="java-json" level="project" />
-    <orderEntry type="library" name="javax.websocket-api" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.46-bin" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="mail" level="project" />
     <orderEntry type="library" name="activation" level="project" />
+    <orderEntry type="library" name="java-json" level="project" />
   </component>
 </module>

@@ -20,6 +20,7 @@ public class profile extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         if (userModel.exist(id)) {
             request.setAttribute("id", id);
+            request.setAttribute("currentUrl","profile?id="+id);
             request.getRequestDispatcher("profile.jsp").forward(request, response);
         }
         else {

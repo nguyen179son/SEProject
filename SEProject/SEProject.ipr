@@ -9,7 +9,12 @@
           <element id="directory" name="classes">
             <element id="module-output" name="SEProject" />
           </element>
-          <element id="directory" name="lib" />
+          <element id="directory" name="lib">
+            <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
+            <element id="library" level="project" name="mail" />
+            <element id="library" level="project" name="activation" />
+            <element id="library" level="project" name="java-json" />
+          </element>
         </element>
       </root>
     </artifact>
@@ -288,19 +293,12 @@
     </library>
     <library name="java-json">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/java-json.jar!/" />
+        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/java-json.jar!/" />
+        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
       </SOURCES>
-    </library>
-    <library name="javax.websocket-api">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/out/artifacts/SEProject_war_exploded/WEB-INF/lib/javax.websocket-api.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
     </library>
     <library name="mail">
       <CLASSES>
