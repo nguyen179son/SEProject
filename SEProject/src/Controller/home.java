@@ -2,7 +2,6 @@ package Controller;
 
 import Helper.validation;
 import Model.User;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +17,7 @@ public class home extends HttpServlet {
         String password = request.getParameter("password");
         if (validation.UserLoginValidation(user_name, password)) {
             HttpSession session = request.getSession();
-            session.setAttribute("user_name", user_name);
+            session.setAttribute("userID", User.getID(user_name));
             response.sendRedirect(session.getAttribute("returnUrl") == null || session.getAttribute("returnUrl").toString().equals("") ?
                     "/SEProject_war_exploded/" : session.getAttribute("returnUrl").toString());
         } else {
@@ -34,7 +33,7 @@ public class home extends HttpServlet {
             ServletException, IOException {
         HttpSession session = request.getSession();
 
-        if (session.getAttribute("user_name") == null || session.isNew()) {
+        if (session.getAttribute("userID") == null || session.isNew()) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             response.sendRedirect("/SEProject_war_exploded/home");

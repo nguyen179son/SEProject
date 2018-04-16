@@ -49,3 +49,16 @@ label.view-label {
 
     font-weight: normal;
 }
+
+
+#edit-profile {
+    !important;
+    display: flex;
+    justify-content: center;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+.hide {
+    display: none;
+}

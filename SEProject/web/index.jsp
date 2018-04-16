@@ -7,7 +7,7 @@
 <body style="margin:0;">
 
 <%
-  if (session.getAttribute("user_name") == null) {
+  if (session.getAttribute("userID") == null) {
       session.setAttribute("returnUrl","/");
       response.sendRedirect("/SEProject_war_exploded/home");
   }

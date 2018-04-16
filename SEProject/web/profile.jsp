@@ -12,7 +12,7 @@
 
 <body>
 <%
-    if (session.getAttribute("user_name") == null) {
+    if (session.getAttribute("userID") == null) {
         session.setAttribute("returnUrl", request.getAttribute("currentUrl"));
         response.sendRedirect("/SEProject_war_exploded/home");
     }
@@ -32,6 +32,7 @@
 </nav>
 
 <input type="text" hidden id="id" value=<%=request.getAttribute("id")%>>
+<input type="text" hidden id="id" value=<%=session.getAttribute("userID")%>>
 <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile">
 
 <div class="form-group">
@@ -74,6 +75,10 @@
     </div>
 </div>
 
-
+<div class="form-group">
+    <div class="">
+        <a href="#" id="edit-profile" class="<%=session.getAttribute("userID")==request.getAttribute("id")? "btn btn-primary":"hide"%>">Edit</a>
+    </div>
+</div>
 </body>
 </html>

@@ -46,4 +46,14 @@
         <servlet-name>profile</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editProfile</servlet-name>
+        <servlet-class>Controller.editProfile</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>editProfile</servlet-name>
+        <url-pattern>/editProfile</url-pattern>
+    </servlet-mapping>
 </web-app>
