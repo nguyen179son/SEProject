@@ -10,7 +10,7 @@ public class validation {
     // JDBC driver name and database URL
 
 
-    public boolean UserLoginValidation(String user_name, String password) {
+    public static boolean UserLoginValidation(String user_name, String password) {
         //Connection conn = null;
         Connection conn = DatabaseConnection.getConnection();
         Statement stmt = null;

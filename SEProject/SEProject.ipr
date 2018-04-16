@@ -9,7 +9,14 @@
           <element id="directory" name="classes">
             <element id="module-output" name="SEProject" />
           </element>
-          <element id="directory" name="lib" />
+          <element id="directory" name="lib">
+            <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
+            <element id="library" level="project" name="mail" />
+            <element id="library" level="project" name="activation" />
+            <element id="library" level="project" name="java-json" />
+            <element id="library" level="project" name="javax.websocket-api-1.0" />
+            <element id="library" level="project" name="gson-2.2.2" />
+          </element>
         </element>
       </root>
     </artifact>
@@ -263,6 +270,22 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="libraryTable">
+    <library name="gson-2.2.2">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/gson-2.2.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="java-json">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
+      </SOURCES>
+    </library>
     <library name="javax.servlet">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jar!/" />

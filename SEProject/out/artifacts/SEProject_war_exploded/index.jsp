@@ -8,6 +8,7 @@
 
 <%
   if (session.getAttribute("user_name") == null) {
+      session.setAttribute("returnUrl","/");
       response.sendRedirect("/SEProject_war_exploded/home");
   }
 %>
