@@ -79,3 +79,7 @@ a{
     margin-right: 0;
     margin-top: 0;
 }
+#edit-profile {
+    display: flex;
+    justify-content: center;
+}

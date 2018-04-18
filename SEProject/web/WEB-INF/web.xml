@@ -56,4 +56,14 @@
         <servlet-name>editProfile</servlet-name>
         <url-pattern>/editProfile</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>error</servlet-name>
+        <servlet-class>Controller.error</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>error</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
 </web-app>

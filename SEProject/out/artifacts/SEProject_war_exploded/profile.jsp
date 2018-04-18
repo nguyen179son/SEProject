@@ -77,7 +77,8 @@
 
 <div class="form-group">
     <div class="">
-        <a href="#" id="edit-profile" class="<%=session.getAttribute("userID")==request.getAttribute("id")? "btn btn-primary":"hide"%>">Edit</a>
+        <a href="<%="/SEProject_war_exploded/editProfile?id="+request.getAttribute("id")%>" id="edit-profile"
+           class="<%=session.getAttribute("userID")==request.getAttribute("id")? "btn btn-primary":"hide"%>">Edit</a>
     </div>
 </div>
 </body>

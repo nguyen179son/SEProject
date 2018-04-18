@@ -20,9 +20,10 @@
         response.sendRedirect("/SEProject_war_exploded/home");
     }
 
-//    if (session.getAttribute("userID")!=request.getAttribute("id")){
-//        request.getRequestDispatcher("404-error").forward(request,response);
-//    }
+    if (session.getAttribute("userID") != request.getAttribute("id")) {
+        response.sendRedirect("/SEProject_war_exploded/error");
+    }
+
 %>
 <nav class="navbar navbar-inverse">
     <div class="container">
@@ -37,9 +38,9 @@
 
     </div>
 </nav>
+<form action="editProfile" method="post">
 
 <input type="text" hidden id="id" value=<%=request.getAttribute("id")%>>
-<input type="text" hidden id="id" value=<%=session.getAttribute("userID")%>>
 <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile">
 
 
@@ -54,7 +55,7 @@
     <div class="col-sm-2"></div>
     <label class="control-label col-sm-2">Nick Name: </label>
     <div class="col-sm-6">
-        <input type="text" class="form-control" placeholder="Nick name" name="nick_name">
+        <input type="text" class="form-control" placeholder="Nick name" name="nick_name" id="nick-name">
     </div>
 </div>
 <br>
@@ -62,16 +63,37 @@
     <div class="col-sm-2"></div>
     <label class="control-label col-sm-2">Email: </label>
     <div class="col-sm-6">
-        <input type="text" class="form-control" placeholder="email" name="email">
+        <input type="text" class="form-control" placeholder="email" name="email" id="email">
     </div>
-
+</div>
+<div class="form-group">
+    <div class="col-sm-2"></div>
+    <label class="control-label col-sm-2">Old Password: </label>
+    <div class="col-sm-6">
+        <input type="text" class="form-control" placeholder="Old password" name="oldPassword" id="oldPassword">
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-2"></div>
+    <label class="control-label col-sm-2">New Password: </label>
+    <div class="col-sm-6">
+        <input type="text" class="form-control" placeholder="New password" name="newPassword" id="newPassword">
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-2"></div>
+    <label class="control-label col-sm-2">Confirm New Password: </label>
+    <div class="col-sm-6">
+        <input type="text" class="form-control" placeholder="Confirm New password"
+               name="confirmNewPassword" id="confirmNewPassword">
+    </div>
 </div>
 
 <div class="form-group">
     <div class="col-sm-2"></div>
     <label class="control-label col-sm-2">Phone Number: </label>
     <div class="col-sm-6">
-        <input type="text" class="form-control" placeholder="phone" name="phone">
+        <input type="text" class="form-control" placeholder="phone" name="phone" id="phone">
     </div>
 </div>
 
@@ -80,7 +102,7 @@
     <label class="control-label col-sm-2">Date of Birth: </label>
     <div class="col-sm-6">
         <div class='input-group date' id='birthday' name="birthday">
-            <input type='text' class="form-control" id="datepicker"/>
+            <input type='text' class="form-control" id="datepicker" placeholder="DoB" name="DoB"/>
             <span class="input-group-addon"><span
                     class="glyphicon glyphicon-calendar"></span></span>
         </div>
@@ -92,12 +114,14 @@
 <div class="form-group">
     <div class="col-sm-4"></div>
     <div class="col-sm-2">
-        <a href="#" id="edit-profile" class="btn btn-primary">Save</a>
+        <input type="submit" id="edit-profile" value="Save" class="btn btn-primary">
+        <%--<a href="#" id="edit-profile" class="btn btn-primary">Save</a>--%>
     </div>
     <div class="col-sm-2">
         <a href="" class="btn btn-danger">cancel</a>
     </div>
 </div>
+</form>
 
 </body>
 </html>

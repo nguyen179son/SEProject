@@ -18,7 +18,7 @@ $(document).ready(function () {
 
                     $("#nick-name").text(result[1]['user_name']);
 
-                    $("#phone").text(typeof result[2]['phone_number'] != "undefined"? result[2]['phone_number'] : "Not added");
+                    $("#phone").text(typeof result[2]['phone_number'] != "undefined" ? result[2]['phone_number'] : "Not added");
 
                     $("#dob").text(typeof result[3]['DOB'] != "undefined" ? result[3]['DOB'] : "Not added");
                 }
