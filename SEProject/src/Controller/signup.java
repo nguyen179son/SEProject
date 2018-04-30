@@ -1,6 +1,6 @@
 package Controller;
 
-import Helper.validation;
+import Helper.Validation;
 import Model.User;
 
 import javax.servlet.ServletException;
@@ -12,15 +12,13 @@ import java.io.IOException;
 
 @WebServlet(name = "signup")
 public class signup extends HttpServlet {
-    validation valid = new validation();
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nickname = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String confirm_password = request.getParameter("confirmpassword");
 
-        String validation_result = valid.UserRegisterValidation(nickname, email, password, confirm_password);
+        String validation_result = Validation.UserRegisterValidation(nickname, email, password, confirm_password);
         if (validation_result.equals("")) {
             User user = new User(email, password, nickname);
             user.save();

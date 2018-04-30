@@ -12,88 +12,119 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 
 public class User {
     private String email;
     private String password;
     private String name;
     private String confirmationCode;
-    private String token;
+    private String profilePicture;
+    private Calendar DOB;
+    private String phoneNunber;
 
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/SEProject?useSSL=false";
-
-    //  Database credentials
-    static final String USER = "root";
-    static final String PASS = "root";
 
     public User(String email, String password, String name) {
         this.setEmail(email);
         this.setName(name);
         this.setPassword(password);
         this.confirmationCode = EmailSender.generateConfirmationCode(12);
-        this.token = EmailSender.generateConfirmationCode(12);
     }
 
     public String getEmail() {
         return email;
     }
 
+
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     public String getPassword() {
         return password;
     }
 
+
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public String getName() {
         return name;
     }
 
+
     public void setName(String name) {
         this.name = name;
     }
 
+
+    public String getConfirmationCode() {
+        return confirmationCode;
+    }
+
+
+    public void setConfirmationCode(String confirmationCode) {
+        this.confirmationCode = confirmationCode;
+    }
+
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+
+    public Calendar getDOB() {
+        return DOB;
+    }
+
+
+    public void setDOB(Calendar DOB) {
+        this.DOB = DOB;
+    }
+
+
+    public String getPhoneNunber() {
+        return phoneNunber;
+    }
+
+
+    public void setPhoneNunber(String phoneNunber) {
+        this.phoneNunber = phoneNunber;
+    }
+
+
     public void save() {
-        //Connection conn = null;
-        Connection conn = DatabaseConnection.getConnection();
         Statement stmt = null;
-        boolean returnValue = false;
-
+        Connection conn = null;
         try {
-
+            conn = DatabaseConnection.getConnection();
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "INSERT into user_info (email, password, user_name, confirm_code, token, confirm)" +
-                    " VALUES (\"" + email + "\",\"" + password + "\",\"" + name + "\",\"" + confirmationCode + "\",\"" + token + "\",\"" + "0" +
+            sql = "INSERT into user_info (email, password, user_name, confirm_code, confirm)" +
+                    " VALUES (\"" + email + "\",\"" + password + "\",\"" + name + "\",\"" + confirmationCode + "\",\"" + "0" +
                     "\")";
             int rs = stmt.executeUpdate(sql);
             EmailSender.send(email, confirmationCode);
 
             stmt.close();
             conn.close();
-        } catch (
-                SQLException se)
-
-        {
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        } finally
-
-        {
+        } finally {
             //finally block used to close resources
             try {
                 if (stmt != null)
@@ -114,39 +145,24 @@ public class User {
         Statement stmt = null;
         JSONArray obj = null;
         Convertor convertor = new Convertor();
-        boolean returnValue = false;
         try {
-            //STEP 2: Register JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
-
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
+            conn = DatabaseConnection.getConnection();
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT email, user_name, phone_number, DOB from user_info WHERE userID=" + id;
+            String sql = "SELECT email, user_name, phone_number, DOB from user_info WHERE userID = " + id;
             ResultSet rs = stmt.executeQuery(sql);
-            obj=convertor.convertToJSON(rs);
-
+            obj = convertor.convertToJSON(rs);
 
             stmt.close();
             conn.close();
-        } catch (
-                SQLException se)
-
-        {
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        } finally
-
-        {
+        } finally {
             //finally block used to close resources
             try {
                 if (stmt != null)
@@ -160,7 +176,6 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        JSObject result = null;
 
         return obj.toString();
     }
@@ -170,18 +185,12 @@ public class User {
         Statement stmt = null;
         boolean returnValue = false;
         try {
-            //STEP 2: Register JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
-
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
+            conn = DatabaseConnection.getConnection();
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "SELECT * FROM user_info WHERE userID="+id;
+            sql = "SELECT * FROM user_info WHERE userID = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             if (!rs.next()) {
                 returnValue = false;
@@ -191,21 +200,13 @@ public class User {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (
-                SQLException se)
-
-        {
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        } finally
-
-        {
+        } finally {
             //finally block used to close resources
             try {
                 if (stmt != null)

@@ -1,6 +1,6 @@
 package Controller;
 
-import Helper.validation;
+import Helper.Validation;
 import Model.User;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ public class home extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String user_name = request.getParameter("user_name");
         String password = request.getParameter("password");
-        if (validation.UserLoginValidation(user_name, password)) {
+        if (Validation.UserLoginValidation(user_name, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user_name", user_name);
             response.sendRedirect(session.getAttribute("returnUrl") == null || session.getAttribute("returnUrl").toString().equals("") ?

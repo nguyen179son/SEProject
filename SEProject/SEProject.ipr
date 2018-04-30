@@ -11,11 +11,7 @@
           </element>
           <element id="directory" name="lib">
             <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
-            <element id="library" level="project" name="mail" />
             <element id="library" level="project" name="activation" />
-            <element id="library" level="project" name="java-json" />
-            <element id="library" level="project" name="javax.websocket-api-1.0" />
-            <element id="library" level="project" name="gson-2.2.2" />
           </element>
         </element>
       </root>
@@ -28,10 +24,7 @@
           <element id="directory" name="classes">
             <element id="module-output" name="SEProject" />
           </element>
-          <element id="directory" name="lib">
-            <element id="library" level="project" name="javax.websocket-api-1.0" />
-            <element id="library" level="project" name="mail" />
-          </element>
+          <element id="directory" name="lib" />
         </element>
       </root>
     </artifact>
@@ -272,37 +265,44 @@
   <component name="libraryTable">
     <library name="gson-2.2.2">
       <CLASSES>
-        <root url="jar://$USER_HOME$/gson-2.2.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/gson-2.2.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="java-json">
       <CLASSES>
-        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/java-json.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/java-json.jar!/" />
       </SOURCES>
     </library>
-    <library name="javax.servlet">
+    <library name="javax.servlet-3.0">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/javax.servlet-3.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="javax.websocket-api-1.0">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/javax.websocket-api-1.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/javax.websocket-api-1.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="mail">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/mail.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="mysql-connector-java-5.1.46-bin">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/mysql-connector-java-5.1.46-bin.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

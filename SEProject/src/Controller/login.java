@@ -1,6 +1,6 @@
 package Controller;
 
-import Helper.validation;
+import Helper.Validation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,6 @@ import java.io.IOException;
 
 @WebServlet(name = "login")
 public class login extends HttpServlet {
-    validation valid = new validation();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -22,7 +21,7 @@ public class login extends HttpServlet {
         String user_name = request.getParameter("user_name");
         String password = request.getParameter("password");
 
-        if (valid.UserLoginValidation(user_name, password)) {
+        if (Validation.UserLoginValidation(user_name, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user_name", user_name);
             response.sendRedirect("/SEProject_war_exploded/");

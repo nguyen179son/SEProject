@@ -6,16 +6,17 @@ import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class validation {
+public class Validation {
     // JDBC driver name and database URL
 
 
     public static boolean UserLoginValidation(String user_name, String password) {
         //Connection conn = null;
-        Connection conn = DatabaseConnection.getConnection();
+        Connection conn = null;
         Statement stmt = null;
         boolean returnValue = false;
         try {
+            conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
             String sql;
             sql = "SELECT * FROM user_info WHERE email=\"" + user_name + "\" AND password=\"" + password + "\"";
@@ -28,8 +29,7 @@ public class validation {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (SQLException se)
-        {
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
         } catch (Exception e) {
@@ -52,37 +52,39 @@ public class validation {
         return returnValue;
     }
 
-    public String UserRegisterValidation(String nickname, String email, String password, String confirm_password) {
+    public static String UserRegisterValidation(String nickname, String email, String password, String confirm_password) {
         String Validation_result = "";
 
-        if (!this.EmailFormValidation(email)) {
-            Validation_result += "Email input has wrong form<br/>";
-        }
-
-        if (!this.nicknameValidation(nickname)) {
+        if (!Validation.nicknameValidation(nickname)) {
             Validation_result += "Nickname must have less than 255 characters<br/>";
         }
 
-        if (!this.passwordValidation(password)) {
+        else if (!Validation.EmailFormValidation(email)) {
+            Validation_result += "Email input has wrong form<br/>";
+        }
+
+        else if (!Validation.UniqueEmailValidation(email)){
+            Validation_result+="Email already existed";
+        }
+
+        if (!Validation.passwordValidation(password)) {
             Validation_result += "Password must contain at " +
                     "least eight characters, at least one number and both lower and uppercase letters and special characters<br/>";
         }
 
-        if (!this.passwordConfirm(password,confirm_password)){
+        if (!Validation.passwordConfirm(password,confirm_password)){
             Validation_result+="Confirm password does not match";
-        }
-        if (!this.UniqueEmailValidation(email)){
-            Validation_result+="Email already existed";
         }
         return Validation_result;
     }
 
-    public boolean UniqueEmailValidation(String email) {
+    public static boolean UniqueEmailValidation(String email) {
         //Connection conn = null;
-        Connection conn = DatabaseConnection.getConnection();
+        Connection conn = null;
         Statement stmt = null;
         boolean returnValue = false;
         try {
+            conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
             String sql;
             sql = "SELECT * FROM user_info WHERE email=\"" + email + "\"";
@@ -118,24 +120,24 @@ public class validation {
         return returnValue;
     }
 
-    public boolean nicknameValidation(String nickname) {
+    public static boolean nicknameValidation(String nickname) {
         return nickname.length() < 255 && nickname.length() != 0;
     }
 
-    public boolean EmailFormValidation(String email) {
+    public static boolean EmailFormValidation(String email) {
         Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile( "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
     }
 
-    public boolean passwordValidation(String password) {
+    public static boolean passwordValidation(String password) {
         Pattern VALID_PASSWORD = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
         Matcher matcher = VALID_PASSWORD.matcher(password);
         return matcher.find();
         //Regex for password must contain at least eight characters, at least one number and both lower and uppercase letters and special characters
     }
 
-    public boolean passwordConfirm(String password, String confirm_password) {
+    public static boolean passwordConfirm(String password, String confirm_password) {
         return password.equals(confirm_password);
     }
 }
