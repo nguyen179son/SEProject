@@ -8,6 +8,7 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+
     <servlet>
         <servlet-name>login</servlet-name>
         <servlet-class>Controller.Login</servlet-class>
@@ -19,10 +20,9 @@
     </servlet-mapping>
 
 
-
     <servlet>
         <servlet-name>signup</servlet-name>
-        <servlet-class>Controller.signup</servlet-class>
+        <servlet-class>Controller.Signup</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -40,6 +40,7 @@
         <servlet-name>getDetailProfile</servlet-name>
         <url-pattern>/detail</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
         <servlet-name>profile</servlet-name>

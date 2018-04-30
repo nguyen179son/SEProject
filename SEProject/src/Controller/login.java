@@ -21,16 +21,15 @@ public class Login extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String user_name = request.getParameter("user_name");
         String password = request.getParameter("password");
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
 
         if (Validation.UserLoginValidation(user_name, password)) {
             //getSession to take redirect_url
             HttpSession session = request.getSession();
 
-
-            //generate return json object
-            ObjectMapper mapper = new ObjectMapper();
             ObjectNode userInfoJson = User.getProfile(user_name);        //user_infor
-            ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+
             //generate token
             String token = JWTHandler.generateToken(userInfoJson.get("userID").toString(), 7);
 
@@ -45,17 +44,14 @@ public class Login extends HttpServlet {
             else {  //user haven't confirmed yet
                 objectNode1.put("redirect_url", "/SEProject_war_exploded/confirmcode.jsp");
             }
-            PrintWriter wr = response.getWriter();
-            wr.write(objectNode1.toString());
-            wr.flush();
-        } else {
-            ObjectMapper mapper = new ObjectMapper();
-            ObjectNode objectNode1 = mapper.createObjectNode();
-            objectNode1.put("success", false);
-            PrintWriter wr = response.getWriter();
-            wr.write(objectNode1.toString());
-            wr.flush();
         }
+        else {
+            objectNode1.put("success", false);
+        }
+
+        PrintWriter wr = response.getWriter();
+        wr.write(objectNode1.toString());
+        wr.flush();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws

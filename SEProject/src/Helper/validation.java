@@ -67,12 +67,12 @@ public class Validation {
             Validation_result+="Email already existed";
         }
 
-        if (!Validation.passwordValidation(password)) {
+        else if (!Validation.passwordValidation(password)) {
             Validation_result += "Password must contain at " +
-                    "least eight characters, at least one number and both lower and uppercase letters and special characters<br/>";
+                    "least eight characters, at least one number and both lower and uppercase letters and special characters";
         }
 
-        if (!Validation.passwordConfirm(password,confirm_password)){
+        else if (!Validation.passwordConfirm(password,confirm_password)){
             Validation_result+="Confirm password does not match";
         }
         return Validation_result;
