@@ -21,9 +21,6 @@ public class home extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String user_name = request.getParameter("user_name");
         String password = request.getParameter("password");
-        System.out.println("user_name: " + user_name);
-        System.out.println("password: " + password);
-
 
         if (Validation.UserLoginValidation(user_name, password)) {
             //getSession to take redirect_url

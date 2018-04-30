@@ -12,6 +12,15 @@
           <element id="directory" name="lib">
             <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
             <element id="library" level="project" name="activation" />
+            <element id="library" level="project" name="jackson-databind-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-core-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-annotations-2.8.0.rc2" />
+            <element id="library" level="project" name="bcprov-ext-jdk15on-159" />
+            <element id="library" level="project" name="android-2.2.1" />
+            <element id="library" level="project" name="mail" />
+            <element id="library" level="project" name="javax.websocket-api-1.0" />
+            <element id="library" level="project" name="java-json" />
+            <element id="library" level="project" name="gson-2.2.2" />
           </element>
         </element>
       </root>
@@ -24,7 +33,18 @@
           <element id="directory" name="classes">
             <element id="module-output" name="SEProject" />
           </element>
-          <element id="directory" name="lib" />
+          <element id="directory" name="lib">
+            <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
+            <element id="library" level="project" name="gson-2.2.2" />
+            <element id="library" level="project" name="java-json" />
+            <element id="library" level="project" name="javax.websocket-api-1.0" />
+            <element id="library" level="project" name="mail" />
+            <element id="library" level="project" name="android-2.2.1" />
+            <element id="library" level="project" name="bcprov-ext-jdk15on-159" />
+            <element id="library" level="project" name="jackson-annotations-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-core-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-databind-2.8.0.rc2" />
+          </element>
         </element>
       </root>
     </artifact>
