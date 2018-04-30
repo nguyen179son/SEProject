@@ -134,7 +134,6 @@ CREATE TABLE `user_info` (
   `profile_picture` varchar(100) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `token` varchar(255) NOT NULL,
   `confirm_code` varchar(30) NOT NULL,
   `confirm` tinyint(1) NOT NULL,
   PRIMARY KEY (`userID`),
