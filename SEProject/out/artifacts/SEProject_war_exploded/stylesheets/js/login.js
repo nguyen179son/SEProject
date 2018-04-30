@@ -3,7 +3,7 @@ $(document).ready(function(){
     $("#login_button").click(function(){
 
         $.ajax({
-            url: "http://localhost:8080/SEProject_war_exploded/home",
+            url: "http://localhost:8080/SEProject_war_exploded/login",
             type: "post",
             data: {
                 user_name: $("#user_name").val(),

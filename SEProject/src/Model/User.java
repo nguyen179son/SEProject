@@ -141,7 +141,9 @@ public class User {
             }//end finally try
         }//end try
     }
-    public static ObjectNode getProfileByEmail(String email) {
+
+
+    public static ObjectNode getProfile(String email) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode1 = mapper.createObjectNode();
         Connection conn = null;
@@ -164,6 +166,8 @@ public class User {
                 objectNode1.put("profile_picture", rs.getString("profile_picture"));
                 objectNode1.put("confirm_code", rs.getString("confirm_code"));
                 objectNode1.put("confirm", rs.getBoolean("confirm"));
+                objectNode1.put("password", rs.getBoolean("password"));
+
             }
 
             stmt.close();
@@ -193,7 +197,7 @@ public class User {
     }
 
 
-    public String getProfileByID(int id) {
+    public String getProfile(int id) {
         Connection conn = null;
         Statement stmt = null;
         JSONArray obj = null;
@@ -232,6 +236,7 @@ public class User {
 
         return obj.toString();
     }
+
 
     public boolean exist(int id) {
         Connection conn = null;

@@ -21,7 +21,7 @@ public class getDetailProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User userModel = new User("", "", "");
         int id = Integer.parseInt(request.getParameter("id"));
-        String result = userModel.getProfileByID(id);
+        String result = userModel.getProfile(id);
         response.setContentType("text/plain");
         response.getWriter().write(result);
 
