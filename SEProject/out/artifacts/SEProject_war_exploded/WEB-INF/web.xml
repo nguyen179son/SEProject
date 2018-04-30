@@ -32,6 +32,17 @@
 
 
     <servlet>
+        <servlet-name>check_confirmation_code</servlet-name>
+        <servlet-class>Controller.ConfirmationCode</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>check_confirmation_code</servlet-name>
+        <url-pattern>/check-confirmation-code</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>getDetailProfile</servlet-name>
         <servlet-class>Controller.getDetailProfile</servlet-class>
     </servlet>

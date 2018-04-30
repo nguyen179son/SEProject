@@ -140,4 +140,56 @@ public class Validation {
     public static boolean passwordConfirm(String password, String confirm_password) {
         return password.equals(confirm_password);
     }
+
+    public static boolean checkConfirmationCode(String email, String confirmationCode){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "SELECT confirm_code from user_info WHERE email = " + "\"" + email + "\"";
+            ResultSet rs = stmt.executeQuery(sql);
+
+
+            if (rs.next()){
+                if(confirmationCode.equals(rs.getString("confirm_code"))) {
+                    stmt.close();
+                    conn.close();
+                    return true;
+                }
+                else {
+                    stmt.close();
+                    conn.close();
+                    return false;
+                }
+            }
+            else {
+                stmt.close();
+                conn.close();
+                return false;
+            }
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return false;
+    }
 }

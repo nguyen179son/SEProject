@@ -281,4 +281,40 @@ public class User {
         return returnValue;
     }
 
+
+    public static void confirmAccount(String email){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "UPDATE user_info SET confirm = true WHERE email = " + "\"" + email + "\"";
+            stmt.executeUpdate(sql);
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+
+    }
+
 }
