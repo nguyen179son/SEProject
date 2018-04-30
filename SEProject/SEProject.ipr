@@ -263,9 +263,51 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="libraryTable">
+    <library name="android-2.2.1">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/android-2.2.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="bcprov-ext-jdk15on-159">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/bcprov-ext-jdk15on-159.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="externalLib">
+      <CLASSES />
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/../../SEServer/externalLib" />
+      </SOURCES>
+    </library>
     <library name="gson-2.2.2">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/gson-2.2.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="jackson-annotations-2.8.0.rc2">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/jackson-annotations-2.8.0.rc2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="jackson-core-2.8.0.rc2">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/jackson-core-2.8.0.rc2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="jackson-databind-2.8.0.rc2">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/jackson-databind-2.8.0.rc2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

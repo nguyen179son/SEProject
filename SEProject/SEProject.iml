@@ -37,5 +37,11 @@
     <orderEntry type="library" name="javax.servlet-3.0" level="project" />
     <orderEntry type="library" name="javax.websocket-api-1.0" level="project" />
     <orderEntry type="library" name="mail" level="project" />
+    <orderEntry type="library" name="android-2.2.1" level="project" />
+    <orderEntry type="library" name="bcprov-ext-jdk15on-159" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.8.0.rc2" level="project" />
+    <orderEntry type="library" name="jackson-core-2.8.0.rc2" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.8.0.rc2" level="project" />
+    <orderEntry type="library" name="externalLib" level="project" />
   </component>
 </module>

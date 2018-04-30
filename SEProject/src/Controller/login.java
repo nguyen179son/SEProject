@@ -27,8 +27,6 @@ public class login extends HttpServlet {
             response.sendRedirect("/SEProject_war_exploded/");
         } else {
             request.setAttribute("error_message", "Wrong email or password");
-            request.setAttribute("user_name", user_name);
-            request.setAttribute("password", password);
             request.getRequestDispatcher("login.jsp").forward(request, response);
 
         }

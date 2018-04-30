@@ -1,5 +1,7 @@
 package Model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jdk.nashorn.api.scripting.JSObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -139,8 +141,59 @@ public class User {
             }//end finally try
         }//end try
     }
+    public static ObjectNode getProfileByEmail(String email) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode1 = mapper.createObjectNode();
+        Connection conn = null;
+        Statement stmt = null;
+        JSONArray obj = null;
+        Convertor convertor = new Convertor();
+        try {
+            conn = DatabaseConnection.getConnection();
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "SELECT * from user_info WHERE email = " + "\"" + email + "\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()){
+                objectNode1.put("userID", rs.getInt("userID"));
+                objectNode1.put("user_name", rs.getString("user_name"));
+                objectNode1.put("email", rs.getString("email"));
+                objectNode1.put("phone_number", rs.getString("phone_number"));
+                objectNode1.put("DOB", rs.getString("DOB"));
+                objectNode1.put("profile_picture", rs.getString("profile_picture"));
+                objectNode1.put("confirm_code", rs.getString("confirm_code"));
+                objectNode1.put("confirm", rs.getBoolean("confirm"));
+            }
 
-    public String getProfile(int id) {
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+
+        return objectNode1;
+    }
+
+
+    public String getProfileByID(int id) {
         Connection conn = null;
         Statement stmt = null;
         JSONArray obj = null;
