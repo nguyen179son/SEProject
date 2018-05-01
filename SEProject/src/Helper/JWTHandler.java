@@ -50,13 +50,13 @@ public class JWTHandler {
                 return Integer.parseInt(claims.getId());
             else return -1;
         }
-        catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-            return -3;
-        }
         catch (SignatureException e){
             e.printStackTrace();
             return -2;
+        }
+        catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+            return -3;
         }
         catch (Exception e){
             e.printStackTrace();

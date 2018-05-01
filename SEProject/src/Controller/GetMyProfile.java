@@ -24,14 +24,20 @@ public class GetMyProfile extends HttpServlet {
         ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
         int userID = JWTHandler.verifyToken(token);
 
-        if (userID < 0) {                                                 //verifying token fails
-            objectNode1.put("verify_token", false);
-            objectNode1.put("verify_value", userID);
-
+        if (userID < 0) {
+            if(userID == -1 || userID == -2) {                              //verifying token fails
+                objectNode1.put("verify_token", false);
+                objectNode1.put("success", true);
+            }
+            else {                                                          //internal error from server
+                objectNode1.put("verify_token", true);
+                objectNode1.put("success", false);
+            }
         }
         else {
             ObjectNode userInfoJson = User.getProfile(userID);              //user_infor
             objectNode1.put("verify_token", true);
+            objectNode1.put("success", true);
             objectNode1.put("userID", userID);
             objectNode1.put("user_name", userInfoJson.get("user_name").textValue());
             objectNode1.put("email", userInfoJson.get("email").textValue());
