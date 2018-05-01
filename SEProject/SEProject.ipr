@@ -355,6 +355,13 @@
       <JAVADOC />
       <SOURCES />
     </library>
+    <library name="jjwt-0.9.0">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/jjwt-0.9.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="mail">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/mail.jar!/" />

@@ -43,6 +43,17 @@
 
 
     <servlet>
+        <servlet-name>get_my_profile</servlet-name>
+        <servlet-class>Controller.GetMyProfile</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get_my_profile</servlet-name>
+        <url-pattern>/get-my-profile</url-pattern>
+    </servlet-mapping>
+    
+
+    <servlet>
         <servlet-name>getDetailProfile</servlet-name>
         <servlet-class>Controller.getDetailProfile</servlet-class>
     </servlet>

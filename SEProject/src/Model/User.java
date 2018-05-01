@@ -197,7 +197,9 @@ public class User {
     }
 
 
-    public String getProfile(int id) {
+    public static ObjectNode getProfile(int id) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode1 = mapper.createObjectNode();
         Connection conn = null;
         Statement stmt = null;
         JSONArray obj = null;
@@ -207,9 +209,19 @@ public class User {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String sql = "SELECT email, user_name, phone_number, DOB from user_info WHERE userID = " + id;
+            String sql = "SELECT * from user_info WHERE userID = " + id;
             ResultSet rs = stmt.executeQuery(sql);
-            obj = convertor.convertToJSON(rs);
+            if (rs.next()){
+                objectNode1.put("userID", rs.getInt("userID"));
+                objectNode1.put("user_name", rs.getString("user_name"));
+                objectNode1.put("email", rs.getString("email"));
+                objectNode1.put("phone_number", rs.getString("phone_number"));
+                objectNode1.put("DOB", rs.getString("DOB"));
+                objectNode1.put("profile_picture", rs.getString("profile_picture"));
+                objectNode1.put("confirm_code", rs.getString("confirm_code"));
+                objectNode1.put("confirm", rs.getBoolean("confirm"));
+                objectNode1.put("password", rs.getBoolean("password"));
+            }
 
             stmt.close();
             conn.close();
@@ -234,11 +246,11 @@ public class User {
             }//end finally try
         }//end try
 
-        return obj.toString();
+        return objectNode1;
     }
 
 
-    public boolean exist(int id) {
+    public static boolean exist(int id) {
         Connection conn = null;
         Statement stmt = null;
         boolean returnValue = false;

@@ -1,10 +1,13 @@
 package Helper;
 
+import Model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 
+import java.io.UnsupportedEncodingException;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -12,42 +15,52 @@ import java.util.UUID;
 
 public class JWTHandler {
 
-    private static final Key secret = MacProvider.generateKey(SignatureAlgorithm.HS256);
-    private static final byte[] secretBytes = secret.getEncoded();
-    private static final String base64SecretBytes = Base64.getEncoder().encodeToString(secretBytes);
+    private static final String SECRET = "HelloWorld!";
     private static final long DAY = 86400000;   //mili-second
 
 
     public static String generateToken(String id, long length) {
         Date now = new Date();
         Date exp = new Date(System.currentTimeMillis() + (length * DAY)); //day
-
-        String token = Jwts.builder()
-                .setHeaderParam("typ", "JWT")
-                .setId(id)
-                .setExpiration(exp)
-                .claim("CreatedDate", new Date().toString())
-                .claim("Expired Date", exp.toString())
-                .signWith(SignatureAlgorithm.HS256, base64SecretBytes)
-                .compact();
-
-        return token;
+        try {
+            String token = Jwts.builder()
+                    .setHeaderParam("typ", "JWT")
+                    .setId(id)
+                    .setExpiration(exp)
+                    .claim("CreatedDate", new Date().toString())
+                    .signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
+                    .compact();
+            return token;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
 
-    public static void verifyToken(String token) {
+    public static int verifyToken(String token) {
+
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(base64SecretBytes)
-                    .parseClaimsJws(token).getBody();
-            System.out.println("----------------------------");
-            System.out.println("ID: " + claims.getId());
-            System.out.println("CreatedDate: " + claims.get("CreatedDate"));
-            System.out.println("ExpiratedDate: " + claims.get("Expired Date"));
-            System.out.println("Expiration: " + claims.getExpiration());
+                    .setSigningKey(SECRET.getBytes("UTF-8"))
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            if(User.exist(Integer.parseInt(claims.getId())))
+                return Integer.parseInt(claims.getId());
+            else return -1;
+        }
+        catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+            return -3;
+        }
+        catch (SignatureException e){
+            e.printStackTrace();
+            return -2;
         }
         catch (Exception e){
             e.printStackTrace();
+            return -4;
         }
-
     }
 }
