@@ -54,6 +54,17 @@
 
 
     <servlet>
+        <servlet-name>search_friend</servlet-name>
+        <servlet-class>Controller.SearchFriend</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>search_friend</servlet-name>
+        <url-pattern>/search-friend</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>get_friend_list</servlet-name>
         <servlet-class>Controller.GetFriendList</servlet-class>
     </servlet>
