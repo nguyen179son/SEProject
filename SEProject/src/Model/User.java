@@ -1,6 +1,7 @@
 package Model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jdk.nashorn.api.scripting.JSObject;
 import org.json.JSONArray;
@@ -327,6 +328,64 @@ public class User {
             }//end finally try
         }//end try
 
+    }
+
+    public static ObjectNode getFriendList(int id) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode1 = mapper.createObjectNode();
+        ArrayNode arrayNode = mapper.createArrayNode();
+
+        Connection conn = null;
+        Statement stmt = null;
+        JSONArray obj = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
+                    + "WHERE user_info.userID = friend.userID_2 "
+                    + "AND userID_1 = " + id;
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                ObjectNode friendNode = mapper.createObjectNode();
+                friendNode.put("userID", rs.getInt("userID"));
+                friendNode.put("user_name", rs.getString("user_name"));
+                friendNode.put("email", rs.getString("email"));
+                friendNode.put("phone_number", rs.getString("phone_number"));
+                friendNode.put("DOB", rs.getString("DOB"));
+                friendNode.put("profile_picture", rs.getString("profile_picture"));
+                arrayNode.add(friendNode);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return null;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+                return null;
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+                return null;
+            }//end finally try
+        }//end try
+        objectNode1.put("friend_list", arrayNode);
+        return objectNode1;
     }
 
 }

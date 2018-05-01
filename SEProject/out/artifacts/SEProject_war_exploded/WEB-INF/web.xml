@@ -51,6 +51,17 @@
         <servlet-name>get_my_profile</servlet-name>
         <url-pattern>/get-my-profile</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>get_friend_list</servlet-name>
+        <servlet-class>Controller.GetFriendList</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get_friend_list</servlet-name>
+        <url-pattern>/get-friend-list</url-pattern>
+    </servlet-mapping>
     
 
     <servlet>
