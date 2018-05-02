@@ -345,7 +345,8 @@ public class User {
             stmt = conn.createStatement();
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
                     + "WHERE user_info.userID = friend.userID_2 "
-                    + "AND userID_1 = " + id;
+                    + "AND userID_1 = " + id
+                    + " ORDER BY favorite DESC";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 ObjectNode friendNode = mapper.createObjectNode();
@@ -355,6 +356,7 @@ public class User {
                 friendNode.put("phone_number", rs.getString("phone_number"));
                 friendNode.put("DOB", rs.getString("DOB"));
                 friendNode.put("profile_picture", rs.getString("profile_picture"));
+                friendNode.put("favorite", rs.getBoolean("favorite"));
                 arrayNode.add(friendNode);
             }
 
