@@ -1,4 +1,4 @@
-package Controller;
+package Controller.myprofile;
 
 import Helper.JWTHandler;
 import Helper.Validation;
@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "get-friend-list")
-public class GetFriendList extends HttpServlet {
+@WebServlet(name = "get-my-profile")
+public class GetMyProfile extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
@@ -27,7 +27,6 @@ public class GetFriendList extends HttpServlet {
         if (userID < 0) {
             if(userID == -1 || userID == -2) {                              //verifying token fails
                 objectNode1.put("verify_token", false);
-                objectNode1.put("success", true);
             }
             else {                                                          //internal error from server
                 objectNode1.put("verify_token", true);
@@ -35,16 +34,15 @@ public class GetFriendList extends HttpServlet {
             }
         }
         else {
-            objectNode1 = User.getFriendList(userID);
-            if (objectNode1 == null){                                         //internal error from server
-                objectNode1 = mapper.createObjectNode();
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", false);
-            }
-            else {
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", true);
-            }
+            ObjectNode userInfoJson = User.getProfile(userID);              //user_infor
+            objectNode1.put("verify_token", true);
+            objectNode1.put("success", true);
+            objectNode1.put("userID", userID);
+            objectNode1.put("user_name", userInfoJson.get("user_name").textValue());
+            objectNode1.put("email", userInfoJson.get("email").textValue());
+            objectNode1.put("phone_number", userInfoJson.get("phone_number").textValue());
+            objectNode1.put("DOB", userInfoJson.get("DOB").textValue());
+            objectNode1.put("profile_picture", userInfoJson.get("profile_picture").textValue());
         }
 
         PrintWriter wr = response.getWriter();
@@ -53,5 +51,6 @@ public class GetFriendList extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("signup.jsp").forward(request, response);
     }
 }

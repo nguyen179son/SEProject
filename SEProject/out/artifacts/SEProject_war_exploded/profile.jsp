@@ -12,12 +12,7 @@
 </head>
 
 <body>
-<%
-    if (session.getAttribute("userID") == null) {
-        session.setAttribute("returnUrl", request.getAttribute("currentUrl"));
-        response.sendRedirect("/SEProject_war_exploded/home");
-    }
-%>
+
 <div class="wrapper">
 
     <%@include file="sidebar.jsp" %>

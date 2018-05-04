@@ -1,4 +1,4 @@
-package Controller;
+package Controller.registration;
 
 import Helper.Validation;
 import Model.User;

@@ -229,9 +229,11 @@ public class User {
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
+            return null;
         } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
+            return null;
         } finally {
             //finally block used to close resources
             try {
@@ -244,6 +246,7 @@ public class User {
                     conn.close();
             } catch (SQLException se) {
                 se.printStackTrace();
+                return null;
             }//end finally try
         }//end try
 
@@ -405,7 +408,8 @@ public class User {
             stmt = conn.createStatement();
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
                     + "WHERE user_info.userID = friend.userID_2 "
-                    + "AND user_name LIKE \"%" + friend_name +  "%\""
+                    + "AND (user_name LIKE \"%" + friend_name +  "%\" "
+                    + "OR email LIKE \"%" + friend_name + "%\") "
                     + "AND userID_1 = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){

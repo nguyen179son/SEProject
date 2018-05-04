@@ -11,7 +11,7 @@
 
     <servlet>
         <servlet-name>login</servlet-name>
-        <servlet-class>Controller.Login</servlet-class>
+        <servlet-class>Controller.registration.Login</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -22,7 +22,7 @@
 
     <servlet>
         <servlet-name>signup</servlet-name>
-        <servlet-class>Controller.Signup</servlet-class>
+        <servlet-class>Controller.registration.Signup</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -33,7 +33,7 @@
 
     <servlet>
         <servlet-name>check_confirmation_code</servlet-name>
-        <servlet-class>Controller.ConfirmationCode</servlet-class>
+        <servlet-class>Controller.registration.ConfirmationCode</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -44,7 +44,7 @@
 
     <servlet>
         <servlet-name>get_my_profile</servlet-name>
-        <servlet-class>Controller.GetMyProfile</servlet-class>
+        <servlet-class>Controller.myprofile.GetMyProfile</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -55,7 +55,7 @@
 
     <servlet>
         <servlet-name>search_friend</servlet-name>
-        <servlet-class>Controller.SearchFriend</servlet-class>
+        <servlet-class>Controller.friendmanagement.SearchFriend</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -66,33 +66,12 @@
 
     <servlet>
         <servlet-name>get_friend_list</servlet-name>
-        <servlet-class>Controller.GetFriendList</servlet-class>
+        <servlet-class>Controller.friendmanagement.GetFriendList</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>get_friend_list</servlet-name>
         <url-pattern>/get-friend-list</url-pattern>
     </servlet-mapping>
-    
 
-    <servlet>
-        <servlet-name>getDetailProfile</servlet-name>
-        <servlet-class>Controller.getDetailProfile</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>getDetailProfile</servlet-name>
-        <url-pattern>/detail</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>profile</servlet-name>
-        <servlet-class>Controller.profile</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>profile</servlet-name>
-        <url-pattern>/profile</url-pattern>
-    </servlet-mapping>
 </web-app>

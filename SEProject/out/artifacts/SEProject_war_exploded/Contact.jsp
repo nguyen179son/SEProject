@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="wrapper">
-    
+    <%@include file="sidebar.jsp" %>
     <div id="content">
         <div class="col-sm-3" id="left">
             <div class="row" id="left-row">

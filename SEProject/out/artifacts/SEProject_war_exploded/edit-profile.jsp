@@ -15,17 +15,7 @@
 </head>
 
 <body>
-<%
-    if (session.getAttribute("userID") == null) {
-        session.setAttribute("returnUrl", request.getAttribute("currentUrl"));
-        response.sendRedirect("/SEProject_war_exploded/home");
-    }
 
-    if (session.getAttribute("userID") != request.getAttribute("id")) {
-        response.sendRedirect("/SEProject_war_exploded/error");
-    }
-
-%>
 <div class="wrapper">
 
     <%@include file="sidebar.jsp" %>

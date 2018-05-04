@@ -22,7 +22,7 @@
     <form action="home" method="post">
 
         <input type="hidden" name="ReturnUrl" value='${requestScope["javax.servlet.forward.request_uri"]}' />
-        <input type="text" class="form-control" id="user_name" placeholder="User name here" name="user_name" required autofocus
+        <input type="text" class="form-control" id="user_name" placeholder="User name here" name="email" required autofocus
                value="<%=request.getAttribute("user_name")!=null?request.getAttribute("user_name"):""%>"/>
         <br>
 

@@ -6,7 +6,7 @@ $(document).ready(function(){
             url: "http://localhost:8080/SEProject_war_exploded/login",
             type: "post",
             data: {
-                user_name: $("#user_name").val(),
+                email: $("#email").val(),
                 password: $("#password").val()
             },
             success: function (response) {
