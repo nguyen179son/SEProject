@@ -46,6 +46,9 @@ public class JWTHandler {
                     .parseClaimsJws(token)
                     .getBody();
 
+            if (claims.getExpiration().before(new Date()))      //check expiration
+                    return -1;
+
             if(User.exist(Integer.parseInt(claims.getId())))
                 return Integer.parseInt(claims.getId());
             else return -1;
