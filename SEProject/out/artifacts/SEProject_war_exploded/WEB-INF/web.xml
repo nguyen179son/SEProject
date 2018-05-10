@@ -74,4 +74,15 @@
         <url-pattern>/get-friend-list</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>get_friend_profile</servlet-name>
+        <servlet-class>Controller.friendmanagement.GetFriendProfile</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get_friend_profile</servlet-name>
+        <url-pattern>/get-friend-profile</url-pattern>
+    </servlet-mapping>
+
 </web-app>
