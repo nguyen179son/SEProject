@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "get-friend-profile")
-public class GetFriendProfile extends HttpServlet {
+@WebServlet(name = "add-friend-favorite")
+public class AddFavorite extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
@@ -34,20 +34,13 @@ public class GetFriendProfile extends HttpServlet {
             }
         }
         else {
+            objectNode1.put("verify_token", true);
             if (User.checkFriend(userID, friendID)) {
-                objectNode1 = User.getFriendProfile(userID, friendID);
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", true);
-                if(objectNode1 == null){                                       //internal error from server
-                    objectNode1 = mapper.createObjectNode();
-                    objectNode1.put("success", false);
-                }
-            }
-            else {
-                objectNode1.put("verify_token", true);
+                User.addFavorite(userID, friendID);
                 objectNode1.put("success", true);
             }
-
+            else
+                objectNode1.put("success", false);
         }
 
         PrintWriter wr = response.getWriter();
@@ -58,3 +51,6 @@ public class GetFriendProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 }
+
+
+

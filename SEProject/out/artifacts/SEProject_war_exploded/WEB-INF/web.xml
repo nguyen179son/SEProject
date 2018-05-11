@@ -85,4 +85,28 @@
         <url-pattern>/get-friend-profile</url-pattern>
     </servlet-mapping>
 
+
+
+    <servlet>
+        <servlet-name>add_friend_favorite</servlet-name>
+        <servlet-class>Controller.friendmanagement.AddFavorite</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>add_friend_favorite</servlet-name>
+        <url-pattern>/add-friend-favorite</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>remove_friend_favorite</servlet-name>
+        <servlet-class>Controller.friendmanagement.RemoveFavorite</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>remove_friend_favorite</servlet-name>
+        <url-pattern>/remove-friend-favorite</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

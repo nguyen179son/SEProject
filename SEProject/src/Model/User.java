@@ -362,8 +362,6 @@ public class User {
                 arrayNode.add(friendNode);
             }
 
-            stmt.close();
-            conn.close();
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -397,7 +395,6 @@ public class User {
 
         Connection conn = null;
         Statement stmt = null;
-        JSONArray obj = null;
         try {
             conn = DatabaseConnection.getConnection();
             //STEP 4: Execute a query
@@ -420,8 +417,6 @@ public class User {
                 arrayNode.add(friendNode);
             }
 
-            stmt.close();
-            conn.close();
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -451,7 +446,7 @@ public class User {
     public static boolean checkFriend(int userID_1, int userID_2){
         Connection conn = null;
         Statement stmt = null;
-        JSONArray obj = null;
+        boolean returnValue = false;
         try {
             conn = DatabaseConnection.getConnection();
             //STEP 4: Execute a query
@@ -461,16 +456,10 @@ public class User {
                     + "WHERE userID_1 = " + userID_1
                     + " AND userID_2 = " + userID_2;
             ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()){
-                stmt.close();
-                conn.close();
-                return true;
-            }
-            else {
-                stmt.close();
-                conn.close();
-                return false;
-            }
+            if (rs.next())
+                returnValue =  true;
+            else returnValue = false;
+
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -491,7 +480,7 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        return false;
+        return returnValue;
     }
 
     public static ObjectNode getFriendProfile(int userID, int friendID) {
@@ -521,8 +510,6 @@ public class User {
                 objectNode1.put("favorite", rs.getBoolean("favorite"));
             }
 
-            stmt.close();
-            conn.close();
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -548,4 +535,84 @@ public class User {
         return objectNode1;
     }
 
+    public static void addFavorite(int userID, int friendID){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "UPDATE friend "
+                    +"SET favorite = 1 "
+                    + "WHERE userID_1 = ?"
+                    + " AND userID_2 = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userID);
+            pstmt.setInt(2, friendID);
+            pstmt.executeUpdate();
+
+
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+    }
+
+    public static void removeFavorite(int userID, int friendID){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "UPDATE friend "
+                    +"SET favorite = 0 "
+                    + "WHERE userID_1 = ?"
+                    + " AND userID_2 = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userID);
+            pstmt.setInt(2, friendID);
+            pstmt.executeUpdate();
+
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+    }
 }
