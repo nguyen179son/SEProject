@@ -11,10 +11,15 @@
           </element>
           <element id="directory" name="lib">
             <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
-            <element id="library" level="project" name="mail" />
             <element id="library" level="project" name="activation" />
-            <element id="library" level="project" name="java-json" />
+            <element id="library" level="project" name="jackson-databind-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-core-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-annotations-2.8.0.rc2" />
+            <element id="library" level="project" name="bcprov-ext-jdk15on-159" />
+            <element id="library" level="project" name="android-2.2.1" />
+            <element id="library" level="project" name="mail" />
             <element id="library" level="project" name="javax.websocket-api-1.0" />
+            <element id="library" level="project" name="java-json" />
             <element id="library" level="project" name="gson-2.2.2" />
           </element>
         </element>
@@ -29,8 +34,16 @@
             <element id="module-output" name="SEProject" />
           </element>
           <element id="directory" name="lib">
+            <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
+            <element id="library" level="project" name="gson-2.2.2" />
+            <element id="library" level="project" name="java-json" />
             <element id="library" level="project" name="javax.websocket-api-1.0" />
             <element id="library" level="project" name="mail" />
+            <element id="library" level="project" name="android-2.2.1" />
+            <element id="library" level="project" name="bcprov-ext-jdk15on-159" />
+            <element id="library" level="project" name="jackson-annotations-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-core-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-databind-2.8.0.rc2" />
           </element>
         </element>
       </root>
@@ -270,39 +283,95 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="libraryTable">
+    <library name="android-2.2.1">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/android-2.2.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="bcprov-ext-jdk15on-159">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/bcprov-ext-jdk15on-159.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="externalLib">
+      <CLASSES />
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/../../SEServer/externalLib" />
+      </SOURCES>
+    </library>
     <library name="gson-2.2.2">
       <CLASSES>
-        <root url="jar://$USER_HOME$/gson-2.2.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/gson-2.2.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="jackson-annotations-2.8.0.rc2">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/jackson-annotations-2.8.0.rc2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="jackson-core-2.8.0.rc2">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/jackson-core-2.8.0.rc2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="jackson-databind-2.8.0.rc2">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/jackson-databind-2.8.0.rc2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="java-json">
       <CLASSES>
-        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/java-json.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/apache-tomcat-9.0.6/java-json.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/java-json.jar!/" />
       </SOURCES>
     </library>
-    <library name="javax.servlet">
+    <library name="javax.servlet-3.0">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/javax.servlet-3.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="javax.websocket-api-1.0">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/javax.websocket-api-1.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/javax.websocket-api-1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="jjwt-0.9.0">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/jjwt-0.9.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="mail">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/mail.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="mysql-connector-java-5.1.46-bin">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/mysql-connector-java-5.1.46-bin.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

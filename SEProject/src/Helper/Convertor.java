@@ -19,8 +19,7 @@ public class Convertor {
      * @return a JSONArray
      * @throws Exception
      */
-    public static JSONArray convertToJSON(ResultSet resultSet)
-            throws Exception {
+    public static JSONArray convertToJSON(ResultSet resultSet) throws Exception {
         JSONArray jsonArray = new JSONArray();
         while (resultSet.next()) {
             int total_rows = resultSet.getMetaData().getColumnCount();

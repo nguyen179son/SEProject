@@ -49,3 +49,22 @@ label.view-label {
 
     font-weight: normal;
 }
+
+
+#edit-profile {
+    !important;
+    display: flex;
+    justify-content: center;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+.hide {
+    display: none;
+}
+
+#profile {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}

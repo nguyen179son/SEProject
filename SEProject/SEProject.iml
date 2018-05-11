@@ -31,11 +31,18 @@
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - RESTful Web Service" level="application_server_libraries" />
     <orderEntry type="library" name="mysql-connector-java-5.1.46-bin" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
-    <orderEntry type="library" name="mail" level="project" />
     <orderEntry type="library" name="activation" level="project" />
-    <orderEntry type="library" name="java-json" level="project" />
-    <orderEntry type="library" name="javax.servlet" level="project" />
-    <orderEntry type="library" name="javax.websocket-api-1.0" level="project" />
     <orderEntry type="library" name="gson-2.2.2" level="project" />
+    <orderEntry type="library" name="java-json" level="project" />
+    <orderEntry type="library" name="javax.servlet-3.0" level="project" />
+    <orderEntry type="library" name="javax.websocket-api-1.0" level="project" />
+    <orderEntry type="library" name="mail" level="project" />
+    <orderEntry type="library" name="android-2.2.1" level="project" />
+    <orderEntry type="library" name="bcprov-ext-jdk15on-159" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.8.0.rc2" level="project" />
+    <orderEntry type="library" name="jackson-core-2.8.0.rc2" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.8.0.rc2" level="project" />
+    <orderEntry type="library" name="externalLib" level="project" />
+    <orderEntry type="library" name="jjwt-0.9.0" level="project" />
   </component>
 </module>

@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+    <script language="javascript" type="text/javascript">
+        if (!window.localStorage.getItem("token"))
+            window.location = "http://localhost:8080/SEProject_war_exploded/login.jsp";
+    </script>
   <title>Chat</title>
 </head>
 <body style="margin:0;">
 
-<%
-  if (session.getAttribute("user_name") == null) {
-      session.setAttribute("returnUrl","/");
-      response.sendRedirect("/SEProject_war_exploded/home");
-  }
-%>
 
 <textarea title="Chat Log" id="log" readonly
           style="display: block; width: 100%; height: 600px; resize: none; margin: 0; padding: 0; border: 0;"></textarea>

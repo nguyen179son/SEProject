@@ -4,21 +4,25 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+
     <servlet>
-        <servlet-name>home</servlet-name>
-        <servlet-class>Controller.home</servlet-class>
+        <servlet-name>login</servlet-name>
+        <servlet-class>Controller.registration.Login</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>home</servlet-name>
-        <url-pattern>/home</url-pattern>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
-
 
 
     <servlet>
         <servlet-name>signup</servlet-name>
-        <servlet-class>Controller.signup</servlet-class>
+        <servlet-class>Controller.registration.Signup</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -28,22 +32,81 @@
 
 
     <servlet>
-        <servlet-name>getDetailProfile</servlet-name>
-        <servlet-class>Controller.getDetailProfile</servlet-class>
+        <servlet-name>check_confirmation_code</servlet-name>
+        <servlet-class>Controller.registration.ConfirmationCode</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>getDetailProfile</servlet-name>
-        <url-pattern>/detail</url-pattern>
+        <servlet-name>check_confirmation_code</servlet-name>
+        <url-pattern>/check-confirmation-code</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
-        <servlet-name>profile</servlet-name>
-        <servlet-class>Controller.profile</servlet-class>
+        <servlet-name>get_my_profile</servlet-name>
+        <servlet-class>Controller.myprofile.GetMyProfile</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>profile</servlet-name>
-        <url-pattern>/profile</url-pattern>
+        <servlet-name>get_my_profile</servlet-name>
+        <url-pattern>/get-my-profile</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>search_friend</servlet-name>
+        <servlet-class>Controller.friendmanagement.SearchFriend</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>search_friend</servlet-name>
+        <url-pattern>/search-friend</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>get_friend_list</servlet-name>
+        <servlet-class>Controller.friendmanagement.GetFriendList</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get_friend_list</servlet-name>
+        <url-pattern>/get-friend-list</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>get_friend_profile</servlet-name>
+        <servlet-class>Controller.friendmanagement.GetFriendProfile</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get_friend_profile</servlet-name>
+        <url-pattern>/get-friend-profile</url-pattern>
+    </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>add_friend_favorite</servlet-name>
+        <servlet-class>Controller.friendmanagement.AddFavorite</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>add_friend_favorite</servlet-name>
+        <url-pattern>/add-friend-favorite</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>remove_friend_favorite</servlet-name>
+        <servlet-class>Controller.friendmanagement.RemoveFavorite</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>remove_friend_favorite</servlet-name>
+        <url-pattern>/remove-friend-favorite</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
