@@ -44,10 +44,10 @@ UNLOCK TABLES;
 -- Table structure for table `chat_room_detail`
 --
 
-DROP TABLE IF EXISTS `chat_room_detail`;
+DROP TABLE IF EXISTS `message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `chat_room_detail` (
+CREATE TABLE `message` (
   `roomID` int(11) NOT NULL,
   `message` text,
   `from_userID` int(11) NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE `chat_room_detail` (
 -- Dumping data for table `chat_room_detail`
 --
 
-LOCK TABLES `chat_room_detail` WRITE;
+LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `chat_room_detail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `chat_room_detail` ENABLE KEYS */;
 UNLOCK TABLES;
