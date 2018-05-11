@@ -535,7 +535,7 @@ public class User {
         return objectNode1;
     }
 
-    public static void addFavorite(int userID, int friendID){
+    public static boolean addFavorite(int userID, int friendID){
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -557,9 +557,11 @@ public class User {
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
+            return false;
         } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
+            return false;
         } finally {
             //finally block used to close resources
             try {
@@ -573,10 +575,11 @@ public class User {
             } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
+            return false;
         }//end try
     }
 
-    public static void removeFavorite(int userID, int friendID){
+    public static boolean removeFavorite(int userID, int friendID){
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -597,9 +600,11 @@ public class User {
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
+            return false;
         } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
+            return false;
         } finally {
             //finally block used to close resources
             try {
@@ -614,5 +619,52 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
+        return true;
+    }
+
+    public static boolean removeFriend(int userID_1, int userID_2){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM friend "
+                    + "WHERE userID_1 = ?"
+                    + " AND userID_2 = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userID_1);
+            pstmt.setInt(2, userID_2);
+            pstmt.executeUpdate();
+
+            pstmt.setInt(1, userID_2);
+            pstmt.setInt(2, userID_1);
+            pstmt.executeUpdate();
+
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
     }
 }

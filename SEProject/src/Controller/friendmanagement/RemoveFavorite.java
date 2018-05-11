@@ -35,12 +35,11 @@ public class RemoveFavorite extends HttpServlet {
         }
         else {
             objectNode1.put("verify_token", true);
+            objectNode1.put("success", true);
             if (User.checkFriend(userID, friendID)) {
-                User.removeFavorite(userID, friendID);
-                objectNode1.put("success", true);
+                if(!User.removeFavorite(userID, friendID))
+                    objectNode1.put("success", false);          //internal error from server
             }
-            else
-                objectNode1.put("success", false);
         }
 
         PrintWriter wr = response.getWriter();
