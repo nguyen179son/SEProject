@@ -44,14 +44,14 @@ UNLOCK TABLES;
 -- Table structure for table `chat_room_detail`
 --
 
-DROP TABLE IF EXISTS `chat_room_detail`;
+DROP TABLE IF EXISTS `message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `chat_room_detail` (
+CREATE TABLE `message` (
   `roomID` int(11) NOT NULL,
   `message` text,
   `from_userID` int(11) NOT NULL,
-  `sending_time` datetime NOT NULL,
+  `sending_time` timestamp NOT NULL,
   PRIMARY KEY (`roomID`,`from_userID`,`sending_time`),
   CONSTRAINT `chat_room_detail_ibfk_1` FOREIGN KEY (`roomID`, `from_userID`) REFERENCES `chat_room` (`roomID`, `userID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -61,7 +61,7 @@ CREATE TABLE `chat_room_detail` (
 -- Dumping data for table `chat_room_detail`
 --
 
-LOCK TABLES `chat_room_detail` WRITE;
+LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `chat_room_detail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `chat_room_detail` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -134,7 +134,6 @@ CREATE TABLE `user_info` (
   `profile_picture` varchar(100) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `token` varchar(255) NOT NULL,
   `confirm_code` varchar(30) NOT NULL,
   `confirm` tinyint(1) NOT NULL,
   PRIMARY KEY (`userID`),
