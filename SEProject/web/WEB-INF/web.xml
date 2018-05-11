@@ -109,4 +109,15 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>remove_friend</servlet-name>
+        <servlet-class>Controller.friendmanagement.RemoveFriend</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>remove_friend</servlet-name>
+        <url-pattern>/remove-friend</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
