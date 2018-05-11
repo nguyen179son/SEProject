@@ -51,7 +51,7 @@ CREATE TABLE `message` (
   `roomID` int(11) NOT NULL,
   `message` text,
   `from_userID` int(11) NOT NULL,
-  `sending_time` timestamp NOT NULL,
+  `sending_time` datetime NOT NULL,
   PRIMARY KEY (`roomID`,`from_userID`,`sending_time`),
   CONSTRAINT `chat_room_detail_ibfk_1` FOREIGN KEY (`roomID`, `from_userID`) REFERENCES `chat_room` (`roomID`, `userID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
