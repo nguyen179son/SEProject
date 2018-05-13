@@ -77,7 +77,7 @@
 
     <servlet>
         <servlet-name>search_friend</servlet-name>
-        <servlet-class>Controller.friendmanagement.SearchFriend</servlet-class>
+        <servlet-class>Controller.friend.management.SearchFriend</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -88,7 +88,7 @@
 
     <servlet>
         <servlet-name>get_friend_list</servlet-name>
-        <servlet-class>Controller.friendmanagement.GetFriendList</servlet-class>
+        <servlet-class>Controller.friend.management.GetFriendList</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -99,7 +99,7 @@
 
     <servlet>
         <servlet-name>get_friend_profile</servlet-name>
-        <servlet-class>Controller.friendmanagement.GetFriendProfile</servlet-class>
+        <servlet-class>Controller.friend.management.GetFriendProfile</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -111,7 +111,7 @@
 
     <servlet>
         <servlet-name>add_friend_favorite</servlet-name>
-        <servlet-class>Controller.friendmanagement.AddFavorite</servlet-class>
+        <servlet-class>Controller.friend.management.AddFavorite</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -122,7 +122,7 @@
 
     <servlet>
         <servlet-name>remove_friend_favorite</servlet-name>
-        <servlet-class>Controller.friendmanagement.RemoveFavorite</servlet-class>
+        <servlet-class>Controller.friend.management.RemoveFavorite</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -133,7 +133,7 @@
 
     <servlet>
         <servlet-name>remove_friend</servlet-name>
-        <servlet-class>Controller.friendmanagement.RemoveFriend</servlet-class>
+        <servlet-class>Controller.friend.management.RemoveFriend</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -151,6 +151,18 @@
         <servlet-name>verify_token</servlet-name>
         <url-pattern>/verify-token</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>add_friend_request</servlet-name>
+        <servlet-class>Controller.friend.request.AddFriendRequest</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>add_friend_request</servlet-name>
+        <url-pattern>/add-friend-request</url-pattern>
+    </servlet-mapping>
+
 
 
 
