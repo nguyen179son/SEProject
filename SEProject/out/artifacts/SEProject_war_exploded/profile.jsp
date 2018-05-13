@@ -70,7 +70,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-10">
-                <a href="<%="/SEProject_war_exploded/editProfile?id="+request.getAttribute("id")%>" id="edit-profile"
+                <a href="<%="/editProfile?id="+request.getAttribute("id")%>" id="edit-profile"
                    class="<%=session.getAttribute("userID")==request.getAttribute("id")? "btn btn-primary":"hide"%>">Edit</a>
             </div>
         </div>

@@ -6,7 +6,7 @@ $(document).ready(function () {
             var condition = {};
             condition['id'] = id;
             var getInfoAjax = $.ajax({
-                url: "/SEProject_war_exploded/detail",
+                url: "/detail",
                 type: "get",
                 data: condition,
                 success: function (responseText) {

@@ -32,7 +32,7 @@ public class Signup extends HttpServlet {
             objectNode1.put("success", true);
         } else {
             objectNode1.put("success", false);
-            objectNode1.put("message", validation_result);
+            objectNode1.put("error_message", validation_result);
         }
 
         PrintWriter wr = response.getWriter();

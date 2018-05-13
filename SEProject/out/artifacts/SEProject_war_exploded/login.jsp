@@ -22,7 +22,7 @@
     <form action="home" method="post">
 
         <input type="hidden" name="ReturnUrl" value='${requestScope["javax.servlet.forward.request_uri"]}' />
-        <input type="text" class="form-control" id="user_name" placeholder="User name here" name="email" required autofocus
+        <input type="text" class="form-control" id="email" placeholder="User name here" name="email" required autofocus
                value="<%=request.getAttribute("user_name")!=null?request.getAttribute("user_name"):""%>"/>
         <br>
 
@@ -34,7 +34,7 @@
         Wrong email or password
     </div>
     <label class="signup">
-        <a href="/SEProject_war_exploded/signup"> Sign up if you are a new user</a>
+        <a href="/signup"> Sign up if you are a new user</a>
     </label>
 
 </div>
