@@ -54,6 +54,17 @@
 
 
     <servlet>
+        <servlet-name>get_new_password</servlet-name>
+        <servlet-class>Controller.registration.GetNewPassword</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get_new_password</servlet-name>
+        <url-pattern>/get-new-password</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>get_my_profile</servlet-name>
         <servlet-class>Controller.myprofile.GetMyProfile</servlet-class>
     </servlet>

@@ -80,6 +80,28 @@ public class Validation {
         return Validation_result;
     }
 
+    public static String UserGetNewPasswordValidation(String email, String confirm_code, String password, String confirm_password) {
+        String Validation_result = "";
+
+        if (Validation.UniqueEmailValidation(email)){
+            Validation_result+="- Email doesn't exist<br/>";
+        }
+
+        if(!checkConfirmationCode(email, confirm_code)){
+            Validation_result+="- Incorrect Confirmation Code<br/>";
+        }
+
+        if (!Validation.passwordValidation(password)) {
+            Validation_result += "- Password must contain at " +
+                    "least eight characters, at least one number and both lower and uppercase letters and special characters<br/>";
+        }
+
+        if (!Validation.passwordConfirm(password,confirm_password)){
+            Validation_result+="- Confirm password does not match<br/>";
+        }
+        return Validation_result;
+    }
+
     public static boolean UniqueEmailValidation(String email) {
         if (email == null) return false;
         //Connection conn = null;
@@ -136,6 +158,7 @@ public class Validation {
     }
 
     public static boolean passwordValidation(String password) {
+        if (password == null) return false;
         Pattern VALID_PASSWORD = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
         Matcher matcher = VALID_PASSWORD.matcher(password);
         return matcher.find();
@@ -143,13 +166,14 @@ public class Validation {
     }
 
     public static boolean passwordConfirm(String password, String confirm_password) {
+        if(password == null || confirm_password == null) return false;
         return password.equals(confirm_password);
     }
 
     public static boolean checkConfirmationCode(String email, String confirmationCode){
-        if (confirmationCode.equals("")) return false;
+        if (confirmationCode == null) return false;
         ObjectNode user_info = User.getProfile(email);
-        if (email.equals(user_info.get("confirm_code")))
+        if (confirmationCode.equals(user_info.get("confirm_code").textValue()))
             return true;
         else return false;
     }
