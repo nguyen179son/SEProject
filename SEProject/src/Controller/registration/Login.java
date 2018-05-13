@@ -39,10 +39,10 @@ public class Login extends HttpServlet {
             if (userInfoJson.get("confirm").booleanValue()) {
                 objectNode1.put("token", token);
                 objectNode1.put("redirect_url", session.getAttribute("returnUrl") == null || session.getAttribute("returnUrl").toString().equals("") ?
-                        "/SEProject_war_exploded/" : session.getAttribute("returnUrl").toString());
+                        "/" : session.getAttribute("returnUrl").toString());
             }
             else {  //user haven't confirmed yet
-                objectNode1.put("redirect_url", "/SEProject_war_exploded/confirmcode.jsp");
+                objectNode1.put("redirect_url", "/check-confirmation-code");
             }
         }
         else {
@@ -56,6 +56,6 @@ public class Login extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 }
