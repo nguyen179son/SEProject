@@ -668,6 +668,49 @@ public class User {
         return true;
     }
 
+    public static boolean addFriendRequest(int from_userID,int to_userID){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "INSERT INTO friend_request VALUES(?, ?)";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, from_userID);
+            pstmt.setInt(2, to_userID);
+            pstmt.executeUpdate();
+
+
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
+
+
+
     public static boolean updateNewPassword(String email, String password){
         Connection conn = null;
         Statement stmt = null;
