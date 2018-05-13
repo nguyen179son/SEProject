@@ -1,0 +1,83 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    color: white;
+    padding: 14px 20px;
+    margin: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+}
+
+input[type=text], input[type=password] {
+    padding: 12px 20px;
+    width: 40%;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.name, .password {
+    text-align: left;
+    font-style: oblique;
+    font-size: 20px;
+}
+
+.container-fluid {
+    padding: 16px;
+}
+
+.hide {
+    display: none;
+}
+
+
+.show {
+    margin-left: 30%;
+    margin-right: 30%;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+}
+
+.name-input {
+    padding: 12px 20px;
+    width: 40%;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.password-input {
+    padding: 12px 20px;
+    width: 40%;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}

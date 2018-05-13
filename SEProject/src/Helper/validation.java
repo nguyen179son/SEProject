@@ -1,6 +1,8 @@
 package Helper;
 
 import Model.DatabaseConnection;
+import Model.User;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.sql.*;
 import java.util.regex.Matcher;
@@ -56,29 +58,30 @@ public class Validation {
         String Validation_result = "";
 
         if (!Validation.nicknameValidation(nickname)) {
-            Validation_result += "Nickname must have less than 255 characters<br/>";
+            Validation_result += "- Nickname must have less than 255 characters<br/>";
         }
 
-        else if (!Validation.EmailFormValidation(email)) {
-            Validation_result += "Email input has wrong form<br/>";
+        if (!Validation.EmailFormValidation(email)) {
+            Validation_result += "- Email input has wrong form<br/>";
         }
 
-        else if (!Validation.UniqueEmailValidation(email)){
-            Validation_result+="Email already existed";
+        if (!Validation.UniqueEmailValidation(email)){
+            Validation_result+="- Email already existed<br/>";
         }
 
-        else if (!Validation.passwordValidation(password)) {
-            Validation_result += "Password must contain at " +
-                    "least eight characters, at least one number and both lower and uppercase letters and special characters";
+        if (!Validation.passwordValidation(password)) {
+            Validation_result += "- Password must contain at " +
+                    "least eight characters, at least one number and both lower and uppercase letters and special characters<br/>";
         }
 
-        else if (!Validation.passwordConfirm(password,confirm_password)){
-            Validation_result+="Confirm password does not match";
+        if (!Validation.passwordConfirm(password,confirm_password)){
+            Validation_result+="- Confirm password does not match<br/>";
         }
         return Validation_result;
     }
 
     public static boolean UniqueEmailValidation(String email) {
+        if (email == null) return false;
         //Connection conn = null;
         Connection conn = null;
         Statement stmt = null;
@@ -121,10 +124,12 @@ public class Validation {
     }
 
     public static boolean nicknameValidation(String nickname) {
+        if (nickname == null) return false;
         return nickname.length() < 255 && nickname.length() != 0;
     }
 
     public static boolean EmailFormValidation(String email) {
+        if (email == null) return false;
         Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile( "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
@@ -142,54 +147,10 @@ public class Validation {
     }
 
     public static boolean checkConfirmationCode(String email, String confirmationCode){
-        Connection conn = null;
-        Statement stmt = null;
-        try {
-            conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
-            stmt = conn.createStatement();
-            String sql = "SELECT confirm_code from user_info WHERE email = " + "\"" + email + "\"";
-            ResultSet rs = stmt.executeQuery(sql);
-
-
-            if (rs.next()){
-                if(confirmationCode.equals(rs.getString("confirm_code"))) {
-                    stmt.close();
-                    conn.close();
-                    return true;
-                }
-                else {
-                    stmt.close();
-                    conn.close();
-                    return false;
-                }
-            }
-            else {
-                stmt.close();
-                conn.close();
-                return false;
-            }
-        } catch (SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
-            //finally block used to close resources
-            try {
-                if (stmt != null)
-                    stmt.close();
-            } catch (SQLException se2) {
-            }// nothing we can do
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }//end finally try
-        }//end try
-        return false;
+        if (confirmationCode.equals("")) return false;
+        ObjectNode user_info = User.getProfile(email);
+        if (email.equals(user_info.get("confirm_code")))
+            return true;
+        else return false;
     }
 }

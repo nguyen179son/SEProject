@@ -47,3 +47,9 @@ p>navbar-text{
 	text-align: center;
 	font-size: 15px;
 }
+
+#error {
+	text-align: center;
+	margin-right: 30%;
+	margin-left: 30%;
+}

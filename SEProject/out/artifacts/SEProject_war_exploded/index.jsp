@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-    <script language="javascript" type="text/javascript">
-        if (!window.localStorage.getItem("token"))
-            window.location = "http://localhost:8080/SEProject_war_exploded/login.jsp";
-    </script>
+  <script language="javascript" type="text/javascript">
+      if (!window.localStorage.getItem("token"))
+          window.location = "http://localhost:8080/login";
+  </script>
   <title>Chat</title>
 </head>
 <body style="margin:0;">
@@ -16,7 +16,7 @@
 <input title="Chat Input" id="input" type="text" style="display: block; width: 100%; border-width: 1px 0 1px 0;"
        autofocus/>
 <script>
-    var ws = new WebSocket("ws://localhost:8080/SEProject_war_exploded/ws");
+    var ws = new WebSocket("ws://localhost:8080/ws");
     ws.onmessage = function (event) {
         console.log(event.data);
         document.getElementById("log").value += "[" + timestamp() + "] " + event.data + "\n";

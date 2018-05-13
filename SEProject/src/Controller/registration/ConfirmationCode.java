@@ -41,6 +41,9 @@ public class ConfirmationCode extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("signup.jsp").forward(request, response);
+        String email = request.getParameter("email");
+        request.setAttribute("email", email);
+        System.out.println(email);
+        request.getRequestDispatcher("confirmcode.jsp").forward(request, response);
     }
 }
