@@ -575,8 +575,8 @@ public class User {
             } catch (SQLException se) {
                 se.printStackTrace();
             }//end finally try
-            return false;
         }//end try
+        return true;
     }
 
     public static boolean removeFavorite(int userID, int friendID){
@@ -642,6 +642,49 @@ public class User {
             pstmt.setInt(1, userID_2);
             pstmt.setInt(2, userID_1);
             pstmt.executeUpdate();
+
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
+
+    public static boolean updateNewPassword(String email, String password){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql = "UPDATE user_info "
+                    +"SET password = ?"
+                    + "WHERE email = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, password);
+            pstmt.setString(2, email);
+            pstmt.executeUpdate();
+
 
         } catch (SQLException se) {
             //Handle errors for JDBC
