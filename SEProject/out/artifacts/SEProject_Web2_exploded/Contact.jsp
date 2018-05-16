@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
     <link rel="stylesheet" href="./stylesheets/css/Contact.css">
+    <script src="stylesheets/js/contact.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -18,23 +19,16 @@
             <div class="row" id="left-row">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="  search-query form-control" placeholder="Conversation"/>
-                        <button class="btn btn-danger" type="button">
+                        <input type="text" class="  search-query form-control" placeholder="Search friends" id="search_friend_name"/>
+                        <button class="btn btn-danger" type="button" id="searchFriends">
                             <span class=" glyphicon glyphicon-search"></span>
                         </button>
                     </div>
                 </div>
-                <div class="dropdown all_conversation">
-                    <label class="dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown"
-                           aria-haspopup="true">
-                        <i class="fa fa-weixin" aria-hidden="true"></i>
-                        All Contacts
-                    </label>
-                </div>
                 <div class="member_list" id="member">
 
-                    <ul class="list-unstyled">
-                        <li class="left clearfix">
+                    <ul class="list-unstyled" id="listFriend">
+                        <li class="left clearfix" data-id="abc">
                      <span class="chat-img pull-left">
                      <img src="./image/profile.png"
                           alt="User Avatar" class="img-circle">

@@ -52,5 +52,6 @@ public class GetFriendList extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("Contact.jsp").forward(request, response);
     }
 }

@@ -60,7 +60,7 @@ i, span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
+    background: #f88d99;
     color: #fff;
     transition: all 0.3s;
 }
@@ -111,7 +111,7 @@ i, span {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: #f88d99;
 }
 
 #sidebar .sidebar-header strong {
@@ -121,7 +121,6 @@ i, span {
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul li a {
@@ -139,7 +138,7 @@ i, span {
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #f05a6b;
 }
 
 
