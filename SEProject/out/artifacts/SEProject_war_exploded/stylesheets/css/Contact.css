@@ -207,10 +207,15 @@
 }
 
 #member {
-    height: 84%;
+    height: 92%;
 }
 
 #content {
     padding-top: 0;
     padding-bottom: 0;
+}
+
+#member {
+    border-top: outset;
+    border-right: outset;
 }
