@@ -23,16 +23,17 @@
 
         <input type="hidden" name="ReturnUrl" value='${requestScope["javax.servlet.forward.request_uri"]}' />
         <input type="text" class="form-control" id="email" placeholder="User name here" name="email" required autofocus
-               value="<%=request.getAttribute("user_name")!=null?request.getAttribute("user_name"):""%>"/>
+               />
         <br>
 
         <input type="password" class="form-control" id="password" placeholder="Your password here" name="password" required
-               value="<%=request.getAttribute("password")!=null?request.getAttribute("password"):""%>"/> <br>
+        /> <br>
         <input type="button" id="login_button" class="btn btn-primary" name="Login" value="Log in"/> <br>
     </form>
-    <div id="message" class=<%= request.getAttribute("error_message") != null ? "show" : "hide"%>>
+    <div id="message" hidden>
         Wrong email or password
     </div>
+    <a href="/get-new-password" id="forgot-password" class="btn btn-light" name="forget-password"> Forgot password?</a> <br>
     <label class="signup">
         <a href="/signup"> Sign up if you are a new user</a>
     </label>
