@@ -1,5 +1,5 @@
 $.ajax({
-    url: "http://localhost:8080/verify-token",
+    url: "/verify-token",
     async:false,
     type: "post",
     data: {
@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     $("body").on("click", "#signupButton", function () {
         $.ajax({
-            url: "http://localhost:8080/signup",
+            url: "/signup",
             type: "post",
             data: {
                 email: $("#email").val(),
@@ -30,7 +30,7 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 if (response["success"]) {
-                    window.location = "http://localhost:8080"
+                    window.location = "/"
                 }
                 else {
                     $("#error").show();

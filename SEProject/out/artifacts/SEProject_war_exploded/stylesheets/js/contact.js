@@ -1,5 +1,5 @@
 $.ajax({
-    url: "http://localhost:8080/verify-token",
+    url: "/verify-token",
     async: false,
     type: "post",
     data: {
