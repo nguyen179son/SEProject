@@ -1,5 +1,5 @@
 $.ajax({
-    url: "http://localhost:8080/verify-token",
+    url: "/verify-token",
     async:false,
     type: "post",
     data: {
@@ -20,7 +20,7 @@ $(document).ready(function () {
 
     $("body").on("click", "#login_button", function () {
         $.ajax({
-            url: "http://localhost:8080/login",
+            url: "/login",
             type: "post",
             data: {
                 email: $("#email").val(),
