@@ -1,5 +1,5 @@
 $.ajax({
-    url: "http://localhost:8080/verify-token",
+    url: "/verify-token",
     async:false,
     type: "post",
     data: {
@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     $("body").on("click", "#reset-password", function () {
         $.ajax({
-            url: "http://localhost:8080/get-new-password",
+            url: "/get-new-password",
             type: "post",
             data: {
                 email: $("#email").val(),
@@ -29,7 +29,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response["success"]) {
-                    window.location = "http://localhost:8080/login"
+                    window.location = "/login"
                 }
                 else {
                     $("#error").show();
@@ -45,7 +45,7 @@ $(document).ready(function () {
     $("body").on("click", "#send-confirm-code", function (e) {
         e.preventDefault();
         $.ajax({
-            url: "http://localhost:8080/send-confirm-email",
+            url: "/send-confirm-email",
             type: "post",
             data: {
                 email: $("#email").val()

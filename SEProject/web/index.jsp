@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script language="javascript" type="text/javascript">
       if (!window.localStorage.getItem("token"))
-          window.location = "http://localhost:8080/login";
+          window.location = "/login";
   </script>
   <title>Chat</title>
 </head>
