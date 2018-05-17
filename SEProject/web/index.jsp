@@ -16,7 +16,7 @@
 <input title="Chat Input" id="input" type="text" style="display: block; width: 100%; border-width: 1px 0 1px 0;"
        autofocus/>
 <script>
-    var ws = new WebSocket("ws://http://loclhost:8080/ws");
+    var ws = new WebSocket("ws://localhost:8080/ws");
     ws.onmessage = function (event) {
         console.log(event.data);
         document.getElementById("log").value += "[" + timestamp() + "] " + event.data + "\n";
