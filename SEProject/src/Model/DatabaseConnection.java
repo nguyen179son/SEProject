@@ -9,9 +9,9 @@ public class DatabaseConnection {
         Connection conn = null;
         try {
             // db parameters
-            String url       = "jdbc:mysql://localhost:3306/SEProject?useSSL=false";
-            String user      = "root";
-            String password  = "root";
+            String url       = "jdbc:mysql://bccccg4or-mysql.services.clever-cloud.com:3306/bccccg4or?useSSL=false";
+            String user      = "uusa0ackteh1ws7o";
+            String password  = "XwizjSmS5NJJtewzG2Y";
 
             // create a connection to the database
             conn = DriverManager.getConnection(url, user, password);

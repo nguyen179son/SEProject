@@ -140,6 +140,49 @@
 
 
         </div>
+        <div class="col-sm-9 message_section" >
+            <div class="row" id="profile-div" hidden>
+                <input type="text" hidden id="id">
+                <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile">
+
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <label class="control-label col-sm-4">Name: </label>
+                    <div class="col-sm-4 div-info">
+                        <label class="view-label prevent-break-line" id="nick-name">abc</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <label class="control-label col-sm-4">Email: </label>
+                    <div class="col-sm-4 div-info">
+                        <label class="view-label prevent-break-line" id="email">abc </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <label class="control-label col-sm-4">Phone Number: </label>
+                    <div class="col-sm-4 div-info">
+                        <label class="view-label prevent-break-line" id="phone">abc </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <label class="control-label col-sm-4">Date of Birth: </label>
+                    <div class="col-sm-4 div-info">
+                        <label class="view-label prevent-break-line" id="dob">abc </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10" id="div-delete-friend">
+                        <a href="#" class="btn btn-danger" id="delete-friend">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!--message_section-->
     </div>
 </div>
 </body>

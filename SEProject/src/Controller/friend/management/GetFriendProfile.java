@@ -42,6 +42,10 @@ public class GetFriendProfile extends HttpServlet {
                     objectNode1 = mapper.createObjectNode();
                     objectNode1.put("success", false);
                 }
+                else {
+                    objectNode1.put("verify_token", true);
+                    objectNode1.put("success", true);
+                }
             }
             else {
                 objectNode1.put("verify_token", true);
