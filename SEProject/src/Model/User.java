@@ -173,17 +173,15 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES user_info READ LOCAL");
             String sql = "SELECT * from user_info WHERE email = " + "\"" + email + "\"";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()){
                 objectNode1 = User.toUserJSON(rs);
             }
 
-            stmt.close();
-            conn.close();
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -217,17 +215,15 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES user_info READ LOCAL");
             String sql = "SELECT * from user_info WHERE userID = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()){
                 objectNode1 = User.toUserJSON(rs);
             }
 
-            stmt.close();
-            conn.close();
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -261,9 +257,8 @@ public class User {
         boolean returnValue = false;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES user_info READ LOCAL");
             String sql;
             sql = "SELECT * FROM user_info WHERE userID = " + id;
             ResultSet rs = stmt.executeQuery(sql);
@@ -272,9 +267,7 @@ public class User {
             } else {
                 returnValue = true;
             }
-            rs.close();
-            stmt.close();
-            conn.close();
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -303,13 +296,12 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLE user_info READ LOCAL");
             String sql = "UPDATE user_info SET confirm = true WHERE email = " + "\"" + email + "\"";
             stmt.executeUpdate(sql);
 
-            stmt.close();
-            conn.close();
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -342,9 +334,8 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES user_info READ LOCAL, friend READ LOCAL");
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
                     + "WHERE user_info.userID = friend.userID_2 "
                     + "AND userID_1 = " + id
@@ -361,7 +352,7 @@ public class User {
                 friendNode.put("favorite", rs.getBoolean("favorite"));
                 arrayNode.add(friendNode);
             }
-
+        stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -397,9 +388,8 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES user_info READ LOCAL, friend READ LOCAL");
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
                     + "WHERE user_info.userID = friend.userID_2 "
                     + "AND (user_name LIKE \"%" + friend_name +  "%\" "
@@ -407,7 +397,7 @@ public class User {
                     + "AND userID_1 = " + id
                     + " ORDER BY favorite DESC";
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()){
+            while (rs.next()) {
                 ObjectNode friendNode = mapper.createObjectNode();
                 friendNode.put("userID", rs.getInt("userID"));
                 friendNode.put("user_name", rs.getString("user_name"));
@@ -419,6 +409,7 @@ public class User {
                 arrayNode.add(friendNode);
             }
 
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -451,9 +442,8 @@ public class User {
         boolean returnValue = false;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES friend READ LOCAL");
             String sql = "SELECT * FROM friend "
                     + "WHERE userID_1 = " + userID_1
                     + " AND userID_2 = " + userID_2;
@@ -461,7 +451,7 @@ public class User {
             if (rs.next())
                 returnValue =  true;
             else returnValue = false;
-
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -493,9 +483,8 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES user_info READ LOCAL, friend READ LOCAL");
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
                     + "WHERE user_info.userID = friend.userID_2 "
                     + "AND userID_1 = " + userID
@@ -511,7 +500,7 @@ public class User {
                 objectNode1.put("profile_picture", rs.getString("profile_picture"));
                 objectNode1.put("favorite", rs.getBoolean("favorite"));
             }
-
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -542,9 +531,8 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES friend WRITE");
             String sql = "UPDATE friend "
                     +"SET favorite = 1 "
                     + "WHERE userID_1 = ?"
@@ -555,7 +543,7 @@ public class User {
             pstmt.setInt(2, friendID);
             pstmt.executeUpdate();
 
-
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -586,9 +574,8 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES friend WRITE");
             String sql = "UPDATE friend "
                     +"SET favorite = 0 "
                     + "WHERE userID_1 = ?"
@@ -598,7 +585,7 @@ public class User {
             pstmt.setInt(1, userID);
             pstmt.setInt(2, friendID);
             pstmt.executeUpdate();
-
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -629,22 +616,19 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES friend WRITE");
             String sql = "DELETE FROM friend "
-                    + "WHERE userID_1 = ?"
-                    + " AND userID_2 = ?";
+                    + "WHERE (userID_1 = ? AND userID_2 = ?) OR (userID_1 = ? AND userID_2 = ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, userID_1);
             pstmt.setInt(2, userID_2);
+            pstmt.setInt(3, userID_2);
+            pstmt.setInt(4, userID_1);
             pstmt.executeUpdate();
 
-            pstmt.setInt(1, userID_2);
-            pstmt.setInt(2, userID_1);
-            pstmt.executeUpdate();
-
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -675,9 +659,8 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES friend_request WRITE");
             String sql = "INSERT INTO friend_request VALUES(?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -685,7 +668,7 @@ public class User {
             pstmt.setInt(2, to_userID);
             pstmt.executeUpdate();
 
-
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -716,9 +699,8 @@ public class User {
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES user_info WRITE");
             String sql = "UPDATE user_info "
                     +"SET password = ?"
                     + "WHERE email = ?";
@@ -728,7 +710,7 @@ public class User {
             pstmt.setString(2, email);
             pstmt.executeUpdate();
 
-
+            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
