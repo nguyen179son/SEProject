@@ -21,6 +21,7 @@ $(document).ready(function () {
         var contact = {};
 
         contact.listContact = function () {
+            $('#pleaseWaitDialog').modal();
             $.ajax({
                 url: "/get-friend-list",
                 type: "post",
@@ -71,9 +72,13 @@ $(document).ready(function () {
                             });
 
                             $("#listFriend").html(htmlText);
+                            $('#pleaseWaitDialog').modal('hide');
+
                         }
                         else {
                             alert("INTERNAL ERROR");
+                            $('#pleaseWaitDialog').modal('hide');
+
                         }
                     }
                     else {
@@ -81,7 +86,6 @@ $(document).ready(function () {
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Error");
                 }
 
             })
@@ -97,19 +101,12 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     if (response["verify_token"]) {
-                        if (response["success"]) {
-                            contact.listContact();
-                        }
-                        else {
-                            alert("INTERNAL ERROR");
-                        }
                     }
                     else {
                         window.location = "/login";
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Error");
                 }
 
             })
@@ -117,6 +114,8 @@ $(document).ready(function () {
         };
 
         contact.searchFriends = function () {
+            $('#pleaseWaitDialog').modal();
+
             $.ajax({
                 url: "/search-friend",
                 type: "post",
@@ -170,9 +169,13 @@ $(document).ready(function () {
                             });
 
                             $("#listFriend").html(htmlText);
+                            $('#pleaseWaitDialog').modal('hide');
+
                         }
                         else {
                             alert("INTERNAL ERROR");
+                            $('#pleaseWaitDialog').modal('hide');
+
                         }
                     }
                     else {
@@ -180,13 +183,13 @@ $(document).ready(function () {
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Error");
                 }
 
             });
         };
 
         contact.getFriendProfile = function (id) {
+            $('#pleaseWaitDialog').modal();
             $.ajax({
                 url: "/get-friend-profile",
                 type: "post",
@@ -201,21 +204,57 @@ $(document).ready(function () {
                             $("#profile-div").show();
                             $("#nick-name").html(response["user_name"]);
                             $("#email").html(response["email"]);
-                            $("#phone").html(response["phone_number"]==null?"":response["phone_number"]);
-                            $("#dob").html(response["DOB"]==null?"":response["DOB"]);
+                            $("#phone").html(response["phone_number"] == null ? "" : response["phone_number"]);
+                            $("#dob").html(response["DOB"] == null ? "" : response["DOB"]);
+                            $("#delete-friend").data("record-id", id);
+                            $('#pleaseWaitDialog').modal('hide');
                         }
                         else {
                             alert("INTERNAL ERROR");
+                            $('#pleaseWaitDialog').modal('hide');
                         }
                     } else {
                         window.location = "/login";
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Error");
                 }
             });
         };
+
+        contact.deleteFriend = function (id, $modalDiv) {
+            $('#pleaseWaitDialog').modal();
+            $.ajax({
+                url: "/remove-friend",
+                type: "post",
+                data: {
+                    token: window.localStorage.getItem("token"),
+                    friend_id: id
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response["verify_token"]) {
+                        if (response["success"]) {
+                            contact.listContact();
+                            $modalDiv.modal('hide').removeClass('loading');
+                            $("#profile-div").hide();
+                        }
+                        else {
+                            alert("INTERNAL ERROR");
+                        }
+                        $('#pleaseWaitDialog').modal('hide');
+
+                    } else {
+                        window.location = "/login";
+                        $('#pleaseWaitDialog').modal('hide');
+
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        };
+
         return contact;
     }(window.jQuery, window, document));
 
@@ -223,16 +262,44 @@ $(document).ready(function () {
         $("body").onload = Contact.listContact();
         $("body").on("click", ".favorite", function (e) {
             e.preventDefault();
-            Contact.addFavorite($(this).data("id"), $(this).data("favorite"));
+            e.stopPropagation();
+            var favorite = $(this).data("favorite");
+            var id = $(this).data("id");
+            if (favorite == 0) {
+                $(this).html("<i class=\"fa fa-star\" style=\"color: yellow;\"></i>");
+                $(this).data("favorite", 1)
+            }
+
+            else {
+                $(this).html("<i class=\"fa fa-star\"></i>");
+                $(this).data("favorite", 0)
+            }
+            Contact.addFavorite(id, favorite);
         });
 
         $("body").on("click", "#searchFriends", function () {
             Contact.searchFriends();
-        })
+        });
 
-        $("body").on("click", ".contact-box", function () {
+        $("body").on("click", ".contact-box", function (e) {
             Contact.getFriendProfile($(this).data("id"));
-        })
+            e.stopPropagation();
+        });
 
+        $('#confirm-delete').on('click', '.btn-ok', function(e) {
+            var $modalDiv = $(e.delegateTarget);
+            var id = $(this).data('recordId');
+            // $.ajax({url: '/api/record/' + id, type: 'DELETE'})
+            // $.post('/api/record/' + id).then()
+            Contact.deleteFriend(id, $modalDiv);
+            setTimeout(function() {
+                $modalDiv.modal('hide').removeClass('loading');
+            }, 1000)
+        });
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            var data = $(e.relatedTarget).data();
+            $('.title', this).text(data.recordTitle);
+            $('.btn-ok', this).data('recordId', data.recordId);
+        });
     });
 });
