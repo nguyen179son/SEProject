@@ -34,8 +34,6 @@ $(document).ready(function () {
                         window.localStorage.setItem("token", response["token"]);
                         window.location = response["redirect_url"];
                     }
-
-                    window.location = response["redirect_url"] + "?email=" + $("#email").val();
                 }
                 else {
                     $("#message").show();
