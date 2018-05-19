@@ -175,7 +175,15 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>remove_friend_request</servlet-name>
+        <servlet-class>Controller.friend.request.RemoveFriendRequest</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>remove_friend_request</servlet-name>
+        <url-pattern>/remove-friend-request</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

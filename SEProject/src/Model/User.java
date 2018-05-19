@@ -656,12 +656,16 @@ public class User {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
             stmt.execute("LOCK TABLES friend_request WRITE");
-            String sql = "SELECT * FROM friend_request WHERE from_userID = ? AND to_userID = ?";
+            String sql = "SELECT * FROM friend_request WHERE (from_userID = ? AND to_userID = ?) " +
+                    "OR (from_userID = ? AND to_userID = ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            //check if to_userID already sent request to from_userID
+            //check sending request condition
             pstmt.setInt(1, to_userID);
             pstmt.setInt(2, from_userID);
+            pstmt.setInt(3, from_userID);
+            pstmt.setInt(4, to_userID);
+
             ResultSet rs = pstmt.executeQuery();
             if(rs.next())
                 returnValue = true;
@@ -799,5 +803,46 @@ public class User {
         }//end try
         objectNode1.put("request_list", arrayNode);
         return objectNode1;
+    }
+
+    public static boolean removeFriendRequest(int userID, int friendID){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES friend_request WRITE");
+            String sql = "DELETE FROM friend_request "
+                    + "WHERE from_userID = ?"
+                    + " AND to_userID = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userID);
+            pstmt.setInt(2, friendID);
+            pstmt.executeUpdate();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                stmt.execute("UNLOCK TABLES");
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
     }
 }
