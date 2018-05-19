@@ -845,4 +845,66 @@ public class User {
         }//end try
         return true;
     }
+
+    public static boolean acceptFriendRequest(int userID, int friendID){
+        Connection conn = null;
+        Statement stmt = null;
+        boolean returnValue = false;
+        try {
+            conn = DatabaseConnection.getConnection();
+            conn.setAutoCommit(false);
+            stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES friend_request WRITE, friend WRITE");
+            String sql = "DELETE FROM friend_request "
+                    + "WHERE from_userID = ?"
+                    + " AND to_userID = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userID);
+            pstmt.setInt(2, friendID);
+            if(pstmt.executeUpdate() != 0){                 //no rows affected
+                sql = "INSERT INTO friend VALUES(?, ?, ?), (?, ?, ?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, userID);
+                pstmt.setInt(2, friendID);
+                pstmt.setInt(3, 0);
+                pstmt.setInt(4, friendID);
+                pstmt.setInt(5, userID);
+                pstmt.setInt(6, 0);
+                pstmt.executeUpdate();
+            }
+            conn.commit();
+            returnValue = true;
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            try{
+                conn.rollback();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            se.printStackTrace();
+            returnValue = false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            returnValue = false;
+        } finally {
+            //finally block used to close resources
+            try {
+                stmt.execute("UNLOCK TABLES");
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return returnValue;
+    }
+
 }
