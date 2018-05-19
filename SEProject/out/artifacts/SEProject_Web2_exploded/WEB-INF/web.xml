@@ -186,4 +186,16 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>accept_friend_request</servlet-name>
+        <servlet-class>Controller.friend.request.AcceptFriendRequest</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>accept_friend_request</servlet-name>
+        <url-pattern>/accept-friend-request</url-pattern>
+    </servlet-mapping>
+
+
+
 </web-app>
