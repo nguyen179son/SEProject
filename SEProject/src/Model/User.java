@@ -661,11 +661,18 @@ public class User {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
             stmt.execute("LOCK TABLES friend_request WRITE");
-            String sql = "INSERT INTO friend_request VALUES(?, ?)";
+            String sql = "INSERT INTO friend_request VALUES(?, ?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
+            //get currentTime
+            java.util.Date dt = new java.util.Date();
+            java.text.SimpleDateFormat sdf =
+                    new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentTime = sdf.format(dt);
+
             pstmt.setInt(1, from_userID);
             pstmt.setInt(2, to_userID);
+            pstmt.setString(3, currentTime);
             pstmt.executeUpdate();
 
             stmt.execute("UNLOCK TABLES");
@@ -734,5 +741,58 @@ public class User {
             }//end finally try
         }//end try
         return true;
+    }
+
+    public static ObjectNode getRequestList(int id) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode1 = mapper.createObjectNode();
+        ArrayNode arrayNode = mapper.createArrayNode();
+
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES friend_request READ LOCAL, user_info READ LOCAL");
+            String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email , timestamp FROM user_info, friend_request "
+                    + "WHERE user_info.userID = friend_request.to_userID "
+                    + "AND friend_request.from_userID = " + id
+                    + " ORDER BY timestamp DESC";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                ObjectNode friendNode = mapper.createObjectNode();
+                friendNode.put("userID", rs.getInt("userID"));
+                friendNode.put("user_name", rs.getString("user_name"));
+                friendNode.put("email", rs.getString("email"));
+                friendNode.put("phone_number", rs.getString("phone_number"));
+                friendNode.put("DOB", rs.getString("DOB"));
+                friendNode.put("profile_picture", rs.getString("profile_picture"));
+                arrayNode.add(friendNode);
+            }
+            stmt.execute("UNLOCK TABLES");
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return null;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        objectNode1.put("request_list", arrayNode);
+        return objectNode1;
     }
 }

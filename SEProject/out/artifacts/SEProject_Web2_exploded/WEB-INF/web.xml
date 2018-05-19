@@ -164,6 +164,18 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>get_request_list</servlet-name>
+        <servlet-class>Controller.friend.request.GetRequestList</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get_request_list</servlet-name>
+        <url-pattern>/get-request-list</url-pattern>
+    </servlet-mapping>
+
+
+
 
 
 </web-app>
