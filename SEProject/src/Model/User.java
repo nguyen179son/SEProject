@@ -656,12 +656,16 @@ public class User {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
             stmt.execute("LOCK TABLES friend_request WRITE");
-            String sql = "SELECT * FROM friend_request WHERE from_userID = ? AND to_userID = ?";
+            String sql = "SELECT * FROM friend_request WHERE (from_userID = ? AND to_userID = ?) " +
+                    "OR (from_userID = ? AND to_userID = ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            //check if to_userID already sent request to from_userID
+            //check sending request condition
             pstmt.setInt(1, to_userID);
             pstmt.setInt(2, from_userID);
+            pstmt.setInt(3, from_userID);
+            pstmt.setInt(4, to_userID);
+
             ResultSet rs = pstmt.executeQuery();
             if(rs.next())
                 returnValue = true;
