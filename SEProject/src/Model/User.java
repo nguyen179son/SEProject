@@ -180,8 +180,6 @@ public class User {
             if (rs.next()){
                 objectNode1 = User.toUserJSON(rs);
             }
-
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -193,6 +191,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -222,8 +221,6 @@ public class User {
             if (rs.next()){
                 objectNode1 = User.toUserJSON(rs);
             }
-
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -235,6 +232,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -267,7 +265,6 @@ public class User {
             } else {
                 returnValue = true;
             }
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -277,6 +274,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -300,8 +298,6 @@ public class User {
             stmt.execute("LOCK TABLE user_info READ LOCAL");
             String sql = "UPDATE user_info SET confirm = true WHERE email = " + "\"" + email + "\"";
             stmt.executeUpdate(sql);
-
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -311,6 +307,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -352,7 +349,6 @@ public class User {
                 friendNode.put("favorite", rs.getBoolean("favorite"));
                 arrayNode.add(friendNode);
             }
-        stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -364,6 +360,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -408,8 +405,6 @@ public class User {
                 friendNode.put("favorite", rs.getBoolean("favorite"));
                 arrayNode.add(friendNode);
             }
-
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -421,6 +416,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -451,7 +447,6 @@ public class User {
             if (rs.next())
                 returnValue =  true;
             else returnValue = false;
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -461,6 +456,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -500,7 +496,6 @@ public class User {
                 objectNode1.put("profile_picture", rs.getString("profile_picture"));
                 objectNode1.put("favorite", rs.getBoolean("favorite"));
             }
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -512,6 +507,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -542,8 +538,6 @@ public class User {
             pstmt.setInt(1, userID);
             pstmt.setInt(2, friendID);
             pstmt.executeUpdate();
-
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -555,6 +549,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -585,7 +580,6 @@ public class User {
             pstmt.setInt(1, userID);
             pstmt.setInt(2, friendID);
             pstmt.executeUpdate();
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -597,6 +591,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -627,8 +622,6 @@ public class User {
             pstmt.setInt(3, userID_2);
             pstmt.setInt(4, userID_1);
             pstmt.executeUpdate();
-
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -640,6 +633,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -657,36 +651,48 @@ public class User {
     public static boolean addFriendRequest(int from_userID,int to_userID){
         Connection conn = null;
         Statement stmt = null;
+        boolean returnValue = false;
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
             stmt.execute("LOCK TABLES friend_request WRITE");
-            String sql = "INSERT INTO friend_request VALUES(?, ?, ?)";
-
+            String sql = "SELECT * FROM friend_request WHERE from_userID = ? AND to_userID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            //get currentTime
-            java.util.Date dt = new java.util.Date();
-            java.text.SimpleDateFormat sdf =
-                    new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String currentTime = sdf.format(dt);
 
-            pstmt.setInt(1, from_userID);
-            pstmt.setInt(2, to_userID);
-            pstmt.setString(3, currentTime);
-            pstmt.executeUpdate();
+            //check if to_userID already sent request to from_userID
+            pstmt.setInt(1, to_userID);
+            pstmt.setInt(2, from_userID);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next())
+                returnValue = true;
+            else{
+                sql = "INSERT INTO friend_request VALUES(?, ?, ?)";
+                pstmt = conn.prepareStatement(sql);
+                //get currentTime
+                java.util.Date dt = new java.util.Date();
+                java.text.SimpleDateFormat sdf =
+                        new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String currentTime = sdf.format(dt);
 
-            stmt.execute("UNLOCK TABLES");
+                pstmt.setInt(1, from_userID);
+                pstmt.setInt(2, to_userID);
+                pstmt.setString(3, currentTime);
+                pstmt.executeUpdate();
+            }
+
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-            return false;
+            returnValue = false;
         } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-            return false;
+            returnValue = false;
         } finally {
+
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -698,7 +704,7 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        return true;
+        return returnValue;
     }
 
     public static boolean updateNewPassword(String email, String password){
@@ -716,8 +722,6 @@ public class User {
             pstmt.setString(1, password);
             pstmt.setString(2, email);
             pstmt.executeUpdate();
-
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -729,6 +733,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -769,7 +774,6 @@ public class User {
                 friendNode.put("profile_picture", rs.getString("profile_picture"));
                 arrayNode.add(friendNode);
             }
-            stmt.execute("UNLOCK TABLES");
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -781,6 +785,7 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
+                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
