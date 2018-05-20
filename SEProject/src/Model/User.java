@@ -907,4 +907,98 @@ public class User {
         return returnValue;
     }
 
+    public static ObjectNode searchUser(int id, String user_name) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode returnNode = mapper.createObjectNode();
+        ArrayNode userArrayNode = mapper.createArrayNode();
+
+        Connection conn = null;
+        Statement stmt = null;
+        boolean flag = false;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            stmt.execute("LOCK TABLES user_info READ LOCAL, friend READ LOCAL, friend_request READ LOCAL");
+            //Select all users
+            String sql = "SELECT userID, user_name, email, phone_number, DOB, profile_picture FROM user_info "
+                    + "WHERE userID != " + id
+                    + " AND (user_name LIKE \"%" + user_name +  "%\" "
+                    + "OR email LIKE \"%" + user_name + "%\") ";
+            PreparedStatement pstmt;
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                ObjectNode userNode = mapper.createObjectNode();
+                userNode.put("userID", rs.getInt("userID"));
+                userNode.put("user_name", rs.getString("user_name"));
+                userNode.put("email", rs.getString("email"));
+                userNode.put("phone_number", rs.getString("phone_number"));
+                userNode.put("DOB", rs.getString("DOB"));
+                userNode.put("profile_picture", rs.getString("profile_picture"));
+
+                flag = false;
+                //check friend_condition
+                sql = "Select userID_1 FROM friend WHERE userID_1 = ? AND userID_2 = ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, id);
+                pstmt.setInt(2, rs.getInt("userID"));
+                if(pstmt.executeQuery().next()) {
+                    userNode.put("relationship_code", 1);                 //friend
+                    flag = true;
+                }
+
+                if(!flag){                                                               //check sending request
+                    sql = "Select * FROM friend_request WHERE from_userID = ? AND to_userID = ?";
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setInt(1, id);
+                    pstmt.setInt(2, rs.getInt("userID"));
+                    if(pstmt.executeQuery().next()) {
+                        userNode.put("relationship_code", 2);                  //sending request
+                        flag = true;
+                    }
+                }
+
+                if(!flag){                                                               //check receive request
+                    sql = "Select * FROM friend_request WHERE from_userID = ? AND to_userID = ?";
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setInt(1, rs.getInt("userID"));
+                    pstmt.setInt(2, id);
+                    if(pstmt.executeQuery().next()) {
+                        userNode.put("relationship_code", 3);                  //receive request
+                        flag = true;
+                    }
+                }
+
+                if(!flag)
+                    userNode.put("relationship_code", 0);                 //no relationship
+
+                userArrayNode.add(userNode);
+            }
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return null;
+        } finally {
+            //finally block used to close resources
+            try {
+                stmt.execute("UNLOCK TABLES");
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        returnNode.put("user_list", userArrayNode);
+        return returnNode;
+    }
+
 }
