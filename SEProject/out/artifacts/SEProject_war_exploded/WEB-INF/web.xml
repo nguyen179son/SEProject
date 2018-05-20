@@ -197,5 +197,16 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>search-user</servlet-name>
+        <servlet-class>Controller.friend.request.SearchUser</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>search-user</servlet-name>
+        <url-pattern>/search-user</url-pattern>
+    </servlet-mapping>
+
+
 
 </web-app>
