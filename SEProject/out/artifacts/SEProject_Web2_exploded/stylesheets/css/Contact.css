@@ -94,6 +94,8 @@
 
 .member_list .contact_sec {
     margin-top: 3px;
+    overflow: hidden;
+    max-width: 92%;
 }
 
 .member_list li {
@@ -249,7 +251,9 @@
 
 #member {
     height: 92%;
+    overflow: hidden;
 }
+
 
 #content {
     padding-top: 0;
@@ -276,4 +280,9 @@
 
 .div-info {
     padding-bottom: 1%;
+}
+
+
+#listFriend {
+    box-sizing: content-box; /* So the width will be 100% + 17px */
 }

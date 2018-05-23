@@ -11,8 +11,8 @@
     <script data-require="bootstrap@*" data-semver="3.1.1"
             src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
-    <link rel="stylesheet" href="./stylesheets/css/Contact.css">
-    <script src="stylesheets/js/contact.js"></script>
+    <link rel="stylesheet" href="./stylesheets/css/Request.css">
+    <script src="stylesheets/js/Request.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -22,14 +22,14 @@
             <div class="row" id="left-row">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="  search-query form-control" placeholder="Search friends"
-                               id="search_friend_name"/>
-                        <button class="btn btn-danger" type="button" id="searchFriends">
+                        <input type="text" class="  search-query form-control" placeholder="Search Users"
+                               id="search_user_name"/>
+                        <button class="btn btn-danger" type="button" id="searchUsers">
                             <span class=" glyphicon glyphicon-search"></span>
                         </button>
                     </div>
                 </div>
-                <div class="member_list" id="member">
+                <div class="member_list" id="member" style="overflow-x: auto">
 
                     <ul class="list-unstyled" id="listFriend">
                     </ul>
@@ -72,14 +72,6 @@
                     <label class="control-label col-sm-4">Date of Birth: </label>
                     <div class="col-sm-4 div-info">
                         <label class="view-label prevent-break-line" id="dob">abc </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-10" id="div-delete-friend">
-                        <button class="btn btn-danger" id="delete-friend" data-record-id="0"
-                                data-record-title="Delete Friend" data-toggle="modal" data-target="#confirm-delete">
-                            Delete
-                        </button>
                     </div>
                 </div>
             </div>
