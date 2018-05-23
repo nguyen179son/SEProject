@@ -254,7 +254,6 @@
     overflow: hidden;
 }
 
-
 #content {
     padding-top: 0;
     padding-bottom: 0;
@@ -281,7 +280,6 @@
 .div-info {
     padding-bottom: 1%;
 }
-
 
 #listFriend {
     box-sizing: content-box; /* So the width will be 100% + 17px */
