@@ -18,7 +18,7 @@
 <div class="wrapper">
     <%@include file="sidebar.jsp" %>
     <div id="content">
-        <div class="col-sm-3" id="left">
+        <div class="col-sm-4" id="left">
             <div class="row" id="left-row">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
@@ -38,7 +38,7 @@
 
 
         </div>
-        <div class="col-sm-9 message_section">
+        <div class="col-sm-8 message_section">
             <div class="row" id="profile-div" hidden>
                 <input type="text" hidden id="id">
                 <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile">

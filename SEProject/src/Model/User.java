@@ -682,6 +682,7 @@ public class User {
                 pstmt.setInt(2, to_userID);
                 pstmt.setString(3, currentTime);
                 pstmt.executeUpdate();
+                returnValue = true;
             }
 
         } catch (SQLException se) {
@@ -764,8 +765,8 @@ public class User {
             stmt = conn.createStatement();
             stmt.execute("LOCK TABLES friend_request READ LOCAL, user_info READ LOCAL");
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email , timestamp FROM user_info, friend_request "
-                    + "WHERE user_info.userID = friend_request.to_userID "
-                    + "AND friend_request.from_userID = " + id
+                    + "WHERE user_info.userID = friend_request.from_userID "
+                    + "AND friend_request.to_userID = " + id
                     + " ORDER BY timestamp DESC";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
@@ -860,8 +861,8 @@ public class User {
                     + " AND to_userID = ?";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, userID);
-            pstmt.setInt(2, friendID);
+            pstmt.setInt(1, friendID);
+            pstmt.setInt(2, userID);
             if(pstmt.executeUpdate() != 0){                 //no rows affected
                 sql = "INSERT INTO friend VALUES(?, ?, ?), (?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);
