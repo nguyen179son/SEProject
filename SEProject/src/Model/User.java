@@ -174,7 +174,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES user_info READ LOCAL");
             String sql = "SELECT * from user_info WHERE email = " + "\"" + email + "\"";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()){
@@ -191,7 +190,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -215,7 +213,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES user_info READ LOCAL");
             String sql = "SELECT * from user_info WHERE userID = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()){
@@ -232,7 +229,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -256,10 +252,10 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES user_info READ LOCAL");
             String sql;
             sql = "SELECT * FROM user_info WHERE userID = " + id;
             ResultSet rs = stmt.executeQuery(sql);
+
             if (!rs.next()) {
                 returnValue = false;
             } else {
@@ -274,7 +270,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -295,7 +290,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLE user_info READ LOCAL");
             String sql = "UPDATE user_info SET confirm = true WHERE email = " + "\"" + email + "\"";
             stmt.executeUpdate(sql);
         } catch (SQLException se) {
@@ -307,7 +301,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -332,7 +325,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES user_info READ LOCAL, friend READ LOCAL");
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
                     + "WHERE user_info.userID = friend.userID_2 "
                     + "AND userID_1 = " + id
@@ -360,7 +352,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -386,7 +377,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES user_info READ LOCAL, friend READ LOCAL");
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
                     + "WHERE user_info.userID = friend.userID_2 "
                     + "AND (user_name LIKE \"%" + friend_name +  "%\" "
@@ -416,7 +406,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -439,7 +428,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES friend READ LOCAL");
             String sql = "SELECT * FROM friend "
                     + "WHERE userID_1 = " + userID_1
                     + " AND userID_2 = " + userID_2;
@@ -456,7 +444,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -480,7 +467,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES user_info READ LOCAL, friend READ LOCAL");
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
                     + "WHERE user_info.userID = friend.userID_2 "
                     + "AND userID_1 = " + userID
@@ -507,7 +493,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -528,7 +513,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES friend WRITE");
             String sql = "UPDATE friend "
                     +"SET favorite = 1 "
                     + "WHERE userID_1 = ?"
@@ -549,7 +533,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -570,7 +553,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES friend WRITE");
             String sql = "UPDATE friend "
                     +"SET favorite = 0 "
                     + "WHERE userID_1 = ?"
@@ -591,7 +573,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -612,7 +593,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES friend WRITE");
             String sql = "DELETE FROM friend "
                     + "WHERE (userID_1 = ? AND userID_2 = ?) OR (userID_1 = ? AND userID_2 = ?)";
 
@@ -633,7 +613,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -655,7 +634,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES friend_request WRITE");
             String sql = "SELECT * FROM friend_request WHERE (from_userID = ? AND to_userID = ?) " +
                     "OR (from_userID = ? AND to_userID = ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -697,7 +675,6 @@ public class User {
 
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -718,7 +695,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES user_info WRITE");
             String sql = "UPDATE user_info "
                     +"SET password = ?"
                     + "WHERE email = ?";
@@ -738,7 +714,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -763,7 +738,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES friend_request READ LOCAL, user_info READ LOCAL");
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email , timestamp FROM user_info, friend_request "
                     + "WHERE user_info.userID = friend_request.from_userID "
                     + "AND friend_request.to_userID = " + id
@@ -790,7 +764,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -812,7 +785,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES friend_request WRITE");
             String sql = "DELETE FROM friend_request "
                     + "WHERE from_userID = ?"
                     + " AND to_userID = ?";
@@ -832,7 +804,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -855,7 +826,6 @@ public class User {
             conn = DatabaseConnection.getConnection();
             conn.setAutoCommit(false);
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES friend_request WRITE, friend WRITE");
             String sql = "DELETE FROM friend_request "
                     + "WHERE from_userID = ?"
                     + " AND to_userID = ?";
@@ -893,7 +863,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
@@ -919,7 +888,6 @@ public class User {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            stmt.execute("LOCK TABLES user_info READ LOCAL, friend READ LOCAL, friend_request READ LOCAL");
             //Select all users
             String sql = "SELECT userID, user_name, email, phone_number, DOB, profile_picture FROM user_info "
                     + "WHERE userID != " + id
@@ -986,7 +954,6 @@ public class User {
         } finally {
             //finally block used to close resources
             try {
-                stmt.execute("UNLOCK TABLES");
                 if (stmt != null)
                     stmt.close();
             } catch (SQLException se2) {
