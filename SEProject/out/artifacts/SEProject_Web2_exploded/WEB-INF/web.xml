@@ -187,6 +187,17 @@
 
 
     <servlet>
+        <servlet-name>deny_friend_request</servlet-name>
+        <servlet-class>Controller.friend.request.DenyFriendRequest</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>deny_friend_request</servlet-name>
+        <url-pattern>/deny-friend-request</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>accept_friend_request</servlet-name>
         <servlet-class>Controller.friend.request.AcceptFriendRequest</servlet-class>
     </servlet>
@@ -208,5 +219,14 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>get_chat_room_list</servlet-name>
+        <servlet-class>Controller.chatroom.GetChatRoomList</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get_chat_room_list</servlet-name>
+        <url-pattern>/get-chat-room-list</url-pattern>
+    </servlet-mapping>
 
 </web-app>
