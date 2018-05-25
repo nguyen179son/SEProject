@@ -284,3 +284,9 @@
 #listFriend {
     box-sizing: content-box; /* So the width will be 100% + 17px */
 }
+
+#deleteRequestDropdown {
+    all: unset;
+}
+
+

@@ -44,7 +44,7 @@ $(document).ready(function () {
                                     "                                    <strong class=\"pull-right\" >\n" +
                                     "<button  class='btn btn-primary accept' style='padding: 2px 3px; margin-right: 2px' data-id=\"" + friend['userID'] + "\">" +
                                     "                                       accept </button>" +
-                                    "<button  class='btn btn-danger delete' style='padding: 2px 3px'  data-toggle=\"modal\" data-target=\"#confirm-delete\" data-id=\"" + friend['userID'] + "\">" +
+                                    "<button  class='btn btn-danger deny' style='padding: 2px 3px'  data-toggle=\"modal\" data-target=\"#confirm-delete\" data-id=\"" + friend['userID'] + "\">" +
                                     "                                       delete </button>" +
                                     " </strong>\n" +
                                     "                                </div>\n" +
@@ -106,11 +106,10 @@ $(document).ready(function () {
 
         };
 
-        request.deleteRequest = function (id) {
-            $('#pleaseWaitDialog').modal();
+        request.denyRequest = function (id) {
 
             $.ajax({
-                url: "remove-friend-request",
+                url: "deny-friend-request",
                 type: "post",
                 data: {
                     token: window.localStorage.getItem("token"),
@@ -119,16 +118,12 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response["verify_token"]) {
                         if (response["success"]) {
-                            request.searchUsers(typeof $("#saveName").val() == undefined ? "" : $("#saveName").val());
-                            $('#pleaseWaitDialog').modal('hide');
 
                         }
-                        $('#pleaseWaitDialog').modal('hide');
 
                     }
                     else {
                         window.location = "/login";
-                        $('#pleaseWaitDialog').modal('hide');
 
                     }
                 },
@@ -140,7 +135,6 @@ $(document).ready(function () {
         };
 
         request.sendRequest = function (id) {
-            $('#pleaseWaitDialog').modal();
             $.ajax({
                 url: "add-friend-request",
                 type: "post",
@@ -151,16 +145,37 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response["verify_token"]) {
                         if (response["success"]) {
-                            request.searchUsers(typeof $("#saveName").val() == undefined ? "" : $("#saveName").val());
-                            $('#pleaseWaitDialog').modal('hide');
+
                         }
-                        else
-                            $('#pleaseWaitDialog').modal('hide');
+                    }
+                    else {
+                        window.location = "/login";
+
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+
+            })
+        };
+
+        request.deleteRequest = function (id) {
+            $.ajax({
+                url: "remove-friend-request",
+                type: "post",
+                data: {
+                    token: window.localStorage.getItem("token"),
+                    friend_id: id
+                },
+                success: function (response) {
+                    if (response["verify_token"]) {
+                        if (response["success"]) {
+
+                        }
 
                     }
                     else {
                         window.location = "/login";
-                        $('#pleaseWaitDialog').modal('hide');
 
                     }
                 },
@@ -234,8 +249,14 @@ $(document).ready(function () {
                                             "                            <div class=\"chat-body clearfix\">\n" +
                                             "                                <div class=\"header_sec\">\n" +
                                             "                                    <strong class=\"primary-font\">" + friend['user_name'] + "</strong>\n" +
-                                            "                                    <strong class=\"pull-right\" >\n" + "<a href='#' class=''  data-favorite='1' data-id=\"" + friend['userID'] + "\">" +
-                                            "                                        <i class=\"fa fa-location-arrow\" ></i></a></strong>\n" +
+                                            "                                    <strong class=\"pull-right\" >\n" + "<button type=\"button\" class=\"dropdown-toggle deleteRequestDropdown\" data-toggle=\"dropdown\"  aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+                                            "    <i class=\"fa fa-location-arrow\" ></i>\n" +
+                                            "</button>\n" +
+                                            "<div class=\"dropdown-menu\">\n" +
+
+
+                                            "    <a class=\"dropdown-item deleteRequest\" data-id=\"" + friend['userID'] + "\" href=\"#\">Action</a>\n" +
+                                            "</div></strong>\n" +
                                             "                                </div>\n" +
                                             "                                <div class=\"contact_sec\">\n" +
                                             "                                    <strong class=\"primary-font\">" + friend['email'] + "</strong>\n" +
@@ -254,7 +275,7 @@ $(document).ready(function () {
                                             "                                <div class=\"header_sec\">\n" +
                                             "                                    <strong class=\"primary-font\">" + friend['user_name'] + "</strong>\n" +
                                             "                                    <strong class=\"pull-right\" >\n" + "<a href='#' class='accept' data-id=\"" + friend['userID'] + "\">" +
-                                            "                                        <i class=\"fa fa-check\" style=\"color: green;\"></i></a>" + "<a href='#' class='delete' data-id=\"" + friend['userID'] + "\">" +
+                                            "                                        <i class=\"fa fa-check\" style=\"color: green;\"></i></a>" + "<a href='#' class='deny' data-id=\"" + friend['userID'] + "\">" +
                                             "                                        <i class=\"fa fa-times-circle\" style=\"color: red;\"></i></a>" + " </strong>\n" +
                                             "                                </div>\n" +
                                             "                                <div class=\"contact_sec\">\n" +
@@ -339,19 +360,45 @@ $(document).ready(function () {
 
 
         $("body").on("click", ".accept", function (e) {
+
+            e.preventDefault();
             e.stopPropagation();
+            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: yellow;\"></i>");
+            $(this).attr('class', 'sendRequest');
             Request.acceptRequest($(this).data("id"))
         });
 
-        $("body").on("click", ".delete", function (e) {
+        $("body").on("click", ".deny", function (e) {
+            e.preventDefault();
             e.stopPropagation();
-            Request.deleteRequest($(this).data("id"))
+            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: yellow;\"></i>");
+            $(this).attr('class', 'sendRequest');
+            Request.denyRequest($(this).data("id"));
         });
         $("body").on("click", ".sendRequest", function (e) {
+            e.preventDefault();
             e.stopPropagation();
-            Request.sendRequest($(this).data("id"))
+            $(this).replaceWith("<button type=\"button\" class=\"dropdown-toggle deleteRequestDropdown\" data-toggle=\"dropdown\"  aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+                "    <i class=\"fa fa-location-arrow\" ></i>\n" +
+                "</button>\n" +
+                "<div class=\"dropdown-menu\">\n" +
+                "    <a class=\"dropdown-item deleteRequest\" data-id=\"" + friend['userID'] + "href=\"#\">Action</a>\n" +
+                "</div></strong>\n");
+            $(this).attr('class', '');
+            Request.sendRequest($(this).data("id"));
         });
 
+        $("body").on("click", ".deleteRequest", function (e) {
+            e.stopPropagation();
+            var id = $(this).data('id');
+            $("button[data-id=id]").replaceWith("<a href='#' class='sendRequest'  data-favorite='1' data-id=\"" + friend['userID'] + "\">" +
+                "                                        <i class=\"fa fa-user-plus\" style=\"color: yellow;\"></i></a>");
+           Request.deleteRequest(id);
+        });
+
+        $("body").on("click",".deleteRequestDropdown",function (e) {
+            e.stopPropagation();
+        })
 
     });
 });
