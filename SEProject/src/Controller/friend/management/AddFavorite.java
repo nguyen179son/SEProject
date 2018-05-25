@@ -36,10 +36,9 @@ public class AddFavorite extends HttpServlet {
         else {
             objectNode1.put("verify_token", true);
             objectNode1.put("success", true);
-            if (User.checkFriend(userID, friendID)) {
-                if(!User.addFavorite(userID, friendID))
-                    objectNode1.put("success", false);          //internal error from server
-            }
+            if(!User.addFavorite(userID, friendID))
+                objectNode1.put("success", false);          //internal error from server
+
         }
 
         PrintWriter wr = response.getWriter();

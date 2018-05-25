@@ -36,10 +36,8 @@ public class RemoveFriend extends HttpServlet {
         else {
             objectNode1.put("verify_token", true);
             objectNode1.put("success", true);
-            if (User.checkFriend(userID, friendID)) {
-                if(!User.removeFriend(userID, friendID))                    //internal error from server
-                    objectNode1.put("success", false);
-            }
+            if(!User.removeFriend(userID, friendID))                    //internal error from server
+                objectNode1.put("success", false);
         }
 
         PrintWriter wr = response.getWriter();

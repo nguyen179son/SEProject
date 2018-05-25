@@ -328,7 +328,7 @@ public class User {
             String sql = "SELECT userID, user_name, phone_number, DOB, profile_picture, email, favorite FROM user_info, friend "
                     + "WHERE user_info.userID = friend.userID_2 "
                     + "AND userID_1 = " + id
-                    + " ORDER BY favorite DESC";
+                    + " ORDER BY favorite DESC, user_name";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 ObjectNode friendNode = mapper.createObjectNode();
@@ -382,7 +382,7 @@ public class User {
                     + "AND (user_name LIKE \"%" + friend_name +  "%\" "
                     + "OR email LIKE \"%" + friend_name + "%\") "
                     + "AND userID_1 = " + id
-                    + " ORDER BY favorite DESC";
+                    + " ORDER BY favorite DESC, user_name";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 ObjectNode friendNode = mapper.createObjectNode();
@@ -892,7 +892,7 @@ public class User {
             String sql = "SELECT userID, user_name, email, phone_number, DOB, profile_picture FROM user_info "
                     + "WHERE userID != " + id
                     + " AND (user_name LIKE \"%" + user_name +  "%\" "
-                    + "OR email LIKE \"%" + user_name + "%\") ";
+                    + "OR email LIKE \"%" + user_name + "%\") ORDER BY user_name";
             PreparedStatement pstmt;
             ResultSet rs = stmt.executeQuery(sql);
 
