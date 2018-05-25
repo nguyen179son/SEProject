@@ -34,24 +34,17 @@ public class GetFriendProfile extends HttpServlet {
             }
         }
         else {
-            if (User.checkFriend(userID, friendID)) {
-                objectNode1 = User.getFriendProfile(userID, friendID);
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", true);
-                if(objectNode1 == null){                                       //internal error from server
-                    objectNode1 = mapper.createObjectNode();
-                    objectNode1.put("success", false);
-                }
-                else {
-                    objectNode1.put("verify_token", true);
-                    objectNode1.put("success", true);
-                }
+            objectNode1 = User.getFriendProfile(userID, friendID);
+            objectNode1.put("verify_token", true);
+            objectNode1.put("success", true);
+            if(objectNode1 == null){                                       //internal error from server
+                objectNode1 = mapper.createObjectNode();
+                objectNode1.put("success", false);
             }
             else {
                 objectNode1.put("verify_token", true);
                 objectNode1.put("success", true);
             }
-
         }
 
         PrintWriter wr = response.getWriter();
