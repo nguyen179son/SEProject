@@ -49,9 +49,7 @@ public class JWTHandler {
             if (claims.getExpiration().before(new Date()))      //check expiration
                     return -1;
 
-            if(User.exist(Integer.parseInt(claims.getId())))
-                return Integer.parseInt(claims.getId());
-            else return -1;
+            return Integer.parseInt(claims.getId());
         }
         catch (SignatureException e){
             e.printStackTrace();
