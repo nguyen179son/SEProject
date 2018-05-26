@@ -229,4 +229,15 @@
         <url-pattern>/get-chat-room-list</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>search_chat_room</servlet-name>
+        <servlet-class>Controller.chatroom.SearchChatRoom</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>search_chat_room</servlet-name>
+        <url-pattern>/search-chat-room</url-pattern>
+    </servlet-mapping>
+
 </web-app>

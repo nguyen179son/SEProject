@@ -15,11 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "get-chat-room-list")
-public class GetChatRoomList extends HttpServlet {
+@WebServlet(name = "search-chat-room")
+public class SearchChatRoom extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
+        String searchKey = request.getParameter("search_key");
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
@@ -35,7 +36,7 @@ public class GetChatRoomList extends HttpServlet {
             }
         }
         else {
-            objectNode1 = ChatRoom.getChatRoomList(userID);
+            objectNode1 = ChatRoom.searchChatRoom(userID, searchKey);
             if (objectNode1 == null){                                         //internal error from server
                 objectNode1 = mapper.createObjectNode();
                 objectNode1.put("verify_token", true);
@@ -56,3 +57,4 @@ public class GetChatRoomList extends HttpServlet {
         //request.getRequestDispatcher("Contact.jsp").forward(request, response);
     }
 }
+
