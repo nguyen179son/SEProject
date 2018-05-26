@@ -215,7 +215,7 @@ $(document).ready(function () {
                                             "                                <div class=\"header_sec\">\n" +
                                             "                                    <strong class=\"primary-font\">" + friend['user_name'] + "</strong>\n" +
                                             "                                    <strong class=\"pull-right\" >\n" + "<a href='#' class='sendRequest'  data-favorite='1' data-id=\"" + friend['userID'] + "\">" +
-                                            "                                        <i class=\"fa fa-user-plus\" style=\"color: yellow;\"></i></a></strong>\n" +
+                                            "                                        <i class=\"fa fa-user-plus\" style=\"color: #f05a6b;\"></i></a></strong>\n" +
                                             "                                </div>\n" +
                                             "                                <div class=\"contact_sec\">\n" +
                                             "                                    <strong class=\"primary-font\">" + friend['email'] + "</strong>\n" +
@@ -249,14 +249,16 @@ $(document).ready(function () {
                                             "                            <div class=\"chat-body clearfix\">\n" +
                                             "                                <div class=\"header_sec\">\n" +
                                             "                                    <strong class=\"primary-font\">" + friend['user_name'] + "</strong>\n" +
-                                            "                                    <strong class=\"pull-right\" >\n" + "<button type=\"button\" class=\"dropdown-toggle deleteRequestDropdown\" data-toggle=\"dropdown\"  aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+                                            "                                    <strong class=\"pull-right\" >\n" +
+                                            "<div class='btn-group' data-id=\""+friend["userID"]+"\" ><button type=\"button\" class=\"dropdown-toggle deleteRequestDropdown\" " +
+                                            "data-toggle=\"dropdown\"  aria-haspopup=\"true\" aria-expanded=\"false\" data-id=\"" + friend["userID"] + "\">\n" +
                                             "    <i class=\"fa fa-location-arrow\" ></i>\n" +
                                             "</button>\n" +
-                                            "<div class=\"dropdown-menu\">\n" +
+                                            "<div class=\"dropdown-menu\" data-id=\"" + friend["userID"] + "\">\n" +
 
 
-                                            "    <a class=\"dropdown-item deleteRequest\" data-id=\"" + friend['userID'] + "\" href=\"#\">Action</a>\n" +
-                                            "</div></strong>\n" +
+                                            "    <a class=\"dropdown-item deleteRequest\" data-id=\"" + friend['userID'] + "\" href=\"#\">Delete Request</a>\n" +
+                                            "</div></div></strong>\n" +
                                             "                                </div>\n" +
                                             "                                <div class=\"contact_sec\">\n" +
                                             "                                    <strong class=\"primary-font\">" + friend['email'] + "</strong>\n" +
@@ -363,7 +365,7 @@ $(document).ready(function () {
 
             e.preventDefault();
             e.stopPropagation();
-            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: yellow;\"></i>");
+            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: #f05a6b;\"></i>");
             $(this).attr('class', 'sendRequest');
             Request.acceptRequest($(this).data("id"))
         });
@@ -371,34 +373,43 @@ $(document).ready(function () {
         $("body").on("click", ".deny", function (e) {
             e.preventDefault();
             e.stopPropagation();
-            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: yellow;\"></i>");
+            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: #f05a6b;\"></i>");
             $(this).attr('class', 'sendRequest');
             Request.denyRequest($(this).data("id"));
         });
         $("body").on("click", ".sendRequest", function (e) {
+            var id = $(this).data('id');
             e.preventDefault();
             e.stopPropagation();
-            $(this).replaceWith("<button type=\"button\" class=\"dropdown-toggle deleteRequestDropdown\" data-toggle=\"dropdown\"  aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+            $(this).replaceWith("<div class='btn-group'><button type=\"button\" class=\"dropdown-toggle deleteRequestDropdown\" " +
+                "data-toggle=\"dropdown\"  aria-haspopup=\"true\" aria-expanded=\"false\" data-id=\"" + id + "\">\n" +
                 "    <i class=\"fa fa-location-arrow\" ></i>\n" +
                 "</button>\n" +
-                "<div class=\"dropdown-menu\">\n" +
-                "    <a class=\"dropdown-item deleteRequest\" data-id=\"" + friend['userID'] + "href=\"#\">Action</a>\n" +
-                "</div></strong>\n");
+                "<div class=\"dropdown-menu\" data-id=\"" + id + "\">\n" +
+
+
+                "    <a class=\"dropdown-item deleteRequest\" data-id=\"" + id + "\" href=\"#\">Delete Request</a>\n" +
+                "</div></div>");
             $(this).attr('class', '');
             Request.sendRequest($(this).data("id"));
         });
 
-        $("body").on("click", ".deleteRequest", function (e) {
+        $("body").on("click", ".dropdown-menu", function (e) {
+            e.preventDefault();
             e.stopPropagation();
+
             var id = $(this).data('id');
-            $("button[data-id=id]").replaceWith("<a href='#' class='sendRequest'  data-favorite='1' data-id=\"" + friend['userID'] + "\">" +
-                "                                        <i class=\"fa fa-user-plus\" style=\"color: yellow;\"></i></a>");
-           Request.deleteRequest(id);
+            $(this).toggle();
+            $(".btn-group").first().data("id",id).replaceWith("<a href='#' class='sendRequest'  data-favorite='1' data-id=\"" + id + "\">" +
+                "                                        <i class=\"fa fa-user-plus\" style=\"color: #f05a6b;\"></i></a>");
+            Request.deleteRequest(id);
         });
 
-        $("body").on("click",".deleteRequestDropdown",function (e) {
+        $("body").on("click", ".deleteRequestDropdown", function (e) {
             e.stopPropagation();
-        })
+            var id = $(this).data['id'];
+            $('.dropdown-menu').first().data("id", id).toggle();
+        });
 
     });
 });
