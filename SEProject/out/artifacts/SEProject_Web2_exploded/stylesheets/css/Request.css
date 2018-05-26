@@ -289,4 +289,14 @@
     all: unset;
 }
 
+.dropdown-menu {
+    left: auto;
+    right: 0;
+    color: #000;
+    padding-left: 10px;
+    font-family: Arial;
+}
 
+.primary-font {
+    font-family: Arial;
+}
