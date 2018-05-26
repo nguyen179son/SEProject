@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Contact</title>
+    <title>Friend requests</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -109,16 +109,7 @@
 </div>
 <div>
 
-<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action
-</button>
-<div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#">Separated link</a>
-</div>
+
 </div>
 </body>
 </html>
