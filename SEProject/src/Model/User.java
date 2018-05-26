@@ -998,10 +998,16 @@ public class User {
                 ObjectNode roomNodeJSON = mapper.createObjectNode();
                 ArrayNode userArrayJSON = mapper.createArrayNode();
 
-                sql = "Select userID from chat_room where roomID = " +  rs1.getInt("roomID");
+                sql = "Select chat_room.userID, user_name from chat_room, user_info" +
+                        " Where chat_room.userID = user_info.userID " +
+                        "and roomID = " +  rs1.getInt("roomID");
                 rs2 = st2.executeQuery(sql);
-                while(rs2.next())
-                    userArrayJSON.add(rs2.getInt("userID"));
+                while(rs2.next()) {
+                    ObjectNode userNodeJSON = mapper.createObjectNode();
+                    userNodeJSON.put("userID", rs2.getInt("userID"));
+                    userNodeJSON.put("user_name", rs2.getString("user_name"));
+                    userArrayJSON.add(userNodeJSON);
+                }
 
                 roomNodeJSON.put("roomID", rs1.getInt("roomID"));
                 roomNodeJSON.put("user_list", userArrayJSON);
