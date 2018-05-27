@@ -4,10 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 public class ChatRoom {
     public static ObjectNode getChatRoomList(int id) {
@@ -147,4 +146,53 @@ public class ChatRoom {
         returnJSON.put("room_list", roomArrayJSON);
         return returnJSON;
     }
+
+    public static ObjectNode loadMessage(int id, int roomID) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
+        ArrayNode messageListJSON = mapper.createArrayNode();
+        returnJSON.put("roomID", roomID);
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT message, from_userID, sending_time from chat_room, message " +
+                    "WHERE chat_room.roomID = ? " +
+                    "AND chat_room.userID = ? " +
+                    "AND chat_room.roomID = message.roomID ORDER BY sending_time DESC";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, roomID);
+            pstmt.setInt(2, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()){
+                Message message = new Message(rs.getString("message"), rs.getInt("from_userID"), rs.getTimestamp("sending_time"));
+                messageListJSON.add(message.toJSON());
+            }
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return  null;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        returnJSON.put("message_list", messageListJSON);
+        return returnJSON;
+    }
+
 }
