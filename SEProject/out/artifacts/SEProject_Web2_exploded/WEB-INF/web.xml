@@ -240,4 +240,15 @@
         <url-pattern>/search-chat-room</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>load_message</servlet-name>
+        <servlet-class>Controller.chatroom.LoadMessage</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>load_message</servlet-name>
+        <url-pattern>/load-message</url-pattern>
+    </servlet-mapping>
+
 </web-app>
