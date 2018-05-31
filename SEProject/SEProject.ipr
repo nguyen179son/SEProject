@@ -10,18 +10,28 @@
             <element id="module-output" name="SEProject" />
           </element>
           <element id="directory" name="lib">
+            <element id="library" level="project" name="mail" />
+            <element id="library" level="project" name="jjwt-0.9.0" />
+            <element id="library" level="project" name="javax.jms" />
             <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
-            <element id="library" level="project" name="activation" />
-            <element id="library" level="project" name="jackson-databind-2.8.0.rc2" />
-            <element id="library" level="project" name="jackson-core-2.8.0.rc2" />
-            <element id="library" level="project" name="jackson-annotations-2.8.0.rc2" />
+            <element id="library" level="project" name="mail-1.5.0-b01" />
+            <element id="library" level="project" name="javax.websocket-api-1.0" />
+            <element id="library" level="project" name="commons-dbcp-1.4" />
             <element id="library" level="project" name="bcprov-ext-jdk15on-159" />
             <element id="library" level="project" name="android-2.2.1" />
-            <element id="library" level="project" name="mail" />
-            <element id="library" level="project" name="javax.websocket-api-1.0" />
+            <element id="library" level="project" name="commons-pool-1.4" />
+            <element id="library" level="project" name="jackson-annotations-2.8.0.rc2" />
+            <element id="library" level="project" name="javax.transaction" />
+            <element id="library" level="project" name="jackson-core-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-databind-2.8.0.rc2" />
+            <element id="library" level="project" name="java-mail-1.4.4" />
+            <element id="library" level="project" name="javax.annotation" />
+            <element id="library" level="project" name="javax.persistence" />
+            <element id="library" level="project" name="javax.resource" />
+            <element id="library" level="project" name="javax.servlet.jsp.jstl" />
+            <element id="library" level="project" name="activation" />
             <element id="library" level="project" name="java-json" />
             <element id="library" level="project" name="gson-2.2.2" />
-            <element id="library" level="project" name="jjwt-0.9.0" />
           </element>
         </element>
       </root>
@@ -35,17 +45,28 @@
             <element id="module-output" name="SEProject" />
           </element>
           <element id="directory" name="lib">
-            <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
-            <element id="library" level="project" name="gson-2.2.2" />
-            <element id="library" level="project" name="java-json" />
-            <element id="library" level="project" name="javax.websocket-api-1.0" />
-            <element id="library" level="project" name="mail" />
-            <element id="library" level="project" name="android-2.2.1" />
-            <element id="library" level="project" name="bcprov-ext-jdk15on-159" />
-            <element id="library" level="project" name="jackson-annotations-2.8.0.rc2" />
-            <element id="library" level="project" name="jackson-core-2.8.0.rc2" />
+            <element id="library" level="project" name="mail-1.5.0-b01" />
             <element id="library" level="project" name="jackson-databind-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-core-2.8.0.rc2" />
+            <element id="library" level="project" name="jackson-annotations-2.8.0.rc2" />
+            <element id="library" level="project" name="commons-dbcp-1.4" />
+            <element id="library" level="project" name="bcprov-ext-jdk15on-159" />
+            <element id="library" level="project" name="android-2.2.1" />
+            <element id="library" level="project" name="mysql-connector-java-5.1.46-bin" />
+            <element id="library" level="project" name="java-mail-1.4.4" />
+            <element id="library" level="project" name="commons-pool-1.4" />
+            <element id="library" level="project" name="javax.annotation" />
+            <element id="library" level="project" name="activation" />
+            <element id="library" level="project" name="mail" />
             <element id="library" level="project" name="jjwt-0.9.0" />
+            <element id="library" level="project" name="javax.websocket-api-1.0" />
+            <element id="library" level="project" name="javax.transaction" />
+            <element id="library" level="project" name="javax.servlet.jsp.jstl" />
+            <element id="library" level="project" name="javax.resource" />
+            <element id="library" level="project" name="javax.persistence" />
+            <element id="library" level="project" name="javax.jms" />
+            <element id="library" level="project" name="java-json" />
+            <element id="library" level="project" name="gson-2.2.2" />
           </element>
         </element>
       </root>
@@ -193,7 +214,7 @@
       <module fileurl="file://$PROJECT_DIR$/SEProject.iml" filepath="$PROJECT_DIR$/SEProject.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="PropertiesComponent">
@@ -288,45 +309,20 @@
     <library name="activation">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/android-2.2.1.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/bcprov-ext-jdk15on-159.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/gson-2.2.2.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/jackson-annotations-2.8.0.rc2.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/jackson-core-2.8.0.rc2.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/jackson-databind-2.8.0.rc2.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/java-json.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/java-mail-1.4.4.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.annotation.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.ejb.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.jms.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.persistence.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.resource.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.servlet-3.0.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jsp.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jsp.jstl.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.transaction.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/javax.websocket-api-1.0.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/jjwt-0.9.0.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/mail-1.5.0-b01.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.46-bin.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES>
-        <root url="jar://$PROJECT_DIR$/lib/java-json.jar!/" />
-      </SOURCES>
+      <SOURCES />
     </library>
     <library name="android-2.2.1">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/android-2.2.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/android-2.2.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="bcprov-ext-jdk15on-159">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/bcprov-ext-jdk15on-159.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/bcprov-ext-jdk15on-159.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
@@ -345,60 +341,123 @@
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="externalLib">
-      <CLASSES />
-      <JAVADOC />
-      <SOURCES>
-        <root url="file://$PROJECT_DIR$/../../SEServer/externalLib" />
-      </SOURCES>
-    </library>
     <library name="gson-2.2.2">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/gson-2.2.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/gson-2.2.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="jackson-annotations-2.8.0.rc2">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/jackson-annotations-2.8.0.rc2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jackson-annotations-2.8.0.rc2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="jackson-core-2.8.0.rc2">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/jackson-core-2.8.0.rc2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jackson-core-2.8.0.rc2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="jackson-databind-2.8.0.rc2">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/jackson-databind-2.8.0.rc2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jackson-databind-2.8.0.rc2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="java-json">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/java-json.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/java-json.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/java-json.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/java-json.jar!/" />
       </SOURCES>
+    </library>
+    <library name="java-mail-1.4.4">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/java-mail-1.4.4.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javax.annotation">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.annotation.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javax.ejb">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.ejb.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javax.jms">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.jms.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javax.persistence">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.persistence.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javax.resource">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.resource.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javax.servlet">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
     </library>
     <library name="javax.servlet-3.0">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/javax.servlet-3.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.servlet-3.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javax.servlet.jsp">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jsp.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javax.servlet.jsp.jstl">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.servlet.jsp.jstl.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javax.transaction">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/javax.transaction.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="javax.websocket-api-1.0">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/javax.websocket-api-1.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/javax.websocket-api-1.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
@@ -412,14 +471,21 @@
     </library>
     <library name="mail">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/mail.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="mail-1.5.0-b01">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/mail-1.5.0-b01.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="mysql-connector-java-5.1.46-bin">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../SEServer/externalLib/mysql-connector-java-5.1.46-bin.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.46-bin.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
