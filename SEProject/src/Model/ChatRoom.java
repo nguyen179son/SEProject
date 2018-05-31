@@ -153,12 +153,15 @@ public class ChatRoom {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         ArrayNode messageListJSON = mapper.createArrayNode();
+        ArrayNode userInfoListJSON = mapper.createArrayNode();
+
         returnJSON.put("roomID", roomID);
         Connection conn = null;
         Statement stmt = null;
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
+            //get message list
             String sql = "SELECT message, from_userID, sending_time from chat_room, message " +
                     "WHERE chat_room.roomID = ? " +
                     "AND chat_room.userID = ? " +
@@ -171,6 +174,22 @@ public class ChatRoom {
                 Message message = new Message(rs.getString("message"), rs.getInt("from_userID"), rs.getTimestamp("sending_time"));
                 messageListJSON.add(message.toJSON());
             }
+
+            //get user info list
+            sql = "SELECT chat_room.userId, user_name, profile_picture from chat_room, user_info " +
+                    "WHERE chat_room.roomID = ? " +
+                    "AND chat_room.userID = user_info.userID ";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, roomID);
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                ObjectNode userInfoJSON = mapper.createObjectNode();
+                userInfoJSON.put("userID", rs.getInt("userID"));
+                userInfoJSON.put("user_name", rs.getString("user_name"));
+                userInfoJSON.put("profile_picture", rs.getString("profile_picture"));
+                userInfoListJSON.add(userInfoJSON);
+            }
+
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
@@ -193,6 +212,7 @@ public class ChatRoom {
                 se.printStackTrace();
             }//end finally try
         }//end try
+        returnJSON.put("userInfo_list", userInfoListJSON);
         returnJSON.put("message_list", messageListJSON);
         return returnJSON;
     }
