@@ -91,7 +91,7 @@ public class ChatRoom {
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY,
                     ResultSet.HOLD_CURSORS_OVER_COMMIT);
-            String sql = "select CR.roomID, seen, message " +
+            String sql = "select CR.roomID, unread_message, message, sending_time " +
                     "from chat_room as CR LEFT JOIN message ON CR.roomID = message.roomID " +
                     "where CR.userId = " + id +
                     " and exists (SELECT userID from user_info " +
@@ -125,7 +125,8 @@ public class ChatRoom {
                 roomNodeJSON.put("roomID", rs1.getInt("roomID"));
                 roomNodeJSON.put("user_list", userArrayJSON);
                 roomNodeJSON.put("last_message", rs1.getString("message"));
-                roomNodeJSON.put("seen", rs1.getBoolean("seen"));
+                roomNodeJSON.put("sending_time", rs1.getString("sending_time"));
+                roomNodeJSON.put("unread_message", rs1.getInt("unread_message"));
                 roomArrayJSON.add(roomNodeJSON);
             }
         } catch (SQLException se) {
