@@ -38,6 +38,7 @@ public class Login extends HttpServlet {
             //user already confirmed
             if (userInfoJson.get("confirm").booleanValue()) {
                 objectNode1.put("token", token);
+                objectNode1.put("userID", userInfoJson.get("userID").asInt());
                 objectNode1.put("redirect_url", session.getAttribute("returnUrl") == null || session.getAttribute("returnUrl").toString().equals("") ?
                         "/" : session.getAttribute("returnUrl").toString());
             }
