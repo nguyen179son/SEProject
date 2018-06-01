@@ -256,4 +256,52 @@ public class ChatRoom {
         }//end try
         return roomArrayJSON;
     }
+
+    public static boolean createChatRoom(int id, int[] userIDList){
+        Connection conn = null;
+        Statement stmt = null;
+        int roomID = 0;
+
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            //get new roomID
+            String sql = "SELECT roomID from chat_room  ORDER BY roomID DESC limit 1";
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next())
+                roomID = rs.getInt("roomID") + 1;
+
+            //prepare sql value
+            String sqlTmpParam = "(" + roomID + "," + id + "),";
+            for(int i = 0; i < userIDList.length; i ++)
+                sqlTmpParam += "(" + roomID + "," + userIDList[i] + "),";
+            String sqlParam = sqlTmpParam.substring(0, sqlTmpParam.length()-1);         //remove last character ','
+
+            sql = "INSERT INTO chat_room (roomID, userID) VALUES " + sqlParam;
+            stmt.executeUpdate(sql);
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
+    
 }

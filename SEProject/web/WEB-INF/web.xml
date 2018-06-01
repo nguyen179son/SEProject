@@ -251,4 +251,16 @@
         <url-pattern>/load-message</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>create_chat_room</servlet-name>
+        <servlet-class>Controller.chatroom.CreateChatRoom</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>create_chat_room</servlet-name>
+        <url-pattern>/create-chat-room</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
