@@ -19,6 +19,7 @@ public class LoadMessage extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
         int roomID = Integer.parseInt(request.getParameter("roomID"));
+        int numberOfMessages = Integer.parseInt(request.getParameter("number_of_messages"));
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
@@ -34,7 +35,7 @@ public class LoadMessage extends HttpServlet {
             }
         }
         else {
-            objectNode1 = ChatRoom.loadMessage(userID, roomID);
+            objectNode1 = ChatRoom.loadMessage(userID, roomID, numberOfMessages);
             if (objectNode1 == null){                                         //internal error from server
                 objectNode1 = mapper.createObjectNode();
                 objectNode1.put("verify_token", true);
