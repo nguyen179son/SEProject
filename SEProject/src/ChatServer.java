@@ -67,7 +67,7 @@ public class ChatServer {
         HashSet<Session> sessionList = sessionMap.get((messageJSON.get("roomID").asInt()));
 
         for(Session userSession : sessionList){
-            //if (!userSession.getId().equals(session.getId()))
+            if (!userSession.getId().equals(session.getId()))
                 userSession.getBasicRemote().sendText(returnMessageJSON.toString());
         }
 
