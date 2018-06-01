@@ -5,6 +5,7 @@ import Model.ChatRoom;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
@@ -26,7 +27,7 @@ public class ChatServer {
         session.getBasicRemote().sendText("Your userID: " + userID + ", Your session ID:" + session.getId());
 
         ArrayNode roomIDList = ChatRoom.getChatRoomLIDist(userID);
-
+        session.getUserProperties().put("userID", userID);
         for(int i = 0; i < roomIDList.size(); i ++){
             int roomID = roomIDList.get(i).asInt();
             System.out.println(roomID);
@@ -57,12 +58,17 @@ public class ChatServer {
         //send message to all user in the room but the sender
         ObjectMapper mapper = new ObjectMapper();
         JsonNode messageJSON = mapper.readTree(message);
+        ObjectNode returnMessageJSON = mapper.createObjectNode();
+
+        returnMessageJSON.put("roomID", messageJSON.get("roomID").asInt());
+        returnMessageJSON.put("from_userID", (Integer) session.getUserProperties().get("userID"));
+        returnMessageJSON.put("message", messageJSON.get("message").textValue());
+        returnMessageJSON.put("sending_time", new Date().toString());
         HashSet<Session> sessionList = sessionMap.get((messageJSON.get("roomID").asInt()));
-        int i = 0;
+
         for(Session userSession : sessionList){
-            System.out.println("i = " + i++);
             //if (!userSession.getId().equals(session.getId()))
-                userSession.getBasicRemote().sendText("Room " + messageJSON.get("roomID") + ": " +messageJSON.get("message").textValue());
+                userSession.getBasicRemote().sendText(returnMessageJSON.toString());
         }
 
     }
