@@ -221,4 +221,39 @@ public class ChatRoom {
         return returnJSON;
     }
 
+    public static ArrayNode getChatRoomLIDist(int id){
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode roomArrayJSON = mapper.createArrayNode();
+
+        Connection conn = null;
+
+
+        try {
+            conn = DatabaseConnection.getConnection();
+            Statement st = conn.createStatement();
+            String sql = "select roomID " +
+                    "from chat_room " +
+                    "where userId = " + id;
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                roomArrayJSON.add(rs.getInt("roomID"));
+            }
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return roomArrayJSON;
+    }
 }
