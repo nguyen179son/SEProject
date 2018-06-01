@@ -149,13 +149,15 @@ public class ChatRoom {
         return returnJSON;
     }
 
-    public static ObjectNode loadMessage(int id, int roomID) {
+    public static ObjectNode loadMessage(int id, int roomID, int numberOfMessages) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         ArrayNode messageListJSON = mapper.createArrayNode();
         ArrayNode userInfoListJSON = mapper.createArrayNode();
 
         returnJSON.put("roomID", roomID);
+        returnJSON.put("number_of_messages", numberOfMessages);
+
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -165,10 +167,12 @@ public class ChatRoom {
             String sql = "SELECT message, from_userID, sending_time from chat_room, message " +
                     "WHERE chat_room.roomID = ? " +
                     "AND chat_room.userID = ? " +
-                    "AND chat_room.roomID = message.roomID ORDER BY sending_time DESC";
+                    "AND chat_room.roomID = message.roomID ORDER BY sending_time DESC " +
+                    "LIMIT ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, roomID);
             pstmt.setInt(2, id);
+            pstmt.setInt(3, numberOfMessages);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()){
                 Message message = new Message(rs.getString("message"), rs.getInt("from_userID"), rs.getTimestamp("sending_time"));
