@@ -1,49 +1,75 @@
 
 
+import Helper.JWTHandler;
+import Model.ChatRoom;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import javax.websocket.*;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import javax.websocket.Session;
 
-@ServerEndpoint("/ws")
+@ServerEndpoint("/websocket")
 public class ChatServer {
-    private Map<String, String> usernames = new HashMap<String, String>();
+    //key: roomID, value: user session in the room
+    static private Map<Integer, HashSet<Session>> sessionMap = new HashMap<Integer, HashSet<Session>>();
 
     @OnOpen
-    public void open(Session session) throws IOException, EncodeException {
-        session.getBasicRemote().sendText("(Server): Welcome to the chat room. Please state your username to begin.");
+    public void open(@PathParam("token") String token, Session session) throws IOException, EncodeException {
+        //add session to session Map
+        int userID = JWTHandler.verifyToken(token);
+        if(userID < 0) return;
+        session.getBasicRemote().sendText("Your userID: " + userID + ", Your session ID:" + session.getId());
 
+        ArrayNode roomIDList = ChatRoom.getChatRoomLIDist(userID);
+        session.getUserProperties().put("userID", userID);
+        for(int i = 0; i < roomIDList.size(); i ++){
+            int roomID = roomIDList.get(i).asInt();
+            System.out.println(roomID);
+            HashSet<Session> sessions = sessionMap.get(roomID);
+            if(sessions == null) {
+                sessionMap.put(roomID, new HashSet<Session>());
+                sessions = sessionMap.get(roomID);
+            }
+            sessions.add(session);
+        }
+
+        for (HashSet<Session> sessionList : sessionMap.values()){
+            for(Session mySession : sessionList)
+                System.out.println(mySession.getId());
+        }
     }
 
     @OnClose
     public void close(Session session) throws IOException, EncodeException {
-        String userId = session.getId();
-        if (usernames.containsKey(userId)) {
-            String username = usernames.get(userId);
-            usernames.remove(userId);
-            for (Session peer : session.getOpenSessions())
-                peer.getBasicRemote().sendText("(Server): " + username + " left the chat room.");
+        //remove session fom session Map
+        for (HashSet<Session> sessionList : sessionMap.values()){
+            sessionList.remove(session);
         }
     }
 
     @OnMessage
     public void handleMessage(String message, Session session) throws IOException, EncodeException {
-        String userId = session.getId();
-        if (usernames.containsKey(userId)) {
-            String username = usernames.get(userId);
-            for (Session peer : session.getOpenSessions())
-                peer.getBasicRemote().sendText("(" + username + "): " + message);
-        } else {
-            if (usernames.containsValue(message) || message.toLowerCase().equals("server"))
-                session.getBasicRemote().sendText("(Server): That username is already in use. Please try again.");
-            else {
-                usernames.put(userId, message);
-                session.getBasicRemote().sendText("(Server): Welcome, " + message + "!");
-                for (Session peer : session.getOpenSessions())
-                    if (!peer.getId().equals(userId))
-                        peer.getBasicRemote().sendText("(Server): " + message + " joined the chat room.");
-            }
+        //send message to all user in the room but the sender
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode messageJSON = mapper.readTree(message);
+        ObjectNode returnMessageJSON = mapper.createObjectNode();
+
+        returnMessageJSON.put("roomID", messageJSON.get("roomID").asInt());
+        returnMessageJSON.put("from_userID", (Integer) session.getUserProperties().get("userID"));
+        returnMessageJSON.put("message", messageJSON.get("message").textValue());
+        returnMessageJSON.put("sending_time", new Date().toString());
+        HashSet<Session> sessionList = sessionMap.get((messageJSON.get("roomID").asInt()));
+
+        for(Session userSession : sessionList){
+            if (!userSession.getId().equals(session.getId()))
+                userSession.getBasicRemote().sendText(returnMessageJSON.toString());
         }
+
     }
 }
