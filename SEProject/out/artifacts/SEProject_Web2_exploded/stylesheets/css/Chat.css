@@ -286,3 +286,21 @@
 #list-chat {
     box-sizing: content-box; /* So the width will be 100% + 17px */
 }
+
+.chat-box {
+    margin-bottom: 0.3%;
+    /*border-bottom-right-radius: 1.3em;*/
+    /*border-bottom-left-radius: 1.3em;*/
+    /*border-top-left-radius: 1.3em;*/
+    /*border-top-right-radius: 1.3em;*/
+}
+.chat-message {
+!important;
+    background-color: pink;
+    color: black;
+    border-bottom-right-radius: 1.3em;
+    border-bottom-left-radius: 1.3em;
+    border-top-left-radius: 1.3em;
+    border-top-right-radius: 1.3em;
+
+}

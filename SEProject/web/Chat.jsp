@@ -172,7 +172,7 @@
                 </div><!--new_message_head-->
 
                 <div class="chat_area">
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled" id="list-message">
                         <li class="left clearfix">
                      <span class="chat-img1 pull-left">
                      <img src="image/profile.png"
