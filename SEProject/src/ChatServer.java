@@ -13,6 +13,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.*;
 import javax.websocket.Session;
+import java.sql.Timestamp;
 
 @ServerEndpoint("/websocket")
 public class ChatServer {
@@ -63,7 +64,7 @@ public class ChatServer {
         returnMessageJSON.put("roomID", messageJSON.get("roomID").asInt());
         returnMessageJSON.put("from_userID", (Integer) session.getUserProperties().get("userID"));
         returnMessageJSON.put("message", messageJSON.get("message").textValue());
-        returnMessageJSON.put("sending_time", new Date().toString());
+        returnMessageJSON.put("sending_time", new Timestamp(System.currentTimeMillis()).toString());
         HashSet<Session> sessionList = sessionMap.get((messageJSON.get("roomID").asInt()));
 
         for(Session userSession : sessionList){

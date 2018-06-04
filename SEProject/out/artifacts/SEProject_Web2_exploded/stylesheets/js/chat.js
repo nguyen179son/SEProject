@@ -1,3 +1,4 @@
+var ws = new WebSocket("ws://localhost:8080/websocket?token=" + localStorage.getItem("token"));
 $.ajax({
     url: "/verify-token",
     async: false,
@@ -19,6 +20,24 @@ $(document).ready(function () {
 
     var Chat = (function ($, window, document) {
         var chat = {};
+
+        chat.checkTime = function (t) {
+            var splitedTime = t.split(" ");
+            var date1 = splitedTime[0].split("-");
+            var time1 = splitedTime[1].split(":");
+
+            var curdate = new Date();
+            var date2 = curdate.getDate();
+            var month2 = curdate.getMonth() + 1;
+            var year2 = curdate.getFullYear();
+
+            if (date2 == date1[2] && month2 == date1[1] && year2 == date1[0]) {
+                return time1[0] + ":" + time1[1];
+            }
+            else {
+                return date1[0] + "-" + date1[1] + "-" + date1[2] + " " + time1[0] + ":" + time1[1];
+            }
+        };
 
         chat.listChat = function () {
             $('#pleaseWaitDialog').modal();
@@ -212,58 +231,51 @@ $(document).ready(function () {
                                     mess['sending_time'].split(" ")[1].split(":")[0] + ":" + mess['sending_time'].split(" ")[1].split(":")[1] : "";
                                 if (mess["from_userID"] != previousUserID) {
                                     if (mess["from_userID"] == userID) {
-                                        htmlText += "<li class=\"left clearfix admin_chat chat-box\" >\n" +
-                                            "                     <div class=\"chat-img1 pull-right\" style='width: 3%'>\n" +
+                                        htmlText += "<li class=\"left clearfix admin_chat\">\n" +
+                                            "                     <span class=\"chat-img1 pull-right\">\n" +
                                             "                     <img src=\"image/profile.png\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
-                                            "                     </div>\n" +
-                                            "                                <span class=\"chat_time pull-left\">" + time +
+                                            "                     </span>\n" +
+                                            "                            <div class=\"chat-body1 clearfix\">\n" +
+                                            "                                <span class='pull-right mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
+                                            + mess["message"] +
                                             "</span>\n" +
-                                            "                            <span class=\"chat-body1 clearfix\ pull-right\" style='display: inline-flex'>\n" +
-                                            "                                <p class='chat-message' style='background-color: pink;color: black'>" + mess["message"] +
-                                            "</p>\n" +
-
-                                            "                            </span>\n" +
+                                            "                            </div>\n" +
                                             "                        </li>";
                                     }
 
                                     else {
-                                        htmlText += "<li class=\"left clearfix chat-box\">\n" +
-                                            "                     <div class=\"chat-img1 pull-left\" style='width: 3%'>\n" +
+                                        htmlText += "<li class=\"left clearfix\">\n" +
+                                            "                     <span class=\"chat-img1 pull-left\">\n" +
                                             "                     <img src=\"image/profile.png\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
-                                            "                     </div>\n" +
-                                            "                            <span class=\"chat-body1 clearfix\" style='display: inline-flex'>\n" +
-                                            "                                <p class='chat-message' style='background-color: pink;color: black'>" + mess["message"] +
-                                            "</p>\n" +
-                                            "                                <span class=\"chat_time pull-right\">" + time +
-                                            "                            </span>\n" +
-                                            "</span>" +
+                                            "                     </span>\n" +
+                                            "                            <div class=\"chat-body1 clearfix\">\n" +
+                                            "                                <span class='pull-left mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
+                                            + mess["message"] +
+                                            "</span>\n" +
+                                            "                            </div>\n" +
                                             "                        </li>";
                                     }
                                 } else {
                                     if (mess["from_userID"] == userID) {
-                                        htmlText += "<li class=\"left clearfix admin_chat chat-box\">\n" +
-                                            "<div class='chat-img1 pull-right' style='width: 3%'><p></p></div>" +
-                                            "                                <span class=\"chat_time pull-left\">" + time +
-                                            "</span>\n" +
-                                            "                            <span class=\"chat-body1 clearfix\ pull-right\" style='display: inline-flex'>\n" +
-                                            "                                <p class='chat-message' style='background-color: pink;color: black'>" + mess["message"] +
-                                            "</p>\n" +
+                                        htmlText += "<li class=\"left clearfix admin_chat\">\n" +
 
-                                            "                            </span>\n" +
+                                            "                            <div class=\"chat-body1 clearfix\">\n" +
+                                            "                                <span class='pull-right mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
+                                            + mess["message"] +
+                                            "</span>\n" +
+                                            "                            </div>\n" +
                                             "                        </li>";
                                     }
 
                                     else {
-                                        htmlText += "<li class=\"left clearfix chat-box\">\n" +
-                                            "<div class='chat-img1 pull-left' style='width: 3%'><p></p></div>" +
-                                            "                            <span class=\"chat-body1 clearfix\" style='display: inline-flex'>\n" +
-                                            "                                <p class='chat-message' style='background-color: pink;color: black'>" + mess["message"] +
-                                            "</p>\n" +
-                                            "                                <span class=\"chat_time pull-right\">" + time +
-                                            "                            </span>\n" +
-                                            "</span>" +
+                                        htmlText += "<li class=\"left clearfix\">\n" +
+                                            "                            <div class=\"chat-body1 clearfix\">\n" +
+                                            "                                <span class='pull-left mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
+                                            + mess["message"] +
+                                            "</span>\n" +
+                                            "                            </div>\n" +
                                             "                        </li>";
                                     }
                                 }
@@ -291,11 +303,44 @@ $(document).ready(function () {
             });
         };
 
+        chat.sendMessage = function (message) {
+            ws.send(JSON.stringify({
+                roomID: $.parseInt($("#list-message").data("roomID")),
+                message: message,
+                userID: window.localStorage.getItem("userID")
+            }));
+        };
+
+        chat.handleMessage = function (message) {
+            var curID = window.localStorage.getItem("userID");
+            if ($("li [data-room-id=curID]")) {
+                if (message["roomID"] == $("#list-message").data("roomID")) {
+                    chat.receiveMessfromCurrentChatWindow(message);
+                }
+
+                else {
+                    chat.receiveMessfromOtherChatWindow(message);
+                }
+            }
+        };
+
+        chat.receiveMessfromCurrentChatWindow = function (mess) {
+            var contactBox;
+            var chatBox;
+
+            var htmlText = $("#list-message").html();
+            htmlText +=
+        };
+
+        chat.receiveMessfromOtherChatWindow = function (mess) {
+
+        };
 
         return chat;
     }(window.jQuery, window, document));
 
     $(function () {
+
         $("body").onload = Chat.listChat();
 
         $("body").on("click", "#search-chat-room", function () {
@@ -306,5 +351,23 @@ $(document).ready(function () {
             Chat.getRecentMessage($(this).data("room-id"));
             e.stopPropagation();
         });
+
+        $("body").on("click", "#send-message", function (e) {
+            var message = $.trim($("#message-content").val());
+            Chat.sendMessage(message);
+
+        });
+
+        $("body").on("keyup", "#message-content", function (e) {
+            var message = $.trim($("#message-content").val());
+            Chat.sendMessage(message);
+        });
+
+        ws.onmessage = function (event) {
+            console.log(event.data);
+            console.log(1);
+            var data = $.parseJSON(event.data);
+            Chat.handleMessage(data);
+        };
     });
 });

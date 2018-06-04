@@ -238,10 +238,10 @@
                     </ul>
                 </div><!--chat_area-->
                 <div class="message_write">
-                    <textarea class="form-control" placeholder="type a message"></textarea>
+                    <textarea class="form-control" placeholder="type a message" id="message-content"></textarea>
                     <div class="clearfix"></div>
                     <div class="chat_bottom">
-                        <a href="#" class="pull-right btn btn-success">
+                        <a href="#" class="pull-right btn btn-success" id="send-message">
                             Send</a></div>
                 </div>
             </div>
