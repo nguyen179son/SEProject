@@ -302,5 +302,11 @@
     border-bottom-left-radius: 1.3em;
     border-top-left-radius: 1.3em;
     border-top-right-radius: 1.3em;
+    display: inline-block;
+    word-wrap: break-word;
+    max-width: 80%;
+}
 
+.chat_time {
+    padding-top: 17%;
 }

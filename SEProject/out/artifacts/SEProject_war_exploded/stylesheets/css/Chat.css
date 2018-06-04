@@ -288,7 +288,7 @@
 }
 
 .chat-box {
-    margin-bottom: 0.3%;
+    /*margin-bottom: 0.3%;*/
     /*border-bottom-right-radius: 1.3em;*/
     /*border-bottom-left-radius: 1.3em;*/
     /*border-top-left-radius: 1.3em;*/
@@ -296,15 +296,28 @@
 }
 .chat-message {
 !important;
+    /*background-color: pink;*/
+    /*color: black;*/
+    /*border-bottom-right-radius: 1.3em;*/
+    /*border-bottom-left-radius: 1.3em;*/
+    /*border-top-left-radius: 1.3em;*/
+    /*border-top-right-radius: 1.3em;*/
+    /*display: inline-block;*/
+    /*word-wrap: break-word;*/
+    /*max-width: 80%;*/
+}
+
+.chat_time {
+    /*padding-top: 17%;*/
+}
+
+.mess-span {
+    max-width: 600px;
+    padding: 1%;
     background-color: pink;
     color: black;
     border-bottom-right-radius: 1.3em;
     border-bottom-left-radius: 1.3em;
     border-top-left-radius: 1.3em;
     border-top-right-radius: 1.3em;
-
-}
-
-.chat_time {
-    padding-top: 17%;
 }

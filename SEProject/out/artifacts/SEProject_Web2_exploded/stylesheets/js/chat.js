@@ -204,6 +204,7 @@ $(document).ready(function () {
                         if (response["success"]) {
                             var htmlText = "";
                             var userID = window.localStorage.getItem("userID");
+                            console.log(userID);
                             var time;
                             var previousUserID = -1;
                             response["message_list"].forEach(function (mess) {
@@ -216,11 +217,12 @@ $(document).ready(function () {
                                             "                     <img src=\"image/profile.png\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                             "                     </div>\n" +
-                                            "                            <span class=\"chat-body1 clearfix\">\n" +
+                                            "                                <span class=\"chat_time pull-left\">" + time +
+                                            "</span>\n" +
+                                            "                            <span class=\"chat-body1 clearfix\ pull-right\" style='display: inline-flex'>\n" +
                                             "                                <p class='chat-message' style='background-color: pink;color: black'>" + mess["message"] +
                                             "</p>\n" +
-                                            "                                <div class=\"chat_time pull-left\">" + time +
-                                            "</div>\n" +
+
                                             "                            </span>\n" +
                                             "                        </li>";
                                     }
@@ -231,35 +233,36 @@ $(document).ready(function () {
                                             "                     <img src=\"image/profile.png\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                             "                     </div>\n" +
-                                            "                            <span class=\"chat-body1 clearfix\">\n" +
+                                            "                            <span class=\"chat-body1 clearfix\" style='display: inline-flex'>\n" +
                                             "                                <p class='chat-message' style='background-color: pink;color: black'>" + mess["message"] +
                                             "</p>\n" +
-                                            "                                <div class=\"chat_time pull-right\">" + time +
-                                            "                            </div>\n" +
+                                            "                                <span class=\"chat_time pull-right\">" + time +
+                                            "                            </span>\n" +
                                             "</span>" +
                                             "                        </li>";
                                     }
                                 } else {
                                     if (mess["from_userID"] == userID) {
                                         htmlText += "<li class=\"left clearfix admin_chat chat-box\">\n" +
-                                            "<div class='chat-img1 pull-left' style='width: 3%'></div>" +
-                                            "                            <span class=\"chat-body1 clearfix\">\n" +
+                                            "<div class='chat-img1 pull-right' style='width: 3%'><p></p></div>" +
+                                            "                                <span class=\"chat_time pull-left\">" + time +
+                                            "</span>\n" +
+                                            "                            <span class=\"chat-body1 clearfix\ pull-right\" style='display: inline-flex'>\n" +
                                             "                                <p class='chat-message' style='background-color: pink;color: black'>" + mess["message"] +
                                             "</p>\n" +
-                                            "                                <div class=\"chat_time pull-left\">" + time +
-                                            "</div>\n" +
+
                                             "                            </span>\n" +
                                             "                        </li>";
                                     }
 
                                     else {
                                         htmlText += "<li class=\"left clearfix chat-box\">\n" +
-                                            "<div class='chat-img1 pull-left' style='width: 3%'></div>" +
-                                            "                            <span class=\"chat-body1 clearfix\">\n" +
+                                            "<div class='chat-img1 pull-left' style='width: 3%'><p></p></div>" +
+                                            "                            <span class=\"chat-body1 clearfix\" style='display: inline-flex'>\n" +
                                             "                                <p class='chat-message' style='background-color: pink;color: black'>" + mess["message"] +
                                             "</p>\n" +
-                                            "                                <div class=\"chat_time pull-right\">" + time +
-                                            "                            </div>\n" +
+                                            "                                <span class=\"chat_time pull-right\">" + time +
+                                            "                            </span>\n" +
                                             "</span>" +
                                             "                        </li>";
                                     }
