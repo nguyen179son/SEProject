@@ -33,7 +33,7 @@
     <div id="message" hidden>
         Wrong email or password
     </div>
-    <a href="/get-new-password" id="forgot-password" class="btn btn-light" name="forget-password"> Forgot password?</a> <br>
+    <a href="/get-new-password" id="forgot-password" class="btn btn-warning" name="forget-password"> Forgot password?</a> <br>
     <label class="signup">
         <a href="/signup"> Sign up if you are a new user</a>
     </label>

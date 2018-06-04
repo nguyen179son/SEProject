@@ -33,6 +33,7 @@ $(document).ready(function () {
                     if (response["confirm"]) {
                         window.localStorage.setItem("token", response["token"]);
                         window.location = response["redirect_url"];
+                        window.localStorage.setItem("userID",response["userID"]);
                     }
                 }
                 else {
