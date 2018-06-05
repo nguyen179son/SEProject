@@ -52,6 +52,7 @@ $(document).ready(function () {
                         if (response["success"]) {
                             var htmlText = "";
                             response["room_list"].forEach(function (friend) {
+                                console.log(friend['roomID']);
                                 var time = friend['sending_time'] ?
                                     friend['sending_time'].split(" ")[1].split(":")[0] + ":" + friend['sending_time'].split(" ")[1].split(":")[1] : "";
                                 htmlText += "<li class=\"left clearfix contact-box\" data-room-id='" + friend['roomID'] + "'>\n" +
@@ -223,9 +224,9 @@ $(document).ready(function () {
                         if (response["success"]) {
                             var htmlText = "";
                             var userID = window.localStorage.getItem("userID");
-                            console.log(userID);
                             var time;
                             var previousUserID = -1;
+                            $("#list-message").data("previousUserSentID", previousUserID);
                             response["message_list"].forEach(function (mess) {
                                 var time = mess['sending_time'] ?
                                     mess['sending_time'].split(" ")[1].split(":")[0] + ":" + mess['sending_time'].split(" ")[1].split(":")[1] : "";
@@ -305,20 +306,73 @@ $(document).ready(function () {
 
         chat.sendMessage = function (message) {
             ws.send(JSON.stringify({
-                roomID: $.parseInt($("#list-message").data("roomID")),
+                roomID: $("#list-message").data("roomID"),
                 message: message,
                 userID: window.localStorage.getItem("userID")
             }));
+            chat.updateChatScreenAfterSent(message, $("#list-message").data("roomID"));
+        };
+
+        chat.updateChatScreenAfterSent = function (mess, roomID) {
+            var currentdate = new Date();
+            var time = currentdate.getHours() + ":" + currentdate.getMinutes();
+
+            $("#list-chat li[data-room-id='" + roomID + "'] .chat-body .contact_sec strong").html(mess);
+            $("#list-chat li[data-room-id='" + roomID + "'] .chat-body .header_sec .pull-right").html(time);
+            var htmlText = "<li class=\"left clearfix contact-box\" data-room-id='" + roomID + "'>\n";
+
+            htmlText += $("#list-chat li[data-room-id='" + roomID + "']").html();
+            htmlText += "</li>";
+            console.log(htmlText);
+            $("#list-chat li[data-room-id='" + roomID + "']").remove();
+
+            htmlText += $("#list-chat").html();
+
+            $("#list-chat").html(htmlText);
+
+
+            htmlText = $("#list-message").html();
+
+
+            var userID = window.localStorage.getItem("userID");
+
+            var previousUserID = $("#list-message").data("previousUserSentID");
+
+            if (userID != previousUserID) {
+                htmlText += "<li class=\"left clearfix admin_chat\">\n" +
+                    "                     <span class=\"chat-img1 pull-right\">\n" +
+                    "                     <img src=\"image/profile.png\"\n" +
+                    "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
+                    "                     </span>\n" +
+                    "                            <div class=\"chat-body1 clearfix\">\n" +
+                    "                                <span class='pull-right mess-span' title=\"" + time + "\">"
+                    + mess +
+                    "</span>\n" +
+                    "                            </div>\n" +
+                    "                        </li>";
+            } else {
+                htmlText += "<li class=\"left clearfix admin_chat\">\n" +
+
+                    "                            <div class=\"chat-body1 clearfix\">\n" +
+                    "                                <span class='pull-right mess-span' title=\"" + time + "\">"
+                    + mess +
+                    "</span>\n" +
+                    "                            </div>\n" +
+                    "                        </li>";
+            }
+
+            $("#list-message").html(htmlText);
         };
 
         chat.handleMessage = function (message) {
             var curID = window.localStorage.getItem("userID");
-            if ($("li [data-room-id=curID]")) {
+            if ($("li[data-room-id='" + message['roomID'] + "']").val() != null) {
                 if (message["roomID"] == $("#list-message").data("roomID")) {
                     chat.receiveMessfromCurrentChatWindow(message);
                 }
 
                 else {
+
                     chat.receiveMessfromOtherChatWindow(message);
                 }
             }
@@ -327,13 +381,47 @@ $(document).ready(function () {
         chat.receiveMessfromCurrentChatWindow = function (mess) {
             var contactBox;
             var chatBox;
-
+            var room = mess["roomID"];
+            console.log(mess);
+            var userID = window.localStorage.getItem("userID");
+            var previousUserID = $("#list-message").data("previousUserSentID");
+            console.log(previousUserID);
             var htmlText = $("#list-message").html();
-            htmlText +=
+            var time = mess['sending_time'] ?
+                mess['sending_time'].split(" ")[1].split(":")[0] + ":" + mess['sending_time'].split(" ")[1].split(":")[1] : "";
+            if (mess["from_userID"] != previousUserID) {
+
+                htmlText += "<li class=\"left clearfix\">\n" +
+                    "                     <span class=\"chat-img1 pull-left\">\n" +
+                    "                     <img src=\"image/profile.png\"\n" +
+                    "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
+                    "                     </span>\n" +
+                    "                            <div class=\"chat-body1 clearfix\">\n" +
+                    "                                <span class='pull-left mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
+                    + mess["message"] +
+                    "</span>\n" +
+                    "                            </div>\n" +
+                    "                        </li>";
+            } else {
+                htmlText += "<li class=\"left clearfix\">\n" +
+                    "                            <div class=\"chat-body1 clearfix\">\n" +
+                    "                                <span class='pull-left mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
+                    + mess["message"] +
+                    "</span>\n" +
+                    "                            </div>\n" +
+                    "                        </li>";
+            }
+
+            $("#list-message").html(htmlText);
+
+            $("li[data-room-id='" + room + "'] .chat-body .contact_sec strong").html(mess["message"]);
+            $("li[data-room-id='" + room + "'] .chat-body .header_sec .pull-right").html(time);
+
+
         };
 
         chat.receiveMessfromOtherChatWindow = function (mess) {
-
+            console.log(999);
         };
 
         return chat;
@@ -359,14 +447,16 @@ $(document).ready(function () {
         });
 
         $("body").on("keyup", "#message-content", function (e) {
-            var message = $.trim($("#message-content").val());
-            Chat.sendMessage(message);
+            if (e.which() == 13) {
+
+                var message = $.trim($("#message-content").val());
+                Chat.sendMessage(message);
+            }
         });
 
         ws.onmessage = function (event) {
-            console.log(event.data);
-            console.log(1);
             var data = $.parseJSON(event.data);
+            console.log(data);
             Chat.handleMessage(data);
         };
     });

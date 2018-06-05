@@ -52,7 +52,6 @@ $(document).ready(function () {
                         if (response["success"]) {
                             var htmlText = "";
                             response["room_list"].forEach(function (friend) {
-                                console.log(friend['roomID']);
                                 var time = friend['sending_time'] ?
                                     friend['sending_time'].split(" ")[1].split(":")[0] + ":" + friend['sending_time'].split(" ")[1].split(":")[1] : "";
                                 htmlText += "<li class=\"left clearfix contact-box\" data-room-id='" + friend['roomID'] + "'>\n" +
@@ -94,7 +93,9 @@ $(document).ready(function () {
                                         "                                </div>\n" +
                                         "                                <div class=\"contact_sec\" style='max-width: 100%'>\n" +
                                         "                                    <strong class=\"primary-font\" style='font-weight: 500'>"
-                                        + friend['last_message'] + "</strong>\n" +
+                                        + friend['last_message'] + "</strong> <span\n" +
+                                        "                                        class=\"badge pull-right\" style='background-color: red'>"
+                                        + "</span>\n" +
                                         "                                </div>\n" +
                                         "                            </div>\n" +
                                         "                        </li>";
@@ -134,7 +135,6 @@ $(document).ready(function () {
                     search_key: $("#search-chat-room-key").val()
                 },
                 success: function (response) {
-                    console.log(response);
                     if (response["verify_token"]) {
                         if (response["success"]) {
                             var htmlText = "";
@@ -180,7 +180,9 @@ $(document).ready(function () {
                                         "                                </div>\n" +
                                         "                                <div class=\"contact_sec\" style='max-width: 100%'>\n" +
                                         "                                    <strong class=\"primary-font\" style='font-weight: 500'>"
-                                        + friend['last_message'] + "</strong>\n" +
+                                        + friend['last_message'] + "</strong> <span\n" +
+                                        "                                        class=\"badge pull-right\" style='background-color: red'>"
+                                        + "</span>\n" +
                                         "                                </div>\n" +
                                         "                            </div>\n" +
                                         "                        </li>";
@@ -219,7 +221,6 @@ $(document).ready(function () {
                     number_of_messages: 10
                 },
                 success: function (response) {
-                    console.log(response);
                     if (response["verify_token"]) {
                         if (response["success"]) {
                             var htmlText = "";
@@ -311,6 +312,7 @@ $(document).ready(function () {
                 userID: window.localStorage.getItem("userID")
             }));
             chat.updateChatScreenAfterSent(message, $("#list-message").data("roomID"));
+            $("#message-content").val("");
         };
 
         chat.updateChatScreenAfterSent = function (mess, roomID) {
@@ -323,7 +325,6 @@ $(document).ready(function () {
 
             htmlText += $("#list-chat li[data-room-id='" + roomID + "']").html();
             htmlText += "</li>";
-            console.log(htmlText);
             $("#list-chat li[data-room-id='" + roomID + "']").remove();
 
             htmlText += $("#list-chat").html();
@@ -379,16 +380,26 @@ $(document).ready(function () {
         };
 
         chat.receiveMessfromCurrentChatWindow = function (mess) {
-            var contactBox;
-            var chatBox;
-            var room = mess["roomID"];
-            console.log(mess);
-            var userID = window.localStorage.getItem("userID");
-            var previousUserID = $("#list-message").data("previousUserSentID");
-            console.log(previousUserID);
-            var htmlText = $("#list-message").html();
+
             var time = mess['sending_time'] ?
                 mess['sending_time'].split(" ")[1].split(":")[0] + ":" + mess['sending_time'].split(" ")[1].split(":")[1] : "";
+
+            var room = mess["roomID"];
+            var currentdate = new Date();
+            $("#list-chat li[data-room-id='" + room + "'] .chat-body .contact_sec strong").html(mess["message"]);
+            $("#list-chat li[data-room-id='" + room + "'] .chat-body .header_sec .pull-right").html(time);
+            var htmlText = "<li class=\"left clearfix contact-box\" data-room-id='" + room + "'>\n";
+
+            htmlText += $("#list-chat li[data-room-id='" + room + "']").html();
+            htmlText += "</li>";
+            $("#list-chat li[data-room-id='" + room + "']").remove();
+
+
+            htmlText += $("#list-chat").html();
+            $("#list-chat").html(htmlText);
+
+            var previousUserID = $("#list-message").data("previousUserSentID");
+            var htmlText = $("#list-message").html();
             if (mess["from_userID"] != previousUserID) {
 
                 htmlText += "<li class=\"left clearfix\">\n" +
@@ -421,7 +432,23 @@ $(document).ready(function () {
         };
 
         chat.receiveMessfromOtherChatWindow = function (mess) {
-            console.log(999);
+            var currentdate = new Date();
+            var time = currentdate.getHours() + ":" + currentdate.getMinutes();
+            var roomID = mess["roomID"];
+            $("#list-chat li[data-room-id='" + roomID + "'] .chat-body .contact_sec strong").html(mess["message"]);
+            $("#list-chat li[data-room-id='" + roomID + "'] .chat-body .contact_sec strong").css("font-weight",700);
+            var unread = $("#list-chat li[data-room-id='" + roomID + "'] .chat-body .contact_sec span").html();
+            $("#list-chat li[data-room-id='" + roomID + "'] .chat-body .contact_sec span").html(1 + (+unread));
+            $("#list-chat li[data-room-id='" + roomID + "'] .chat-body .header_sec .pull-right").html(time);
+            var htmlText = "<li class=\"left clearfix contact-box\" data-room-id='" + roomID + "'>\n";
+
+            htmlText += $("#list-chat li[data-room-id='" + roomID + "']").html();
+            htmlText += "</li>";
+            $("#list-chat li[data-room-id='" + roomID + "']").remove();
+
+
+            htmlText += $("#list-chat").html();
+            $("#list-chat").html(htmlText);
         };
 
         return chat;
@@ -436,6 +463,8 @@ $(document).ready(function () {
         });
 
         $("body").on("click", ".contact-box", function (e) {
+            $(this).find(".contact_sec strong").css("font-weight",500);
+            $(this).find(".contact_sec span").html("");
             Chat.getRecentMessage($(this).data("room-id"));
             e.stopPropagation();
         });
@@ -456,7 +485,6 @@ $(document).ready(function () {
 
         ws.onmessage = function (event) {
             var data = $.parseJSON(event.data);
-            console.log(data);
             Chat.handleMessage(data);
         };
     });
