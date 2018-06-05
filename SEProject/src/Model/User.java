@@ -8,9 +8,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Helper.Convertor;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.sql.*;
 import Helper.EmailSender;
+import sun.misc.BASE64Decoder;
 
+import javax.imageio.ImageIO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -967,6 +973,109 @@ public class User {
         }//end try
         returnNode.put("user_list", userArrayNode);
         return returnNode;
+    }
+
+    public static boolean editProfile(int userID, String userName, String DOB, String phoneNumber){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            String sql = "UPDATE user_info "
+                    + "SET user_name = ?, DOB = ?, phone_number = ? "
+                    + "WHERE userID = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userName);
+            pstmt.setString(2, DOB);
+            pstmt.setString(3, phoneNumber);
+            pstmt.setInt(4, userID);
+
+            pstmt.executeUpdate();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
+
+    public static boolean uploadProfilePicture(int userID, StringBuilder buffer){
+        //save file
+        try {
+            BufferedImage image = null;
+            byte[] imageByte;
+
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(buffer.toString().split(",")[1]);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+
+            // write the image to a file
+            File outputfile = new File("/home/hungphan/Data/Java Workspace/SE Project/master/SEProject/out/artifacts/SEProject_war_exploded/image/profile/" + userID);
+            ImageIO.write(image, "png", outputfile);
+        }
+        catch (Exception e){
+            return false;
+        }
+
+        //update database
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            String sql = "UPDATE user_info "
+                    + "SET profile_picture = ? "
+                    + "WHERE userID = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "/image/profile/" + userID);
+            pstmt.setInt(2, userID);
+
+            pstmt.executeUpdate();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+
     }
 
 
