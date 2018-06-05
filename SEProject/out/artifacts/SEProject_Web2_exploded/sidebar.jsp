@@ -8,17 +8,17 @@
 
         <ul class="list-unstyled components">
             <li class=<%=request.getRequestURL().toString().contains("Chat.jsp")?"active":""%>>
-                <a href="#homeSubmenu">
+                <a href="/get-chat-room-list">
                     <i class="glyphicon glyphicon-comment"></i>
                 </a>
             </li>
             <li class=<%=request.getRequestURL().toString().contains("Contact.jsp")?"active":""%>>
-                <a href="#pageSubmenu">
+                <a href="/get-friend-list">
                     <i class="fa fa-address-book-o"></i>
                 </a>
             </li>
-            <li class=<%=request.getRequestURL().toString().contains("get-friend-request")?"active":""%>>
-                <a href="#">
+            <li class=<%=request.getRequestURL().toString().contains("Request.jsp")?"active":""%>>
+                <a href="/get-request-list">
                     <i class="icon fa fa-user-plus"></i>
                 </a>
             </li>

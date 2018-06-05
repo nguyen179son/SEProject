@@ -76,6 +76,17 @@
 
 
     <servlet>
+        <servlet-name>edit_my_profile</servlet-name>
+        <servlet-class>Controller.myprofile.EditMyProfile</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>edit_my_profile</servlet-name>
+        <url-pattern>/edit-my-profile</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>search_friend</servlet-name>
         <servlet-class>Controller.friend.management.SearchFriend</servlet-class>
     </servlet>
