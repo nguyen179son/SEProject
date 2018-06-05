@@ -167,7 +167,7 @@ public class ChatRoom {
             String sql = "SELECT message, from_userID, sending_time from chat_room, message " +
                     "WHERE chat_room.roomID = ? " +
                     "AND chat_room.userID = ? " +
-                    "AND chat_room.roomID = message.roomID ORDER BY sending_time DESC " +
+                    "AND chat_room.roomID = message.roomID ORDER BY sending_time " +
                     "LIMIT ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, roomID);
@@ -303,5 +303,60 @@ public class ChatRoom {
         }//end try
         return true;
     }
-    
+
+    public static boolean addMessage(int roomID, Message message){
+        Connection conn = null;
+        Statement stmt = null;
+
+        try {
+            conn = DatabaseConnection.getConnection();
+            conn.setAutoCommit(false);
+            String sql = "UPDATE chat_room " +
+                    "SET unread_message = (unread_message + 1) " +
+                    "WHERE roomID = ? AND userID != ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, roomID);
+            pstmt.setInt(2, message.getFromUserID());
+            pstmt.executeUpdate();
+            sql = "INSERT INTO message VALUES (?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, roomID);
+            pstmt.setString(2, message.getMessage());
+            pstmt.setInt(3, message.getFromUserID());
+            pstmt.setString(4, message.getSending_time().toString());
+            pstmt.executeUpdate();
+            conn.commit();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            try{
+                conn.rollback();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
+
+
+
 }

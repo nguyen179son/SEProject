@@ -2,6 +2,7 @@
 
 import Helper.JWTHandler;
 import Model.ChatRoom;
+import Model.Message;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -60,17 +61,21 @@ public class ChatServer {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode messageJSON = mapper.readTree(message);
         ObjectNode returnMessageJSON = mapper.createObjectNode();
+        Timestamp sendingTime = new Timestamp(System.currentTimeMillis());
 
         returnMessageJSON.put("roomID", messageJSON.get("roomID").asInt());
         returnMessageJSON.put("from_userID", (Integer) session.getUserProperties().get("userID"));
         returnMessageJSON.put("message", messageJSON.get("message").textValue());
-        returnMessageJSON.put("sending_time", new Timestamp(System.currentTimeMillis()).toString());
+        returnMessageJSON.put("sending_time", sendingTime.toString());
         HashSet<Session> sessionList = sessionMap.get((messageJSON.get("roomID").asInt()));
 
         for(Session userSession : sessionList){
             if (!userSession.getId().equals(session.getId()))
                 userSession.getBasicRemote().sendText(returnMessageJSON.toString());
         }
+
+        Message newMessage = new Message(messageJSON.get("message").textValue(), (Integer) session.getUserProperties().get("userID"), sendingTime);
+        ChatRoom.addMessage(messageJSON.get("roomID").asInt(), newMessage);
 
     }
 }
