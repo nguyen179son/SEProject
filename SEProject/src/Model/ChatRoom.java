@@ -149,14 +149,13 @@ public class ChatRoom {
         return returnJSON;
     }
 
-    public static ObjectNode loadMessage(int id, int roomID, int numberOfMessages) {
+    public static ObjectNode loadMessage(int id, int roomID, int requestNumberOfMessages) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         ArrayNode messageListJSON = mapper.createArrayNode();
         ArrayNode userInfoListJSON = mapper.createArrayNode();
+        int numberOfMessages = 0;
 
-        returnJSON.put("roomID", roomID);
-        returnJSON.put("number_of_messages", numberOfMessages);
 
         Connection conn = null;
         Statement stmt = null;
@@ -172,9 +171,10 @@ public class ChatRoom {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, roomID);
             pstmt.setInt(2, id);
-            pstmt.setInt(3, numberOfMessages);
+            pstmt.setInt(3, requestNumberOfMessages);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()){
+                numberOfMessages++;
                 Message message = new Message(rs.getString("message"), rs.getInt("from_userID"), rs.getTimestamp("sending_time"));
                 messageListJSON.add(message.toJSON());
             }
@@ -216,6 +216,9 @@ public class ChatRoom {
                 se.printStackTrace();
             }//end finally try
         }//end try
+
+        returnJSON.put("roomID", roomID);
+        returnJSON.put("number_of_messages", numberOfMessages);
         returnJSON.put("userInfo_list", userInfoListJSON);
         returnJSON.put("message_list", messageListJSON);
         return returnJSON;
