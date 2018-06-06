@@ -501,7 +501,6 @@ $(document).ready(function () {
             $.ajax({
                 url: "/create-chat-room",
                 type: "post",
-                datatype: 'json',
                 data: {
                     token: window.localStorage.getItem("token"),
                     userID_list: userSelected
@@ -509,7 +508,6 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response["verify_token"]) {
                         if (response["success"]) {
-                            console.log(response);
 
                         }
                         else {

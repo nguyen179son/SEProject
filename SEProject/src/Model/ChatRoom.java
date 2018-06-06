@@ -149,14 +149,13 @@ public class ChatRoom {
         return returnJSON;
     }
 
-    public static ObjectNode loadMessage(int id, int roomID, int numberOfMessages) {
+    public static ObjectNode loadMessage(int id, int roomID, int requestNumberOfMessages) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         ArrayNode messageListJSON = mapper.createArrayNode();
         ArrayNode userInfoListJSON = mapper.createArrayNode();
+        int numberOfMessages = 0;
 
-        returnJSON.put("roomID", roomID);
-        returnJSON.put("number_of_messages", numberOfMessages);
 
         Connection conn = null;
         Statement stmt = null;
@@ -172,9 +171,10 @@ public class ChatRoom {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, roomID);
             pstmt.setInt(2, id);
-            pstmt.setInt(3, numberOfMessages);
+            pstmt.setInt(3, requestNumberOfMessages);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()){
+                numberOfMessages++;
                 Message message = new Message(rs.getString("message"), rs.getInt("from_userID"), rs.getTimestamp("sending_time"));
                 messageListJSON.add(message.toJSON());
             }
@@ -216,6 +216,9 @@ public class ChatRoom {
                 se.printStackTrace();
             }//end finally try
         }//end try
+
+        returnJSON.put("roomID", roomID);
+        returnJSON.put("number_of_messages", numberOfMessages);
         returnJSON.put("userInfo_list", userInfoListJSON);
         returnJSON.put("message_list", messageListJSON);
         return returnJSON;
@@ -257,36 +260,54 @@ public class ChatRoom {
         return roomArrayJSON;
     }
 
-    public static boolean createChatRoom(int id, int[] userIDList){
+    public static int createChatRoom(int id, int[] userIDList){
         Connection conn = null;
         Statement stmt = null;
-        int roomID = 0;
+        ResultSet rs = null;
+        int roomID = -1;
+        boolean flag = true;
 
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
-            //get new roomID
-            String sql = "SELECT roomID from chat_room  ORDER BY roomID DESC limit 1";
-            ResultSet rs = stmt.executeQuery(sql);
-            if(rs.next())
-                roomID = rs.getInt("roomID") + 1;
+            if(userIDList.length == 1) {
+                String sql = "SELECT CR.roomID from chat_room AS CR WHERE CR.roomID IN " +
+                                      "(SELECT CR1.roomID " +
+                                      "FROM chat_room  as CR1, chat_room as CR2 " +
+                                        "WHERE CR1.userID = " + id +
+                                        " AND CR2.userID = " + userIDList[0] +
+                                        " AND CR1.roomID = CR2.roomID) " +
+                            "GROUP BY (roomID) HAVING count(roomID) = 2";
+                rs = stmt.executeQuery(sql);
+                if (rs.next()){
+                    roomID =  rs.getInt("roomID");
+                    flag = false;
+                }
+            }
 
-            //prepare sql value
-            String sqlTmpParam = "(" + roomID + "," + id + "),";
-            for(int i = 0; i < userIDList.length; i ++)
-                sqlTmpParam += "(" + roomID + "," + userIDList[i] + "),";
-            String sqlParam = sqlTmpParam.substring(0, sqlTmpParam.length()-1);         //remove last character ','
+            if(flag) {
+                String sql = "SELECT roomID from chat_room  ORDER BY roomID DESC limit 1";
+                rs = stmt.executeQuery(sql);
+                if (rs.next())
+                    roomID = rs.getInt("roomID") + 1;
 
-            sql = "INSERT INTO chat_room (roomID, userID) VALUES " + sqlParam;
-            stmt.executeUpdate(sql);
+                //prepare sql value
+                String sqlTmpParam = "(" + roomID + "," + id + "),";
+                for (int i = 0; i < userIDList.length; i++)
+                    sqlTmpParam += "(" + roomID + "," + userIDList[i] + "),";
+                String sqlParam = sqlTmpParam.substring(0, sqlTmpParam.length() - 1);         //remove last character ','
+
+                sql = "INSERT INTO chat_room (roomID, userID) VALUES " + sqlParam;
+                stmt.executeUpdate(sql);
+            }
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-            return false;
+            return -1;
         } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-            return false;
+            return -1;
         } finally {
             //finally block used to close resources
             try {
@@ -301,7 +322,7 @@ public class ChatRoom {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        return true;
+        return roomID;
     }
 
     public static boolean addMessage(int roomID, Message message){
@@ -357,6 +378,41 @@ public class ChatRoom {
         return true;
     }
 
+    public static boolean seenMessage(int id, int roomID){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            String sql  = "UPDATE chat_room SET unread_message = 0 " +
+                    "WHERE roomID =" + roomID +
+                    " AND userID = " + id;
+
+            stmt.executeUpdate(sql);
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
 
 
 }

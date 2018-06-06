@@ -16,17 +16,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(name = "create-chat-room")
-public class CreateChatRoom extends HttpServlet {
+@WebServlet(name = "seen-message")
+public class SeenMessage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
-        String[] userIDListParam = request.getParameterValues("userID_list[]");
+        int roomID = Integer.parseInt(request.getParameter("roomID"));
 
-        int[] userIDListInteger = new int[userIDListParam.length];
-        for(int i = 0; i < userIDListInteger.length; i ++) {
-            userIDListInteger[i] = Integer.parseInt(userIDListParam[i]);
-        }
 
 
         ObjectMapper mapper = new ObjectMapper();
@@ -45,12 +41,8 @@ public class CreateChatRoom extends HttpServlet {
         else {
             objectNode1.put("verify_token", true);
             objectNode1.put("success", true);
-            int roomID = ChatRoom.createChatRoom(userID, userIDListInteger);
-            if(roomID < 0)
+            if(!ChatRoom.seenMessage(userID, roomID))
                 objectNode1.put("success", false);          //internal error from server
-            else{
-                objectNode1.put("roomID", roomID);
-            }
         }
 
         PrintWriter wr = response.getWriter();
