@@ -149,7 +149,7 @@ public class ChatRoom {
         return returnJSON;
     }
 
-    public static ObjectNode loadMessage(int id, int roomID, int nequestNumberOfMessages) {
+    public static ObjectNode loadMessage(int id, int roomID, int requestNumberOfMessages) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         ArrayNode messageListJSON = mapper.createArrayNode();
@@ -171,7 +171,7 @@ public class ChatRoom {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, roomID);
             pstmt.setInt(2, id);
-            pstmt.setInt(3, nequestNumberOfMessages);
+            pstmt.setInt(3, requestNumberOfMessages);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()){
                 numberOfMessages++;
