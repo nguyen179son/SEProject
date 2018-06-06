@@ -45,8 +45,12 @@ public class CreateChatRoom extends HttpServlet {
         else {
             objectNode1.put("verify_token", true);
             objectNode1.put("success", true);
-            if(!ChatRoom.createChatRoom(userID, userIDListInteger))
+            int roomID = ChatRoom.createChatRoom(userID, userIDListInteger);
+            if(roomID < 0)
                 objectNode1.put("success", false);          //internal error from server
+            else{
+                objectNode1.put("roomID", roomID);
+            }
         }
 
         PrintWriter wr = response.getWriter();
