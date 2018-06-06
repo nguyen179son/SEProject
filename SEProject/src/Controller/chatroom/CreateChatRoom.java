@@ -21,7 +21,7 @@ public class CreateChatRoom extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
-        String[] userIDListParam = request.getParameterValues("userID_list");
+        String[] userIDListParam = request.getParameterValues("userID_list[]");
 
         int[] userIDListInteger = new int[userIDListParam.length];
         for(int i = 0; i < userIDListInteger.length; i ++) {

@@ -167,9 +167,31 @@
             <div class="row">
                 <div class="new_message_head">
                     <div class="pull-left">
-                        <button><i class="fa fa-plus-square-o" aria-hidden="true"></i> New Message</button>
+                        <button id="new-message"><i class="fa fa-plus-square-o" aria-hidden="true">
+
+                        </i> New Message</button>
+
                     </div>
                 </div><!--new_message_head-->
+                        <div class="modal fade" id="newChatRoom" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Add friends to new chat room</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success" id="create-chat-room">Create room chat</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
 
                 <div class="chat_area">
                     <ul class="list-unstyled" id="list-message">
