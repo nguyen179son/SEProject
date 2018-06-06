@@ -49,16 +49,7 @@ public class CreateChatRoom extends HttpServlet {
             if(roomID < 0)
                 objectNode1.put("success", false);          //internal error from server
             else{
-                objectNode1 = ChatRoom.loadMessage(userID, roomID, 20);
-                if (objectNode1 == null){
-                    objectNode1 = mapper.createObjectNode();
-                    objectNode1.put("verify_token", true);  //internal error from server
-                    objectNode1.put("success", false);
-                }
-                else {
-                    objectNode1.put("verify_token", true);
-                    objectNode1.put("success", true);
-                }
+                objectNode1.put("roomID", roomID);
             }
         }
 
