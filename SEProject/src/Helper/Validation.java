@@ -134,26 +134,36 @@ public class Validation {
         return result;
     }
 
-    public static String UserGetNewPasswordValidation(String email, String confirm_code, String password, String confirm_password) {
-        String Validation_result = "";
+    public static ObjectNode UserGetNewPasswordValidation(String email, String confirm_code, String password, String confirm_password) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        result.put("valid", true);
+        ArrayNode errorMessage = mapper.createArrayNode();
+
 
         if (Validation.UniqueEmailValidation(email)){
-            Validation_result+="- Email doesn't exist<br/>";
+            result.put("valid", false);
+            errorMessage.add("Email doesn't exist");
         }
 
         if(!checkConfirmationCode(email, confirm_code)){
-            Validation_result+="- Incorrect Confirmation Code<br/>";
+            result.put("valid", false);
+            errorMessage.add("Incorrect Confirmation Code");
         }
 
         if (!Validation.passwordValidation(password)) {
-            Validation_result += "- Password must contain at " +
-                    "least eight characters, at least one number and both lower and uppercase letters and special characters<br/>";
+            result.put("valid", false);
+            errorMessage.add("Password must contain at " +
+                    "least eight characters, at least one number and both lower and uppercase letters and special characters");
         }
 
         if (!Validation.passwordConfirm(password,confirm_password)){
-            Validation_result+="- Confirm password does not match<br/>";
+            result.put("valid", false);
+            errorMessage.add("Confirm password does not match");
         }
-        return Validation_result;
+
+        result.put("error_message", errorMessage);
+        return result;
     }
 
     public static boolean UniqueEmailValidation(String email) {

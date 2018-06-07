@@ -24,20 +24,21 @@ public class GetNewPassword extends HttpServlet {
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        objectNode1.put("success", true);
 
-        String validation_result = Validation.UserGetNewPasswordValidation(email, confirm_code, password, confirm_password);
-        if (validation_result.equals("")) {
-            if (User.updateNewPassword(email, password))
-                objectNode1.put("success", true);
+        ObjectNode validationResult = Validation.UserGetNewPasswordValidation(email, confirm_code, password, confirm_password);
+        if (validationResult.get("valid").asBoolean()) {
+            if (User.updateNewPassword(email, password)) {
+                objectNode1.put("valid", true);
+            }
             else {
-                objectNode1.put("success", false);
-                objectNode1.put("error_message", "Internal Server Error");
+                objectNode1.put("success", false);              //internal error from server
             }
         } else {
-            objectNode1.put("success", false);
-            objectNode1.put("error_message", validation_result);
-
+            objectNode1.put("valid", false);
+            objectNode1.put("error_message", validationResult.get("error_message"));
         }
+
 
         PrintWriter wr = response.getWriter();
         wr.write(objectNode1.toString());
