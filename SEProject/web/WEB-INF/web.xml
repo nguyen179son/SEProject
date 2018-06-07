@@ -96,6 +96,16 @@
         <url-pattern>/edit-my-profile</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>api/change_pass_word</servlet-name>
+        <servlet-class>Controller.myprofile.ChangePassword</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>api/change_pass_word</servlet-name>
+        <url-pattern>/api/change-password</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>search_friend</servlet-name>
