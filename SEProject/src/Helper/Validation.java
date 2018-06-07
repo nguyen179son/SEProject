@@ -98,30 +98,40 @@ public class Validation {
         return returnValue;
     }
 
-    public static String UserRegisterValidation(String nickname, String email, String password, String confirm_password) {
-        String Validation_result = "";
+    public static ObjectNode UserRegisterValidation(String nickname, String email, String password, String confirm_password) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        result.put("valid", true);
+        ArrayNode errorMessage = mapper.createArrayNode();
+
 
         if (!Validation.nicknameValidation(nickname)) {
-            Validation_result += "- Nickname must have less than 255 characters<br/>";
+            result.put("valid", false);
+            errorMessage.add("Nickname must have less than 255 characters");
         }
 
         if (!Validation.EmailFormValidation(email)) {
-            Validation_result += "- Email input has wrong form<br/>";
+            result.put("valid", false);
+            errorMessage.add("Email input has wrong form");
         }
 
         if (!Validation.UniqueEmailValidation(email)){
-            Validation_result+="- Email already existed<br/>";
+            result.put("valid", false);
+            errorMessage.add("Email already existed");
         }
 
         if (!Validation.passwordValidation(password)) {
-            Validation_result += "- Password must contain at " +
-                    "least eight characters, at least one number and both lower and uppercase letters and special characters<br/>";
+            result.put("valid", false);
+            errorMessage.add("Password must contain at " +
+                    "least eight characters, at least one number and both lower and uppercase letters and special characters");
         }
 
         if (!Validation.passwordConfirm(password,confirm_password)){
-            Validation_result+="- Confirm password does not match<br/>";
+            result.put("valid", false);
+            errorMessage.add("Confirm password does not match");
         }
-        return Validation_result;
+        result.put("error_message", errorMessage);
+        return result;
     }
 
     public static String UserGetNewPasswordValidation(String email, String confirm_code, String password, String confirm_password) {
@@ -230,7 +240,7 @@ public class Validation {
 
         if(!Validation.UserLoginValidation(userID, currentPassword)) {
             result.put("valid", false);
-            errorMessage.add("Email and password does not match");
+            errorMessage.add("Incorrect password");
         }
         if (!Validation.passwordValidation(newPassword)) {
             result.put("valid", false);
@@ -246,5 +256,4 @@ public class Validation {
 
         return result;
     }
-
 }
