@@ -26,7 +26,7 @@ public class GetNewPassword extends HttpServlet {
         ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
         objectNode1.put("success", true);
 
-        ObjectNode validationResult = Validation.UserGetNewPasswordValidation(email, confirm_code, password, confirm_password);
+        ObjectNode validationResult = Validation.newPasswordValidation(email, confirm_code, password, confirm_password);
         if (validationResult.get("valid").asBoolean()) {
             if (User.updateNewPassword(email, password)) {
                 objectNode1.put("valid", true);

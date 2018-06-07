@@ -24,7 +24,7 @@ public class Login extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
 
-        if (Validation.UserLoginValidation(email, password)) {
+        if (Validation.loginValidation(email, password)) {
             //getSession to take redirect_url
             HttpSession session = request.getSession();
 
