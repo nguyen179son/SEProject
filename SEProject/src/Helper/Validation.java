@@ -14,7 +14,7 @@ public class Validation {
     // JDBC driver name and database URL
 
 
-    public static boolean UserLoginValidation(String user_name, String password) {
+    public static boolean loginValidation(String user_name, String password) {
         //Connection conn = null;
         Connection conn = null;
         Statement stmt = null;
@@ -56,7 +56,7 @@ public class Validation {
         return returnValue;
     }
 
-    public static boolean UserLoginValidation(int userID, String password) {
+    public static boolean loginValidation(int userID, String password) {
         //Connection conn = null;
         Connection conn = null;
         Statement stmt = null;
@@ -98,7 +98,7 @@ public class Validation {
         return returnValue;
     }
 
-    public static ObjectNode UserRegisterValidation(String nickname, String email, String password, String confirm_password) {
+    public static ObjectNode registerValidation(String nickname, String email, String password, String confirm_password) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         result.put("valid", true);
@@ -110,12 +110,12 @@ public class Validation {
             errorMessage.add("Nickname must have less than 255 characters");
         }
 
-        if (!Validation.EmailFormValidation(email)) {
+        if (!Validation.emailFormValidation(email)) {
             result.put("valid", false);
             errorMessage.add("Email input has wrong form");
         }
 
-        if (!Validation.UniqueEmailValidation(email)){
+        if (!Validation.uniqueEmailValidation(email)){
             result.put("valid", false);
             errorMessage.add("Email already existed");
         }
@@ -134,14 +134,14 @@ public class Validation {
         return result;
     }
 
-    public static ObjectNode UserGetNewPasswordValidation(String email, String confirm_code, String password, String confirm_password) {
+    public static ObjectNode newPasswordValidation(String email, String confirm_code, String password, String confirm_password) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         result.put("valid", true);
         ArrayNode errorMessage = mapper.createArrayNode();
 
 
-        if (Validation.UniqueEmailValidation(email)){
+        if (Validation.uniqueEmailValidation(email)){
             result.put("valid", false);
             errorMessage.add("Email doesn't exist");
         }
@@ -166,7 +166,7 @@ public class Validation {
         return result;
     }
 
-    public static boolean UniqueEmailValidation(String email) {
+    public static boolean uniqueEmailValidation(String email) {
         if (email == null) return false;
         //Connection conn = null;
         Connection conn = null;
@@ -214,7 +214,7 @@ public class Validation {
         return nickname.length() < 255 && nickname.length() != 0;
     }
 
-    public static boolean EmailFormValidation(String email) {
+    public static boolean emailFormValidation(String email) {
         if (email == null) return false;
         Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile( "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
@@ -242,13 +242,38 @@ public class Validation {
         else return false;
     }
 
+    public static boolean phoneNumberValidation(String phoneNumber){
+        if(phoneNumber.length() > 20)
+            return false;
+        try{
+            Integer.parseInt(phoneNumber);
+        }
+        catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean dobValidation(String DOB){
+        String[] components = DOB.split("-");
+        if(components.length != 3) return false;
+        try{
+            if((Integer.parseInt(components[0]) <= 0) || (Integer.parseInt(components[1]) <= 0) || (Integer.parseInt(components[0]) <= 0))
+                return false;
+        }
+        catch(Exception e){
+            return false;
+        }
+        return true;
+    }
+
     public static ObjectNode changePasswordValidation(int userID, String currentPassword, String newPassword, String confirmPassword) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
         result.put("valid", true);
         ArrayNode errorMessage = mapper.createArrayNode();
 
-        if(!Validation.UserLoginValidation(userID, currentPassword)) {
+        if(!Validation.loginValidation(userID, currentPassword)) {
             result.put("valid", false);
             errorMessage.add("Incorrect password");
         }
@@ -266,4 +291,31 @@ public class Validation {
 
         return result;
     }
+
+    public static ObjectNode profileValidation(String userName, String phoneNumber, String DOB) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        result.put("valid", true);
+        ArrayNode errorMessage = mapper.createArrayNode();
+
+        if (!Validation.nicknameValidation(userName)) {
+            result.put("valid", false);
+            errorMessage.add("Nickname must have less than 255 characters");
+        }
+
+        if (!Validation.phoneNumberValidation(phoneNumber)) {
+            result.put("valid", false);
+            errorMessage.add("Invalid phone number");
+        }
+
+        if (!Validation.dobValidation(DOB)) {
+            result.put("valid", false);
+            errorMessage.add("Invalid date of birth");
+        }
+
+        result.put("error_message", errorMessage);
+
+        return result;
+    }
+
 }

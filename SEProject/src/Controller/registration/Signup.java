@@ -26,7 +26,7 @@ public class Signup extends HttpServlet {
         ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
         objectNode1.put("success", true);
 
-        ObjectNode validationResult = Validation.UserRegisterValidation(nickname, email, password, confirm_password);
+        ObjectNode validationResult = Validation.registerValidation(nickname, email, password, confirm_password);
         if (validationResult.get("valid").asBoolean()) {
             User user = new User(email, password, nickname);
             if(user.save()){

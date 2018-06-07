@@ -39,8 +39,16 @@ public class EditMyProfile extends HttpServlet {
         else {
             objectNode1.put("verify_token", true);
             objectNode1.put("success", true);
+            ObjectNode validationResult = Validation.profileValidation(userName, phoneNumber, DOB);
+            if(validationResult.get("valid").asBoolean()){
+                if(!User.editProfile(userID, userName, DOB,phoneNumber))
+                    objectNode1.put("success", false);              //internal error from server
+                else
+                    objectNode1.put("valid", true);
+            }
             if(!User.editProfile(userID, userName, DOB,phoneNumber))
-                objectNode1.put("success", false);              //internal error from server
+                objectNode1.put("valid", false);
+               objectNode1.put("error_message", validationResult.get("error_message"));
         }
 
         PrintWriter wr = response.getWriter();
