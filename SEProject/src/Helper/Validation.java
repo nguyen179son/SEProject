@@ -2,6 +2,8 @@ package Helper;
 
 import Model.DatabaseConnection;
 import Model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.sql.*;
@@ -54,30 +56,82 @@ public class Validation {
         return returnValue;
     }
 
-    public static String UserRegisterValidation(String nickname, String email, String password, String confirm_password) {
-        String Validation_result = "";
+    public static boolean UserLoginValidation(int userID, String password) {
+        //Connection conn = null;
+        Connection conn = null;
+        Statement stmt = null;
+        boolean returnValue = false;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            String sql;
+            sql = "SELECT * FROM user_info WHERE userID = " + userID + " AND password=\"" + password + "\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            if (!rs.next()) {
+                returnValue = false;
+            } else {
+                returnValue = true;
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return returnValue;
+    }
+
+    public static ObjectNode UserRegisterValidation(String nickname, String email, String password, String confirm_password) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        result.put("valid", true);
+        ArrayNode errorMessage = mapper.createArrayNode();
+
 
         if (!Validation.nicknameValidation(nickname)) {
-            Validation_result += "- Nickname must have less than 255 characters<br/>";
+            result.put("valid", false);
+            errorMessage.add("Nickname must have less than 255 characters");
         }
 
         if (!Validation.EmailFormValidation(email)) {
-            Validation_result += "- Email input has wrong form<br/>";
+            result.put("valid", false);
+            errorMessage.add("Email input has wrong form");
         }
 
         if (!Validation.UniqueEmailValidation(email)){
-            Validation_result+="- Email already existed<br/>";
+            result.put("valid", false);
+            errorMessage.add("Email already existed");
         }
 
         if (!Validation.passwordValidation(password)) {
-            Validation_result += "- Password must contain at " +
-                    "least eight characters, at least one number and both lower and uppercase letters and special characters<br/>";
+            result.put("valid", false);
+            errorMessage.add("Password must contain at " +
+                    "least eight characters, at least one number and both lower and uppercase letters and special characters");
         }
 
         if (!Validation.passwordConfirm(password,confirm_password)){
-            Validation_result+="- Confirm password does not match<br/>";
+            result.put("valid", false);
+            errorMessage.add("Confirm password does not match");
         }
-        return Validation_result;
+        result.put("error_message", errorMessage);
+        return result;
     }
 
     public static String UserGetNewPasswordValidation(String email, String confirm_code, String password, String confirm_password) {
@@ -176,5 +230,30 @@ public class Validation {
         if (confirmationCode.equals(user_info.get("confirm_code").textValue()))
             return true;
         else return false;
+    }
+
+    public static ObjectNode changePasswordValidation(int userID, String currentPassword, String newPassword, String confirmPassword) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        result.put("valid", true);
+        ArrayNode errorMessage = mapper.createArrayNode();
+
+        if(!Validation.UserLoginValidation(userID, currentPassword)) {
+            result.put("valid", false);
+            errorMessage.add("Incorrect password");
+        }
+        if (!Validation.passwordValidation(newPassword)) {
+            result.put("valid", false);
+            errorMessage.add("Password must contain at " +
+                    "least eight characters, at least one number and both lower and uppercase letters and special characters");
+        }
+
+        if (!Validation.passwordConfirm(newPassword, confirmPassword)){
+            result.put("valid", false);
+            errorMessage.add("Confirm password does not match");
+        }
+        result.put("error_message", errorMessage);
+
+        return result;
     }
 }
