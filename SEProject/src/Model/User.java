@@ -114,9 +114,10 @@ public class User {
     }
 
 
-    public void save() {
+    public boolean save() {
         Statement stmt = null;
         Connection conn = null;
+        boolean returnValue = true;
         try {
             conn = DatabaseConnection.getConnection();
             //STEP 4: Execute a query
@@ -133,9 +134,11 @@ public class User {
             conn.close();
         } catch (SQLException se) {
             //Handle errors for JDBC
+            returnValue = false;
             se.printStackTrace();
         } catch (Exception e) {
             //Handle errors for Class.forName
+            returnValue = false;
             e.printStackTrace();
         } finally {
             //finally block used to close resources
@@ -151,6 +154,7 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
+        return returnValue;
     }
 
     public static ObjectNode toUserJSON(ResultSet rs){

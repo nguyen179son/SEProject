@@ -24,15 +24,19 @@ public class Signup extends HttpServlet {
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        objectNode1.put("success", true);
 
-        String validation_result = Validation.UserRegisterValidation(nickname, email, password, confirm_password);
-        if (validation_result.equals("")) {
+        ObjectNode validationResult = Validation.UserRegisterValidation(nickname, email, password, confirm_password);
+        if (validationResult.get("valid").asBoolean()) {
             User user = new User(email, password, nickname);
-            user.save();
-            objectNode1.put("success", true);
+            if(user.save()){
+                objectNode1.put("valid", true);
+            }
+            else
+                objectNode1.put("success", false);              //internal error from server
         } else {
-            objectNode1.put("success", false);
-            objectNode1.put("error_message", validation_result);
+            objectNode1.put("valid", false);
+            objectNode1.put("error_message", validationResult.get("error_message"));
         }
 
         PrintWriter wr = response.getWriter();
