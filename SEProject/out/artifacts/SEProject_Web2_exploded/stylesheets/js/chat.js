@@ -469,7 +469,7 @@ $(document).ready(function () {
                         if (response["success"]) {
                             var htmlText = "<ul class='list-unstyled' id='friends-select'>";
                             response["friend_list"].forEach(function (friend) {
-                                htmlText += "<li class='left clearfix'><div class='pull-left'> <input type='checkbox' value=\"" + friend["userID"] + "\">" +
+                                htmlText += "<li class='left clearfix'><div class='pull-left'> <input type='checkbox' data-name=" + friend['user_name'] + " value=\"" + friend["userID"] + "\">" +
                                     "</div> <div class='pull-left'>" + friend['user_name'] + "</div> </li>";
                             });
                             htmlText += "</ul>";
@@ -494,10 +494,11 @@ $(document).ready(function () {
 
         chat.createChatRoom = function () {
             var userSelected = [];
-            $('#friends-select input:checked').each(function() {
+            var userName = [];
+            $('#friends-select input:checked').each(function () {
                 userSelected.push($(this).val());
+                userName.push($(this).data('name'));
             });
-            console.log(userSelected);
             $.ajax({
                 url: "/create-chat-room",
                 type: "post",
@@ -506,9 +507,47 @@ $(document).ready(function () {
                     userID_list: userSelected
                 },
                 success: function (response) {
+                    var htmlText = "";
                     if (response["verify_token"]) {
                         if (response["success"]) {
+                            $("#newChatRoom").modal("hide");
+                            if ($("li[data-room-id='" + response['roomID'] + "']").val() != null) {
+                                $("li[data-room-id='" + response['roomID'] + "']").click();
+                            }
+                            else {
+                                htmlText += "<li class=\"left clearfix contact-box\" data-room-id='" + response['roomID'] + "'>\n" +
+                                    "                     <span class=\"chat-img pull-left\">\n" +
+                                    "                     <img src=\"image/profile.png\"\n" +
+                                    "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
+                                    "                     </span>\n" +
+                                    "                            <div class=\"chat-body clearfix\">\n" +
+                                    "                                <div class=\"header_sec\" style='overflow: hidden'>\n" +
+                                    "                                    <strong class=\"primary-font\" style='white-space: nowrap'>";
+                                userName.forEach(function (user, i, array) {
+                                    if (i < array.length - 1) {
+                                        htmlText += user + ",";
+                                    }
+                                    else {
+                                        htmlText += user;
+                                    }
+                                });
 
+                                htmlText += "</strong> <strong class=\"pull-right\">\n"
+                                    + "                                    </strong>\n" +
+                                    "                                </div>\n" +
+                                    "                                <div class=\"contact_sec\" style='max-width: 100%'>\n" +
+                                    "                                    <strong class=\"primary-font\">" +
+                                    "</strong> <span\n" +
+                                    "                                        class=\"badge pull-right\" style='background-color: red'>"
+                                    + "</span>\n" +
+                                    "                                </div>\n" +
+                                    "                            </div>\n" +
+                                    "                        </li>";
+
+                                htmlText += $("#list-chat").html();
+                                $("#list-chat").html(htmlText);
+                                $("li[data-room-id='" + response['roomID'] + "']").click();
+                            }
                         }
                         else {
                             alert("INTERNAL ERROR");
@@ -530,6 +569,8 @@ $(document).ready(function () {
     }(window.jQuery, window, document));
 
     $(function () {
+
+
 
         $("body").onload = Chat.listChat();
 
@@ -572,8 +613,8 @@ $(document).ready(function () {
             Chat.loadFriendToChatRoom();
         });
 
-        $("body").on("click","#create-chat-room",function (e) {
-           Chat.createChatRoom();
+        $("body").on("click", "#create-chat-room", function (e) {
+            Chat.createChatRoom();
         });
     });
 });
