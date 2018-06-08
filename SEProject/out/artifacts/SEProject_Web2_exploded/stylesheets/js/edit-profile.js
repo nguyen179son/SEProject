@@ -56,8 +56,25 @@ $(document).ready(function () {
                     console.log(response);
                     if (response["verify_token"]) {
                         if (response["success"]) {
+                            if (response["valid"]) {
+                                window.location = "/get-my-profile";
+                            }
+                            else {
+                                var htmlText = "";
+                                response["error_message"].forEach(function (errorMess, i, array) {
+                                    if (i < array.length - 1) {
+                                        htmlText += errorMess + "<br>";
+                                    }
+                                    else {
+                                        htmlText += errorMess;
+                                    }
 
-                            // window.location = "/get-my-profile"
+                                });
+                                $("#error").html(htmlText);
+
+                                $("#error").show();
+
+                            }
                         }
                         else {
                             alert("INTERNAL ERROR");

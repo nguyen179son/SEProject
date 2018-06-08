@@ -3,11 +3,7 @@
     <nav id="sidebar" class="active">
         <div class="sidebar-header">
             <h3>Bootstrap Sidebar</h3>
-<<<<<<< HEAD
             <a href="/get-my-profile" id="profile-ava">
-=======
-            <a href="#" id="profile-ava">
->>>>>>> a7b38d38272b985fe3d52e5a7a689f19c91063d3
                 <img src="image/profile.png" class="center img-responsive" alt="profilepic" style="border-radius: 50%">
             </a>
         </div>
@@ -29,13 +25,18 @@
                 </a>
             </li>
             <li class=<%=request.getRequestURL().toString().contains("setting") ? "active" : ""%>>
-                <a href="#">
+                <a href="#extra-menu" data-toggle="collapse" aria-expanded="false">
                     <i class="icon fa fa-ellipsis-h"></i>
                 </a>
+                <ul class="collapse list-unstyled" id="extra-menu">
+                    <li><a href="/change-password">Change Password</a></li>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#" id="log-out">Sign out</a></li>
+                </ul>
             </li>
         </ul>
     </nav>
 
-    <!-- Page Content Holder -->
+    <script src="stylesheets/js/logout.js"></script>
 
 </div>

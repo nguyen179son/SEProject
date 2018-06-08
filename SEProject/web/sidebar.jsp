@@ -25,13 +25,18 @@
                 </a>
             </li>
             <li class=<%=request.getRequestURL().toString().contains("setting") ? "active" : ""%>>
-                <a href="#">
+                <a href="#extra-menu" data-toggle="collapse" aria-expanded="false">
                     <i class="icon fa fa-ellipsis-h"></i>
                 </a>
+                <ul class="collapse list-unstyled" id="extra-menu">
+                    <li><a href="/change-password">Change Password</a></li>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#" id="log-out">Sign out</a></li>
+                </ul>
             </li>
         </ul>
     </nav>
 
-    <!-- Page Content Holder -->
+    <script src="stylesheets/js/logout.js"></script>
 
 </div>

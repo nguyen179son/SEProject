@@ -44,10 +44,12 @@
                         All Conversations
                     </label>
                 </div>
-                <div class="member_list" id="member">
-                    <ul class="list-unstyled" id="list-chat">
+                <div class="member_list" id="member" >
+                    <div id="mem-list">
+                        <ul class="list-unstyled" id="list-chat">
 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
