@@ -88,7 +88,7 @@
     <div class="form-group">
         <div class="col-sm-7" style="text-align:right">
             Already Registered?
-            <a href="/home"> Sign In</a>
+            <a href="/"> Sign In</a>
             <br> <br>
         </div>
     </div>

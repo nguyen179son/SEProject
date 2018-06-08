@@ -259,6 +259,7 @@ $(document).ready(function () {
     }(window.jQuery, window, document));
 
     $(function () {
+
         $("body").onload = Contact.listContact();
         $("body").on("click", ".favorite", function (e) {
             e.preventDefault();
@@ -286,17 +287,17 @@ $(document).ready(function () {
             e.stopPropagation();
         });
 
-        $('#confirm-delete').on('click', '.btn-ok', function(e) {
+        $('#confirm-delete').on('click', '.btn-ok', function (e) {
             var $modalDiv = $(e.delegateTarget);
             var id = $(this).data('recordId');
             // $.ajax({url: '/api/record/' + id, type: 'DELETE'})
             // $.post('/api/record/' + id).then()
             Contact.deleteFriend(id, $modalDiv);
-            setTimeout(function() {
+            setTimeout(function () {
                 $modalDiv.modal('hide').removeClass('loading');
             }, 1000)
         });
-        $('#confirm-delete').on('show.bs.modal', function(e) {
+        $('#confirm-delete').on('show.bs.modal', function (e) {
             var data = $(e.relatedTarget).data();
             $('.title', this).text(data.recordTitle);
             $('.btn-ok', this).data('recordId', data.recordId);

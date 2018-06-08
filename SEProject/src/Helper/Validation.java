@@ -115,7 +115,7 @@ public class Validation {
             errorMessage.add("Email input has wrong form");
         }
 
-        if (!Validation.uniqueEmailValidation(email)){
+        if (!Validation.uniqueEmailValidation(email)) {
             result.put("valid", false);
             errorMessage.add("Email already existed");
         }
@@ -126,7 +126,7 @@ public class Validation {
                     "least eight characters, at least one number and both lower and uppercase letters and special characters");
         }
 
-        if (!Validation.passwordConfirm(password,confirm_password)){
+        if (!Validation.passwordConfirm(password, confirm_password)) {
             result.put("valid", false);
             errorMessage.add("Confirm password does not match");
         }
@@ -141,12 +141,12 @@ public class Validation {
         ArrayNode errorMessage = mapper.createArrayNode();
 
 
-        if (Validation.uniqueEmailValidation(email)){
+        if (Validation.uniqueEmailValidation(email)) {
             result.put("valid", false);
             errorMessage.add("Email doesn't exist");
         }
 
-        if(!checkConfirmationCode(email, confirm_code)){
+        if (!checkConfirmationCode(email, confirm_code)) {
             result.put("valid", false);
             errorMessage.add("Incorrect Confirmation Code");
         }
@@ -157,7 +157,7 @@ public class Validation {
                     "least eight characters, at least one number and both lower and uppercase letters and special characters");
         }
 
-        if (!Validation.passwordConfirm(password,confirm_password)){
+        if (!Validation.passwordConfirm(password, confirm_password)) {
             result.put("valid", false);
             errorMessage.add("Confirm password does not match");
         }
@@ -216,7 +216,7 @@ public class Validation {
 
     public static boolean emailFormValidation(String email) {
         if (email == null) return false;
-        Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile( "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
+        Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
     }
@@ -230,11 +230,11 @@ public class Validation {
     }
 
     public static boolean passwordConfirm(String password, String confirm_password) {
-        if(password == null || confirm_password == null) return false;
+        if (password == null || confirm_password == null) return false;
         return password.equals(confirm_password);
     }
 
-    public static boolean checkConfirmationCode(String email, String confirmationCode){
+    public static boolean checkConfirmationCode(String email, String confirmationCode) {
         if (confirmationCode == null) return false;
         ObjectNode user_info = User.getProfile(email);
         if (confirmationCode.equals(user_info.get("confirm_code").textValue()))
@@ -242,26 +242,25 @@ public class Validation {
         else return false;
     }
 
-    public static boolean phoneNumberValidation(String phoneNumber){
-        if(phoneNumber.length() > 20)
-            return false;
-        try{
-            Integer.parseInt(phoneNumber);
-        }
-        catch (Exception e){
-            return false;
-        }
-        return true;
+    public static boolean phoneNumberValidation(String phoneNumber) {
+        if (phoneNumber == null) return true;
+        Pattern VALID_PASSWORD = Pattern.compile("\\(?([0-9]{3})\\)?([ .-]?)([0-9]{3})\\2([0-9]{4})");
+        Matcher matcher = VALID_PASSWORD.matcher(phoneNumber);
+        if (matcher.find())
+            return true;
+        VALID_PASSWORD = Pattern.compile("\\(?([0-9]{4})\\)?([ .-]?)([0-9]{3})\\2([0-9]{4})");
+        matcher = VALID_PASSWORD.matcher(phoneNumber);
+        return matcher.find();
     }
 
-    public static boolean dobValidation(String DOB){
+    public static boolean dobValidation(String DOB) {
+        if (DOB == null) return true;
         String[] components = DOB.split("-");
-        if(components.length != 3) return false;
-        try{
-            if((Integer.parseInt(components[0]) <= 0) || (Integer.parseInt(components[1]) <= 0) || (Integer.parseInt(components[0]) <= 0))
+        if (components.length != 3) return false;
+        try {
+            if ((Integer.parseInt(components[0]) <= 0) || (Integer.parseInt(components[1]) <= 0) || (Integer.parseInt(components[0]) <= 0))
                 return false;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
@@ -273,7 +272,7 @@ public class Validation {
         result.put("valid", true);
         ArrayNode errorMessage = mapper.createArrayNode();
 
-        if(!Validation.loginValidation(userID, currentPassword)) {
+        if (!Validation.loginValidation(userID, currentPassword)) {
             result.put("valid", false);
             errorMessage.add("Incorrect password");
         }
@@ -283,7 +282,7 @@ public class Validation {
                     "least eight characters, at least one number and both lower and uppercase letters and special characters");
         }
 
-        if (!Validation.passwordConfirm(newPassword, confirmPassword)){
+        if (!Validation.passwordConfirm(newPassword, confirmPassword)) {
             result.put("valid", false);
             errorMessage.add("Confirm password does not match");
         }

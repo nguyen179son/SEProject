@@ -3,7 +3,11 @@
     <nav id="sidebar" class="active">
         <div class="sidebar-header">
             <h3>Bootstrap Sidebar</h3>
+<<<<<<< HEAD
+            <a href="/get-my-profile" id="profile-ava">
+=======
             <a href="#" id="profile-ava">
+>>>>>>> a7b38d38272b985fe3d52e5a7a689f19c91063d3
                 <img src="image/profile.png" class="center img-responsive" alt="profilepic" style="border-radius: 50%">
             </a>
         </div>
