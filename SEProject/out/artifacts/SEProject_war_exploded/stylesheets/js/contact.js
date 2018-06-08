@@ -259,6 +259,7 @@ $(document).ready(function () {
     }(window.jQuery, window, document));
 
     $(function () {
+
         $("body").onload = Contact.listContact();
         $("body").on("click", ".favorite", function (e) {
             e.preventDefault();

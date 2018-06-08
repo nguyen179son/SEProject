@@ -50,5 +50,6 @@ public class EditMyProfile extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("edit-profile.jsp").forward(request,response);
     }
 }

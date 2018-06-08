@@ -166,7 +166,7 @@ public class ChatRoom {
             String sql = "SELECT message, from_userID, sending_time from chat_room, message " +
                     "WHERE chat_room.roomID = ? " +
                     "AND chat_room.userID = ? " +
-                    "AND chat_room.roomID = message.roomID ORDER BY sending_time " +
+                    "AND chat_room.roomID = message.roomID ORDER BY sending_time DESC " +
                     "LIMIT ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, roomID);

@@ -1,8 +1,9 @@
 $(document).ready(function () {
 
-    var Profile = (function ($, window, document) {
-        var profile = {};
-        profile.getDetail = function () {
+    var EditProfile = (function ($, window, document) {
+        var editProfile = {};
+
+        editProfile.getDetail = function () {
             $('#pleaseWaitDialog').modal();
             $.ajax({
                 url: "/get-my-profile",
@@ -15,17 +16,13 @@ $(document).ready(function () {
                     if (response["verify_token"]) {
                         if (response["success"]) {
 
-                            $("#email").text(response['email']);
-                            $("#email").css("font-weight", 500);
+                            $("#email").val(response['email']);
 
-                            $("#nick-name").text(response['user_name']);
-                            $("#nick-name").css("font-weight", 500);
+                            $("#nick-name").val(response['user_name']);
 
-                            $("#phone").text(response['phone_number']);
-                            $("#phone").css("font-weight", 500);
+                            $("#phone").val(response['phone_number']);
 
-                            $("#dob").text(response['DOB']);
-                            $("#dob").css("font-weight", 500);
+                            $("#dob").val(response['DOB']);
                         }
                         else {
                             alert("INTERNAL ERROR");
@@ -42,11 +39,25 @@ $(document).ready(function () {
                 }
             });
         };
+
+        editProfile.submitEdit = function () {
+
+        };
         return profile;
     }(window.jQuery, window, document));
 
     $(function () {
-        $("#edit-profile").attr("href", "/edit-my-profile");
-        $('body').onload = Profile.getDetail();
+        $('.datepicker').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+        $('body').onload = EditProfile.getDetail();
+
+        $("body").on("keypress", "#datepicker", function (e) {
+            e.preventDefault();
+        });
+
+        $("body").on("click", "#edit-profile", function (e) {
+            EditProfile.submitEdit();
+        });
     });
 });
