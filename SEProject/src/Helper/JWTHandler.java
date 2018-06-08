@@ -39,7 +39,7 @@ public class JWTHandler {
     }
 
     public static int verifyToken(String token) {
-
+        if(token == null) return -1;
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(SECRET.getBytes("UTF-8"))
