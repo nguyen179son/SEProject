@@ -16,7 +16,9 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "change-pass-word")
 public class ChangePassword extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
         String currentPassword = request.getParameter("current_password");
@@ -24,39 +26,39 @@ public class ChangePassword extends HttpServlet {
         String confirmPassword = request.getParameter("confirm_password");
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
-            if(userID == -1 || userID == -2) {                              //verifying token fails
-                objectNode1.put("verify_token", false);
-            }
-            else {                                                          //internal error from server
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", false);
-            }
+            returnJSON.put("verify_token", false);
         }
         else {
-            objectNode1.put("verify_token", true);
-            objectNode1.put("success", true);
+            returnJSON.put("verify_token", true);
+            returnJSON.put("success", true);
             ObjectNode result = Validation.changePasswordValidation(userID, currentPassword, newPassword, confirmPassword);
             if(!result.get("valid").asBoolean()){
-                objectNode1.put("valid", false);
-                objectNode1.put("error_message", result.get("error_message"));
+                returnJSON.put("valid", false);
+                returnJSON.put("error_message", result.get("error_message"));
             }
             else {
                 if (!User.changePassword(userID, newPassword))
-                    objectNode1.put("success", false);              //internal error from server
+                    returnJSON.put("success", false);              //internal error from server
                 else
-                    objectNode1.put("valid", true);
+                    returnJSON.put("valid", true);
             }
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       processRequest(request, response);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("change-password.jsp").forward(request,response);
     }

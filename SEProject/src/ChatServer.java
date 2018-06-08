@@ -32,18 +32,12 @@ public class ChatServer {
         session.getUserProperties().put("userID", userID);
         for(int i = 0; i < roomIDList.size(); i ++){
             int roomID = roomIDList.get(i).asInt();
-            System.out.println(roomID);
             HashSet<Session> sessions = sessionMap.get(roomID);
             if(sessions == null) {
                 sessionMap.put(roomID, new HashSet<Session>());
                 sessions = sessionMap.get(roomID);
             }
             sessions.add(session);
-        }
-
-        for (HashSet<Session> sessionList : sessionMap.values()){
-            for(Session mySession : sessionList)
-                System.out.println(mySession.getId());
         }
     }
 

@@ -18,6 +18,7 @@
     <script data-require="bootstrap@*" data-semver="3.1.1"
             src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
+    <link rel="stylesheet" href="./stylesheets/css/change-password.css">
     <script src="stylesheets/js/change-password.js"></script>
 </head>
 <body>
@@ -29,6 +30,8 @@
 
             <div id="error" class="alert alert-danger" hidden>
             </div>
+            <div id='alert' class='alert alert-info' hidden>
+            </div>
         </div>
 
         <div class="form-group">
@@ -36,7 +39,7 @@
                 <label class="control-label col-sm-offset-3">Old password: </label>
             </div>
             <div class="col-sm-6">
-                <input type="text" class="form-control" name="email" id="old-password" placeholder="Enter your old password here">
+                <input type="password" class="form-control" name="old_password" id="old-password" placeholder="Enter your old password here">
                 <br>
             </div>
         </div>

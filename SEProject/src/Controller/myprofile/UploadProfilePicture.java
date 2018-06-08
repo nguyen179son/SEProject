@@ -19,7 +19,9 @@ import java.util.Map;
 
 @WebServlet(name = "upload-profile-picture")
 public class UploadProfilePicture extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
         StringBuilder buffer = new StringBuilder();
@@ -27,24 +29,30 @@ public class UploadProfilePicture extends HttpServlet {
 
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
-            objectNode1.put("verify_token", false);
+            returnJSON.put("verify_token", false);
         }
         else {
-            objectNode1.put("verify_token", true);
-            objectNode1.put("success", true);
+            returnJSON.put("verify_token", true);
+            returnJSON.put("success", true);
             if(!User.uploadProfilePicture(userID, buffer))
-                objectNode1.put("success", false);
+                returnJSON.put("success", false);
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 }
