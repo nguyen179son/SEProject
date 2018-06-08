@@ -232,7 +232,7 @@ $(document).ready(function () {
                                 var time = chat.checkTime(mess["sending_time"]);
                                 if (mess["from_userID"] != previousUserID) {
                                     if (mess["from_userID"] == userID) {
-                                        htmlText += "<li class=\"left clearfix admin_chat\">\n" +
+                                        htmlText = "<li class=\"left clearfix admin_chat\">\n" +
                                             "                     <span class=\"chat-img1 pull-right\">\n" +
                                             "                     <img src=\"image/profile.png\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
@@ -242,11 +242,11 @@ $(document).ready(function () {
                                             + mess["message"] +
                                             "</span>\n" +
                                             "                            </div>\n" +
-                                            "                        </li>";
+                                            "                        </li>" + htmlText;
                                     }
 
                                     else {
-                                        htmlText += "<li class=\"left clearfix\">\n" +
+                                        htmlText = "<li class=\"left clearfix\">\n" +
                                             "                     <span class=\"chat-img1 pull-left\">\n" +
                                             "                     <img src=\"image/profile.png\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
@@ -256,28 +256,28 @@ $(document).ready(function () {
                                             + mess["message"] +
                                             "</span>\n" +
                                             "                            </div>\n" +
-                                            "                        </li>";
+                                            "                        </li>"+htmlText;
                                     }
                                 } else {
                                     if (mess["from_userID"] == userID) {
-                                        htmlText += "<li class=\"left clearfix admin_chat\">\n" +
+                                        htmlText = "<li class=\"left clearfix admin_chat\">\n" +
 
                                             "                            <div class=\"chat-body1 clearfix\">\n" +
                                             "                                <span class='pull-right mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
                                             + mess["message"] +
                                             "</span>\n" +
                                             "                            </div>\n" +
-                                            "                        </li>";
+                                            "                        </li>"+htmlText;
                                     }
 
                                     else {
-                                        htmlText += "<li class=\"left clearfix\">\n" +
+                                        htmlText = "<li class=\"left clearfix\">\n" +
                                             "                            <div class=\"chat-body1 clearfix\">\n" +
                                             "                                <span class='pull-left mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
                                             + mess["message"] +
                                             "</span>\n" +
                                             "                            </div>\n" +
-                                            "                        </li>";
+                                            "                        </li>"+htmlText;
                                     }
                                 }
 
@@ -290,6 +290,7 @@ $(document).ready(function () {
                             $("#list-message").data("numOfMess", response["number_of_messages"]);
 
                             $('#pleaseWaitDialog').modal('hide');
+                            $('.chat_area').scrollTop($('.chat_area')[0].scrollHeight);
                         }
                         else {
                             alert("INTERNAL ERROR");
@@ -611,8 +612,7 @@ $(document).ready(function () {
 
         };
 
-        chat.loadMoreMessage = function () {
-            console.log(1);
+        chat.loadMoreMessage = function (height) {
             $.ajax({
                 url: "/load-message",
                 type: "post",
@@ -633,7 +633,7 @@ $(document).ready(function () {
                                 var time = chat.checkTime(mess["sending_time"]);
                                 if (mess["from_userID"] != previousUserID) {
                                     if (mess["from_userID"] == userID) {
-                                        htmlText += "<li class=\"left clearfix admin_chat\">\n" +
+                                        htmlText = "<li class=\"left clearfix admin_chat\">\n" +
                                             "                     <span class=\"chat-img1 pull-right\">\n" +
                                             "                     <img src=\"image/profile.png\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
@@ -643,11 +643,11 @@ $(document).ready(function () {
                                             + mess["message"] +
                                             "</span>\n" +
                                             "                            </div>\n" +
-                                            "                        </li>";
+                                            "                        </li>"+htmlText;
                                     }
 
                                     else {
-                                        htmlText += "<li class=\"left clearfix\">\n" +
+                                        htmlText = "<li class=\"left clearfix\">\n" +
                                             "                     <span class=\"chat-img1 pull-left\">\n" +
                                             "                     <img src=\"image/profile.png\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
@@ -657,28 +657,28 @@ $(document).ready(function () {
                                             + mess["message"] +
                                             "</span>\n" +
                                             "                            </div>\n" +
-                                            "                        </li>";
+                                            "                        </li>"+htmlText;
                                     }
                                 } else {
                                     if (mess["from_userID"] == userID) {
-                                        htmlText += "<li class=\"left clearfix admin_chat\">\n" +
+                                        htmlText = "<li class=\"left clearfix admin_chat\">\n" +
 
                                             "                            <div class=\"chat-body1 clearfix\">\n" +
                                             "                                <span class='pull-right mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
                                             + mess["message"] +
                                             "</span>\n" +
                                             "                            </div>\n" +
-                                            "                        </li>";
+                                            "                        </li>"+htmlText;
                                     }
 
                                     else {
-                                        htmlText += "<li class=\"left clearfix\">\n" +
+                                        htmlText = "<li class=\"left clearfix\">\n" +
                                             "                            <div class=\"chat-body1 clearfix\">\n" +
                                             "                                <span class='pull-left mess-span' title=\"" + chat.checkTime(mess["sending_time"]) + "\">"
                                             + mess["message"] +
                                             "</span>\n" +
                                             "                            </div>\n" +
-                                            "                        </li>";
+                                            "                        </li>"+htmlText;
                                     }
                                 }
 
@@ -689,12 +689,11 @@ $(document).ready(function () {
                             $("#list-message").html(htmlText);
                             $("#list-message").data("roomID", response["roomID"]);
                             $("#list-message").data("numOfMess", response["number_of_messages"]);
+                            $(".chat_area").scrollTop($(".chat_area")[0].scrollHeight-height);
 
-                            $('#pleaseWaitDialog').modal('hide');
                         }
                         else {
                             alert("INTERNAL ERROR");
-                            $('#pleaseWaitDialog').modal('hide');
                         }
                     } else {
                         window.location = "/login";
@@ -723,10 +722,11 @@ $(document).ready(function () {
             $(this).css("background-color", "#dddddd");
             $(this).find(".contact_sec strong").css("font-weight", 500);
             $(this).find(".contact_sec span").html("");
-            $('.chat_area').scrollTop($('.chat_area')[0].scrollHeight);
-            // $(this).find(".chat-body strong").css("font-weight", 500);
+
             Chat.getRecentMessage($(this).data("room-id"));
+
             e.stopPropagation();
+            $('.chat_area').scrollTop($('.chat_area')[0].scrollHeight);
         });
 
         $("body").on("click", "#send-message", function (e) {
@@ -761,10 +761,12 @@ $(document).ready(function () {
         $('.chat_area').scroll(function () {
             var pos = $('.chat_area').scrollTop();
             if (pos == 0) {
-                Chat.loadMoreMessage();
+
+                var height = $('.chat_area')[0].scrollHeight;
+                Chat.loadMoreMessage(height);
+                $(".chat_area").scrollTop($(".chat_area")[0].scrollHeight-height);
             }
         });
-
 
 
     });

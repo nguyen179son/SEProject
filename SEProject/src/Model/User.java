@@ -114,9 +114,10 @@ public class User {
     }
 
 
-    public void save() {
+    public boolean save() {
         Statement stmt = null;
         Connection conn = null;
+        boolean returnValue = true;
         try {
             conn = DatabaseConnection.getConnection();
             //STEP 4: Execute a query
@@ -133,9 +134,11 @@ public class User {
             conn.close();
         } catch (SQLException se) {
             //Handle errors for JDBC
+            returnValue = false;
             se.printStackTrace();
         } catch (Exception e) {
             //Handle errors for Class.forName
+            returnValue = false;
             e.printStackTrace();
         } finally {
             //finally block used to close resources
@@ -151,6 +154,7 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
+        return returnValue;
     }
 
     public static ObjectNode toUserJSON(ResultSet rs){
@@ -1078,5 +1082,44 @@ public class User {
 
     }
 
+    public static boolean changePassword(int userID, String password){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            String sql = "UPDATE user_info "
+                    + "SET password = ? "
+                    + "WHERE userID = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, password);
+            pstmt.setInt(2, userID);
+
+            pstmt.executeUpdate();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
 
 }

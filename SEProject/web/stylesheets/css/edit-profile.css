@@ -97,3 +97,8 @@ input.form-control {
     height: 200px;
     border-radius: 50%;
 }
+
+#error {
+    margin-right: 30%;
+    margin-left: 30%;
+}

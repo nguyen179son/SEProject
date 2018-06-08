@@ -41,9 +41,57 @@ $(document).ready(function () {
         };
 
         editProfile.submitEdit = function () {
+            $('#pleaseWaitDialog').modal();
 
+            $.ajax({
+                url: "/edit-my-profile",
+                type: "post",
+                data: {
+                    token: window.localStorage.getItem("token"),
+                    user_name: $("#nick-name").val(),
+                    DOB: $("#dob").val(),
+                    phone_number: $("#phone").val()
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response["verify_token"]) {
+                        if (response["success"]) {
+                            if (response["valid"]) {
+                                window.location = "/get-my-profile";
+                            }
+                            else {
+                                var htmlText = "";
+                                response["error_message"].forEach(function (errorMess, i, array) {
+                                    if (i < array.length - 1) {
+                                        htmlText += errorMess + "<br>";
+                                    }
+                                    else {
+                                        htmlText += errorMess;
+                                    }
+
+                                });
+                                $("#error").html(htmlText);
+
+                                $("#error").show();
+
+                            }
+                        }
+                        else {
+                            alert("INTERNAL ERROR");
+                        }
+                        $('#pleaseWaitDialog').modal('hide');
+
+                    } else {
+                        window.location = "/login";
+                        $('#pleaseWaitDialog').modal('hide');
+
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
         };
-        return profile;
+        return editProfile;
     }(window.jQuery, window, document));
 
     $(function () {
@@ -57,6 +105,7 @@ $(document).ready(function () {
         });
 
         $("body").on("click", "#edit-profile", function (e) {
+            e.preventDefault();
             EditProfile.submitEdit();
         });
     });

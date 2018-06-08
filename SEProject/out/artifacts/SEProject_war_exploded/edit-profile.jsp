@@ -14,7 +14,7 @@
             src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
     <link rel="stylesheet" href="./stylesheets/css/Contact.css">
-    <script src="stylesheets/js/edit-profile.js" type="text/javascript"></script>
+    <script src="stylesheets/js/edit-profile.js"></script>
     <script src="stylesheets/js/datetimepicker/moment-with-locales.min.js"></script>
     <script src="stylesheets/js/datetimepicker/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" href="stylesheets/css/sidebar.css">
@@ -32,6 +32,7 @@
             <input type="text" hidden id="id" value=<%=request.getAttribute("id")%>>
             <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile">
 
+            <div id="error" class="alert alert-danger" hidden></div>
 
             <div class="form-group">
                 <div class="col-sm-2"></div>
