@@ -19,6 +19,7 @@ $(document).ready(function () {
 
 
     $("body").on("click", "#login_button", function () {
+        $("#pleaseWaitDialog").modal();
         $.ajax({
             url: "/login",
             type: "post",
@@ -44,6 +45,7 @@ $(document).ready(function () {
                 alert("Error");
             }
         });
+        $("#pleaseWaitDialog").modal('hide');
     })
 
 

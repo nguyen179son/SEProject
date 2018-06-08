@@ -30,9 +30,11 @@
                     </div>
                 </div>
                 <div class="member_list" id="member" style="overflow-x: auto">
+                    <div id="mem-list">
 
                     <ul class="list-unstyled" id="listFriend">
                     </ul>
+                    </div>
                 </div>
             </div>
 

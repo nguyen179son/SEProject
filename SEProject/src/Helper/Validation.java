@@ -230,7 +230,6 @@ public class Validation {
     }
 
     public static boolean passwordConfirm(String password, String confirm_password) {
-        if (password == null || confirm_password == null) return false;
         return password.equals(confirm_password);
     }
 

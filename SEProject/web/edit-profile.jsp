@@ -80,7 +80,7 @@
                     <a href="#" id="edit-profile" class="btn btn-primary">Save</a>
                 </div>
                 <div class="col-sm-2 padding-top-10">
-                    <a href="" class="btn btn-danger" id="cancel">cancel</a>
+                    <a href="/get-my-profile" class="btn btn-danger" id="cancel">cancel</a>
                 </div>
             </div>
         </form>

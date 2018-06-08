@@ -58,5 +58,6 @@ public class ChangePassword extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("change-password.jsp").forward(request,response);
     }
 }
