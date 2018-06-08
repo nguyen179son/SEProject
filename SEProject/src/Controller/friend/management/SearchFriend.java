@@ -24,33 +24,33 @@ public class SearchFriend extends HttpServlet {
         String friend_name = request.getParameter("friend_name");
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
             if(userID == -1 || userID == -2) {                              //verifying token fails
-                objectNode1.put("verify_token", false);
+                returnJSON.put("verify_token", false);
             }
             else {                                                          //internal error from server
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", false);
+                returnJSON.put("verify_token", true);
+                returnJSON.put("success", false);
             }
         }
         else {
-            objectNode1 = User.searchFriend(userID, friend_name);
-            if (objectNode1 == null){                                         //internal error from server
-                objectNode1 = mapper.createObjectNode();
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", false);
+            returnJSON = User.searchFriend(userID, friend_name);
+            if (returnJSON == null){                                         //internal error from server
+                returnJSON = mapper.createObjectNode();
+                returnJSON.put("verify_token", true);
+                returnJSON.put("success", false);
             }
             else {
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", true);
+                returnJSON.put("verify_token", true);
+                returnJSON.put("success", true);
             }
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 

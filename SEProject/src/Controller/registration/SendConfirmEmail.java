@@ -23,18 +23,18 @@ public class SendConfirmEmail extends HttpServlet {
         String email = request.getParameter("email");
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();
+        ObjectNode returnJSON = mapper.createObjectNode();
         ObjectNode user_info = User.getProfile(email);                          //return JSON
         if (user_info != null) {
             EmailSender.send(email, user_info.get("confirm_code").textValue());
-            objectNode1.put("success", true);
+            returnJSON.put("success", true);
         }
         else{
-            objectNode1.put("success", false);
+            returnJSON.put("success", false);
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 

@@ -24,7 +24,7 @@ public class Login extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
 
         if (Validation.loginValidation(email, password)) {
             //getSession to take redirect_url
@@ -35,25 +35,25 @@ public class Login extends HttpServlet {
             //generate token
             String token = JWTHandler.generateToken(userInfoJson.get("userID").toString(), 7);
 
-            objectNode1.put("success", true);
-            objectNode1.put("confirm", userInfoJson.get("confirm").booleanValue());
+            returnJSON.put("success", true);
+            returnJSON.put("confirm", userInfoJson.get("confirm").booleanValue());
             //user already confirmed
             if (userInfoJson.get("confirm").booleanValue()) {
-                objectNode1.put("token", token);
-                objectNode1.put("userID", userInfoJson.get("userID").asInt());
-                objectNode1.put("redirect_url", session.getAttribute("returnUrl") == null || session.getAttribute("returnUrl").toString().equals("") ?
+                returnJSON.put("token", token);
+                returnJSON.put("userID", userInfoJson.get("userID").asInt());
+                returnJSON.put("redirect_url", session.getAttribute("returnUrl") == null || session.getAttribute("returnUrl").toString().equals("") ?
                         "/" : session.getAttribute("returnUrl").toString());
             }
             else {  //user haven't confirmed yet
-                objectNode1.put("redirect_url", "/check-confirmation-code");
+                returnJSON.put("redirect_url", "/check-confirmation-code");
             }
         }
         else {
-            objectNode1.put("success", false);
+            returnJSON.put("success", false);
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 

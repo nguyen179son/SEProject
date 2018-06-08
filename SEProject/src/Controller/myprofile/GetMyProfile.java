@@ -23,36 +23,36 @@ public class GetMyProfile extends HttpServlet {
         String token = request.getParameter("token");
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
             if(userID == -1 || userID == -2) {                              //verifying token fails
-                objectNode1.put("verify_token", false);
+                returnJSON.put("verify_token", false);
             }
             else {                                                          //internal error from server
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", false);
+                returnJSON.put("verify_token", true);
+                returnJSON.put("success", false);
             }
         }
         else {
-            objectNode1.put("verify_token", true);
-            objectNode1.put("success", true);
+            returnJSON.put("verify_token", true);
+            returnJSON.put("success", true);
             ObjectNode userInfoJson = User.getProfile(userID);              //user_infor
             if (userInfoJson == null)                                       //internal error from server
-                objectNode1.put("success", false);
+                returnJSON.put("success", false);
             else {
-                objectNode1.put("userID", userID);
-                objectNode1.put("user_name", userInfoJson.get("user_name").textValue());
-                objectNode1.put("email", userInfoJson.get("email").textValue());
-                objectNode1.put("phone_number", userInfoJson.get("phone_number").textValue());
-                objectNode1.put("DOB", userInfoJson.get("DOB").textValue());
-                objectNode1.put("profile_picture", userInfoJson.get("profile_picture").textValue());
+                returnJSON.put("userID", userID);
+                returnJSON.put("user_name", userInfoJson.get("user_name").textValue());
+                returnJSON.put("email", userInfoJson.get("email").textValue());
+                returnJSON.put("phone_number", userInfoJson.get("phone_number").textValue());
+                returnJSON.put("DOB", userInfoJson.get("DOB").textValue());
+                returnJSON.put("profile_picture", userInfoJson.get("profile_picture").textValue());
             }
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 

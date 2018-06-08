@@ -25,24 +25,24 @@ public class Signup extends HttpServlet {
         String confirm_password = request.getParameter("confirm_password");
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
-        objectNode1.put("success", true);
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
+        returnJSON.put("success", true);
 
         ObjectNode validationResult = Validation.registerValidation(nickname, email, password, confirm_password);
         if (validationResult.get("valid").asBoolean()) {
             User user = new User(email, password, nickname);
             if(user.save()){
-                objectNode1.put("valid", true);
+                returnJSON.put("valid", true);
             }
             else
-                objectNode1.put("success", false);              //internal error from server
+                returnJSON.put("success", false);              //internal error from server
         } else {
-            objectNode1.put("valid", false);
-            objectNode1.put("error_message", validationResult.get("error_message"));
+            returnJSON.put("valid", false);
+            returnJSON.put("error_message", validationResult.get("error_message"));
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 

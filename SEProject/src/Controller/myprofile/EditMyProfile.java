@@ -26,34 +26,34 @@ public class EditMyProfile extends HttpServlet {
         String phoneNumber = request.getParameter("phone_number");
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
             if (userID == -1 || userID == -2) {                              //verifying token fails
-                objectNode1.put("verify_token", false);
+                returnJSON.put("verify_token", false);
             } else {                                                          //internal error from server
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", false);
+                returnJSON.put("verify_token", true);
+                returnJSON.put("success", false);
             }
         } else {
-            objectNode1.put("verify_token", true);
-            objectNode1.put("success", true);
+            returnJSON.put("verify_token", true);
+            returnJSON.put("success", true);
             ObjectNode validationResult = Validation.profileValidation(userName, phoneNumber, DOB);
             if (validationResult.get("valid").asBoolean()) {
                 if (!User.editProfile(userID, userName, DOB, phoneNumber))
-                    objectNode1.put("success", false);              //internal error from server
+                    returnJSON.put("success", false);              //internal error from server
                 else
-                    objectNode1.put("valid", true);
+                    returnJSON.put("valid", true);
             } else {
                 //if (!User.editProfile(userID, userName, DOB, phoneNumber))
-                objectNode1.put("valid", false);
-                objectNode1.put("error_message", validationResult.get("error_message"));
+                returnJSON.put("valid", false);
+                returnJSON.put("error_message", validationResult.get("error_message"));
             }
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 

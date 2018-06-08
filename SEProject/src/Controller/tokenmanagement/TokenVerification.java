@@ -22,18 +22,18 @@ public class TokenVerification extends HttpServlet {
         String token = request.getParameter("token");
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
-            objectNode1.put("verify_token", false);
+            returnJSON.put("verify_token", false);
         }
         else {
-            objectNode1.put("verify_token", true);
+            returnJSON.put("verify_token", true);
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 
