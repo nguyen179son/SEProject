@@ -28,13 +28,7 @@ public class SearchUser extends HttpServlet {
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
-            if(userID == -1) {                              //verifying token fails
-                returnJSON.put("verify_token", false);
-            }
-            else {                                                          //internal error from server
-                returnJSON.put("verify_token", true);
-                returnJSON.put("success", false);
-            }
+            returnJSON.put("verify_token", false);
         }
         else {
             returnJSON = User.searchUser(userID, user_name);
