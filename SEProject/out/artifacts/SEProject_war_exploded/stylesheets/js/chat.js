@@ -56,10 +56,10 @@ $(document).ready(function () {
                             response["room_list"].forEach(function (friend) {
                                 var time = friend['sending_time'] == null ? "" : chat.checkTime(friend['sending_time']);
                                 htmlText += "<li class=\"left clearfix contact-box\" data-room-id='" + friend['roomID'] + "'>\n" +
-                                    "                     <span class=\"chat-img pull-left\">\n" +
+                                    "                     <div class=\"chat-img pull-left\">\n" +
                                     "                     <img src=\"image/profile.png\"\n" +
                                     "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
-                                    "                     </span>\n" +
+                                    "                     </div>\n" +
                                     "                            <div class=\"chat-body clearfix\">\n" +
                                     "                                <div class=\"header_sec\" style='overflow: hidden'>\n" +
                                     "                                    <strong class=\"primary-font\" style='white-space: nowrap'>";

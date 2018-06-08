@@ -337,3 +337,16 @@
     right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
     overflow-y: scroll;
 }
+
+.left-ava {
+    width: 17px;
+    overflow: hidden;
+    float: left;
+}
+
+.right-ava {
+    width: 17px;
+    height: 17px;
+    float: left;
+    overflow: hidden;
+}

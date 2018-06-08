@@ -303,3 +303,10 @@
     right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
     overflow-y: scroll;
 }
+
+#profile-picture {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin: 5% 40%;
+}
