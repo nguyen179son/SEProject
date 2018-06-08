@@ -33,7 +33,13 @@ public class UploadProfilePicture extends HttpServlet {
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
-            returnJSON.put("verify_token", false);
+            if(userID == -1) {                              //verifying token fails
+                returnJSON.put("verify_token", false);
+            }
+            else {                                                          //internal error from server
+                returnJSON.put("verify_token", true);
+                returnJSON.put("success", false);
+            }
         }
         else {
             returnJSON.put("verify_token", true);

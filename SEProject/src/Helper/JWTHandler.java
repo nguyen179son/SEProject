@@ -53,15 +53,11 @@ public class JWTHandler {
         }
         catch (SignatureException e){
             e.printStackTrace();
-            return -2;
+            return -1;
         }
         catch (UnsupportedEncodingException e){
             e.printStackTrace();
-            return -3;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return -4;
+            return -2;
         }
     }
 }

@@ -3,11 +3,6 @@ package Model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import jdk.nashorn.api.scripting.JSObject;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import Helper.Convertor;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -18,7 +13,6 @@ import sun.misc.BASE64Decoder;
 
 import javax.imageio.ImageIO;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;

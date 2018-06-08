@@ -30,13 +30,15 @@ public class EditMyProfile extends HttpServlet {
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
-            if (userID == -1 || userID == -2) {                              //verifying token fails
+            if(userID == -1) {                              //verifying token fails
                 returnJSON.put("verify_token", false);
-            } else {                                                          //internal error from server
+            }
+            else {                                                          //internal error from server
                 returnJSON.put("verify_token", true);
                 returnJSON.put("success", false);
             }
-        } else {
+        }
+        else {
             returnJSON.put("verify_token", true);
             returnJSON.put("success", true);
             ObjectNode validationResult = Validation.profileValidation(userName, phoneNumber, DOB);
