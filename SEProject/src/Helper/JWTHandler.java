@@ -59,5 +59,9 @@ public class JWTHandler {
             e.printStackTrace();
             return -2;
         }
+        catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
     }
 }

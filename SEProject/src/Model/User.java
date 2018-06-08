@@ -116,8 +116,8 @@ public class User {
             conn = DatabaseConnection.getConnection();
             stmt = conn.createStatement();
             String sql;
-            sql = "INSERT into user_info (email, password, user_name, confirm_code, confirm)" +
-                    " VALUES (\"" + email + "\",\"" + password + "\",\"" + name + "\",\"" + confirmationCode + "\",\"" + "0" +
+            sql = "INSERT into user_info (email, password, user_name, confirm_code, profile_picture, confirm)" +
+                    " VALUES (\"" + email + "\",\"" + password + "\",\"" + name + "\",\"" + confirmationCode + "\",\"" + "/image/profile/profile.png" + "\",\"" + "0" +
                     "\")";
             stmt.executeUpdate(sql);
             EmailSender.send(email, confirmationCode);
@@ -156,8 +156,12 @@ public class User {
             returnJSON.put("userID", rs.getInt("userID"));
             returnJSON.put("user_name", rs.getString("user_name"));
             returnJSON.put("email", rs.getString("email"));
-            returnJSON.put("phone_number", rs.getString("phone_number"));
-            returnJSON.put("DOB", rs.getString("DOB"));
+            if(rs.getObject("phone_number") == null)
+                returnJSON.put("phone_number", "");
+            else returnJSON.put("phone_number", rs.getString("phone_number"));
+            if(rs.getObject("DOB") == null)
+                returnJSON.put("DOB", "");
+            else returnJSON.put("DOB", rs.getString("DOB"));
             returnJSON.put("profile_picture", rs.getString("profile_picture"));
             returnJSON.put("confirm_code", rs.getString("confirm_code"));
             returnJSON.put("confirm", rs.getBoolean("confirm"));
@@ -337,8 +341,12 @@ public class User {
                 friendNode.put("userID", rs.getInt("userID"));
                 friendNode.put("user_name", rs.getString("user_name"));
                 friendNode.put("email", rs.getString("email"));
-                friendNode.put("phone_number", rs.getString("phone_number"));
-                friendNode.put("DOB", rs.getString("DOB"));
+                if(rs.getObject("phone_number") == null)
+                    friendNode.put("phone_number", "");
+                else friendNode.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    friendNode.put("DOB", "");
+                else friendNode.put("DOB", rs.getString("DOB"));
                 friendNode.put("profile_picture", rs.getString("profile_picture"));
                 friendNode.put("favorite", rs.getBoolean("favorite"));
                 arrayNode.add(friendNode);
@@ -391,8 +399,12 @@ public class User {
                 friendNode.put("userID", rs.getInt("userID"));
                 friendNode.put("user_name", rs.getString("user_name"));
                 friendNode.put("email", rs.getString("email"));
-                friendNode.put("phone_number", rs.getString("phone_number"));
-                friendNode.put("DOB", rs.getString("DOB"));
+                if(rs.getObject("phone_number") == null)
+                    friendNode.put("phone_number", "");
+                else friendNode.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    friendNode.put("DOB", "");
+                else friendNode.put("DOB", rs.getString("DOB"));
                 friendNode.put("profile_picture", rs.getString("profile_picture"));
                 friendNode.put("favorite", rs.getBoolean("favorite"));
                 arrayNode.add(friendNode);
@@ -479,8 +491,12 @@ public class User {
                 returnJSON.put("userID", rs.getInt("userID"));
                 returnJSON.put("user_name", rs.getString("user_name"));
                 returnJSON.put("email", rs.getString("email"));
-                returnJSON.put("phone_number", rs.getString("phone_number"));
-                returnJSON.put("DOB", rs.getString("DOB"));
+                if(rs.getObject("phone_number") == null)
+                    returnJSON.put("phone_number", "");
+                else returnJSON.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    returnJSON.put("DOB", "");
+                else returnJSON.put("DOB", rs.getString("DOB"));
                 returnJSON.put("profile_picture", rs.getString("profile_picture"));
                 returnJSON.put("favorite", rs.getBoolean("favorite"));
             }
@@ -750,8 +766,12 @@ public class User {
                 friendNode.put("userID", rs.getInt("userID"));
                 friendNode.put("user_name", rs.getString("user_name"));
                 friendNode.put("email", rs.getString("email"));
-                friendNode.put("phone_number", rs.getString("phone_number"));
-                friendNode.put("DOB", rs.getString("DOB"));
+                if(rs.getObject("phone_number") == null)
+                    friendNode.put("phone_number", "");
+                else friendNode.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    friendNode.put("DOB", "");
+                else friendNode.put("DOB", rs.getString("DOB"));
                 friendNode.put("profile_picture", rs.getString("profile_picture"));
                 arrayNode.add(friendNode);
             }
@@ -903,8 +923,12 @@ public class User {
                 userNode.put("userID", rs.getInt("userID"));
                 userNode.put("user_name", rs.getString("user_name"));
                 userNode.put("email", rs.getString("email"));
-                userNode.put("phone_number", rs.getString("phone_number"));
-                userNode.put("DOB", rs.getString("DOB"));
+                if(rs.getObject("phone_number") == null)
+                    userNode.put("phone_number", "");
+                else userNode.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    userNode.put("DOB", "");
+                else userNode.put("DOB", rs.getString("DOB"));
                 userNode.put("profile_picture", rs.getString("profile_picture"));
 
                 flag = false;
