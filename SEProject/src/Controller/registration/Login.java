@@ -17,7 +17,9 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "login")
 public class Login extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -55,6 +57,12 @@ public class Login extends HttpServlet {
         wr.flush();
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
         request.getRequestDispatcher("login.jsp").forward(request, response);

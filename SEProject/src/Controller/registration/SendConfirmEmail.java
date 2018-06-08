@@ -16,7 +16,9 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "send-confirm-email")
 public class SendConfirmEmail extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String email = request.getParameter("email");
 
@@ -36,6 +38,12 @@ public class SendConfirmEmail extends HttpServlet {
         wr.flush();
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 }

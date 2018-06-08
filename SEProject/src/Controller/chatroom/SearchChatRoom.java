@@ -17,7 +17,9 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "search-chat-room")
 public class SearchChatRoom extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
         String searchKey = request.getParameter("search_key");
@@ -53,8 +55,12 @@ public class SearchChatRoom extends HttpServlet {
         wr.flush();
     }
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //request.getRequestDispatcher("Contact.jsp").forward(request, response);
     }
 }
 

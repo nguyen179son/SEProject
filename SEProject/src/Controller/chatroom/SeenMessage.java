@@ -18,7 +18,9 @@ import java.util.ArrayList;
 
 @WebServlet(name = "seen-message")
 public class SeenMessage extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
         int roomID = Integer.parseInt(request.getParameter("roomID"));
@@ -50,8 +52,13 @@ public class SeenMessage extends HttpServlet {
         wr.flush();
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //request.getRequestDispatcher("Contact.jsp").forward(request, response);
     }
 }
 
