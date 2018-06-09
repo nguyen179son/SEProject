@@ -35,6 +35,7 @@ $(document).ready(function () {
                         window.localStorage.setItem("token", response["token"]);
                         window.location = response["redirect_url"];
                         window.localStorage.setItem("userID",response["userID"]);
+                        window.localStorage.setItem("profile_picture",response["profile_picture"]);
                     }
                 }
                 else {

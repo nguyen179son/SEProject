@@ -35,7 +35,7 @@ $(document).ready(function () {
                             response["request_list"].forEach(function (friend) {
                                 htmlText += "<li class=\"left clearfix contact-box contact-box contact-box\" data-id='" + friend['userID'] + "'>\n" +
                                     "                     <span class=\"chat-img pull-left\">\n" +
-                                    "                     <img src=\"./image/profile.png\"\n" +
+                                    "                     <img src=\""+friend['profile_picture']+"\"\n" +
                                     "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                     "                     </span>\n" +
                                     "                            <div class=\"chat-body clearfix\">\n" +
@@ -44,7 +44,7 @@ $(document).ready(function () {
                                     "                                    <strong class=\"pull-right\" >\n" +
                                     "<button  class='btn btn-primary accept' style='padding: 2px 3px; margin-right: 2px' data-id=\"" + friend['userID'] + "\">" +
                                     "                                       accept </button>" +
-                                    "<button  class='btn btn-danger deny' style='padding: 2px 3px'  data-toggle=\"modal\" data-target=\"#confirm-delete\" data-id=\"" + friend['userID'] + "\">" +
+                                    "<button  class='btn btn-danger deny1' style='padding: 2px 3px'  data-toggle=\"modal\" data-target=\"#confirm-delete\" data-id=\"" + friend['userID'] + "\">" +
                                     "                                       delete </button>" +
                                     " </strong>\n" +
                                     "                                </div>\n" +
@@ -226,7 +226,7 @@ $(document).ready(function () {
                                     else if (friend["relationship_code"] == 1) {
                                         htmlText += "<li class=\"left clearfix contact-box contact-box contact-box\" data-id='" + friend['userID'] + "'>\n" +
                                             "                     <span class=\"chat-img pull-left\">\n" +
-                                            "                     <img src=\"./image/profile.png\"\n" +
+                                            "                     <img src=\""+friend['profile_picture']+"\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                             "                     </span>\n" +
                                             "                            <div class=\"chat-body clearfix\">\n" +
@@ -243,7 +243,7 @@ $(document).ready(function () {
                                     else if (friend["relationship_code"] == 2) {
                                         htmlText += "<li class=\"left clearfix contact-box contact-box contact-box\" data-id='" + friend['userID'] + "'>\n" +
                                             "                     <span class=\"chat-img pull-left\">\n" +
-                                            "                     <img src=\"./image/profile.png\"\n" +
+                                            "                     <img src=\""+friend['profile_picture']+"\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                             "                     </span>\n" +
                                             "                            <div class=\"chat-body clearfix\">\n" +
@@ -270,7 +270,7 @@ $(document).ready(function () {
                                     else if (friend["relationship_code"] == 3) {
                                         htmlText += "<li class=\"left clearfix contact-box contact-box contact-box\" data-id='" + friend['userID'] + "'>\n" +
                                             "                     <span class=\"chat-img pull-left\">\n" +
-                                            "                     <img src=\"./image/profile.png\"\n" +
+                                            "                     <img src=\""+friend['profile_picture']+"\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                             "                     </span>\n" +
                                             "                            <div class=\"chat-body clearfix\">\n" +
@@ -322,6 +322,7 @@ $(document).ready(function () {
                     if (response["verify_token"]) {
                         if (response["success"]) {
                             $("#profile-div").show();
+                            $("#profile-picture").attr("src",response["profile_picture"]);
                             $("#nick-name").html(response["user_name"]);
                             $("#email").html(response["email"]);
                             $("#phone").html(response["phone_number"] == null ? "" : response["phone_number"]);
@@ -357,6 +358,8 @@ $(document).ready(function () {
         });
 
         $("body").on("click", ".contact-box", function (e) {
+            $("#listFriend li").css("background-color", "");
+            $(this).css("background-color", "#dddddd");
             Request.getProfile($(this).data("id"));
             e.stopPropagation();
         });
@@ -366,7 +369,7 @@ $(document).ready(function () {
 
             e.preventDefault();
             e.stopPropagation();
-            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: #f05a6b;\"></i>");
+            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: #f18c99;\"></i>");
             $(this).attr('class', 'sendRequest');
             Request.acceptRequest($(this).data("id"))
         });
@@ -374,9 +377,16 @@ $(document).ready(function () {
         $("body").on("click", ".deny", function (e) {
             e.preventDefault();
             e.stopPropagation();
-            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: #f05a6b;\"></i>");
+            $(this).html(" <i class=\"fa fa-user-plus\" style=\"color: #f18c99;\"></i>");
             $(this).attr('class', 'sendRequest');
             Request.denyRequest($(this).data("id"));
+        });
+
+        $("body").on("click", ".deny1", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            Request.denyRequest($(this).data("id"));
+            $(this).parent().parent().parent().parent().remove();
         });
         $("body").on("click", ".sendRequest", function (e) {
             var id = $(this).data('id');

@@ -19,6 +19,7 @@
             src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
     <link rel="stylesheet" href="./stylesheets/css/change-password.css">
+    <script src="stylesheets/js/sidebar.js"></script>
     <script src="stylesheets/js/change-password.js"></script>
 </head>
 <body>

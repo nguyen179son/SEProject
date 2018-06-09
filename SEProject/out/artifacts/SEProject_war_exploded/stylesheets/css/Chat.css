@@ -106,10 +106,10 @@
     border: 1px solid #dddddd;
 }
 
-.chat-img img {
-    height: 34px;
-    width: 34px;
-}
+/*.chat-img img {*/
+    /*height: 34px;*/
+    /*width: 34px;*/
+/*}*/
 
 .member_list li {
     border-bottom: 1px solid #dddddd;
@@ -254,7 +254,6 @@
     overflow: hidden;
 }
 
-
 #content {
     padding-top: 0;
     padding-bottom: 0;
@@ -282,7 +281,6 @@
     padding-bottom: 1%;
 }
 
-
 #list-chat {
     box-sizing: content-box; /* So the width will be 100% + 17px */
 }
@@ -294,6 +292,7 @@
     /*border-top-left-radius: 1.3em;*/
     /*border-top-right-radius: 1.3em;*/
 }
+
 .chat-message {
 !important;
     /*background-color: pink;*/
@@ -336,4 +335,69 @@
     left: 0;
     right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
     overflow-y: scroll;
+}
+
+.left-ava {
+    width: 17px;
+    overflow: hidden;
+    float: left;
+}
+
+.right-ava {
+    width: 17px;
+    height: 17px;
+    float: left;
+    overflow: hidden;
+}
+
+.right-ava-top {
+    width: 17px;
+    height: 17px;
+    overflow: hidden;
+    display: block;
+}
+
+.right-ava-bottom {
+    width: 17px;
+    height: 17px;
+    overflow: hidden;
+    display: block;
+}
+
+
+.img-circle-left {
+    !important;
+    height: 34px;
+    width: 34px;
+    border-bottom-left-radius: 50%;
+    border-top-left-radius: 50%;
+}
+
+.img-circle-right {
+    width: 34px;
+    height: 34px;
+    border-top-right-radius: 100%;
+    border-bottom-right-radius: 100%;
+}
+
+.img-circle-right-top {
+    width: 17px;
+    height: 17px;
+    border-top-right-radius: 100%;
+}
+
+.img-circle-right-bottom {
+    width: 17px;
+    height: 17px;
+    border-bottom-right-radius: 100%;
+}
+
+.single-ava {
+    width: 34px;
+    height: 34px;
+}
+
+
+.primary-font {
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
 }

@@ -12,6 +12,7 @@
             src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
     <link rel="stylesheet" href="./stylesheets/css/Contact.css">
+    <script src="stylesheets/js/sidebar.js"></script>
     <script src="stylesheets/js/contact.js"></script>
 </head>
 <body>
@@ -43,37 +44,37 @@
         <div class="col-sm-8 message_section">
             <div class="row" id="profile-div" hidden>
                 <input type="text" hidden id="id">
-                <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile">
+                <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile-picture">
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-sm-4">Name: </label>
+                    <label class="control-label col-sm-4 primary-font">Name: </label>
                     <div class="col-sm-4 div-info">
-                        <label class="view-label prevent-break-line" id="nick-name">abc</label>
+                        <label class="view-label prevent-break-line primary-font" style="font-weight: 500" id="nick-name">abc</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-sm-4">Email: </label>
+                    <label class="control-label col-sm-4 primary-font">Email: </label>
                     <div class="col-sm-4 div-info">
-                        <label class="view-label prevent-break-line" id="email">abc </label>
+                        <label class="view-label prevent-break-line primary-font" style="font-weight: 500" id="email">abc </label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-sm-4">Phone Number: </label>
+                    <label class="control-label col-sm-4 primary-font">Phone Number: </label>
                     <div class="col-sm-4 div-info">
-                        <label class="view-label prevent-break-line" id="phone">abc </label>
+                        <label class="view-label prevent-break-line primary-font" style="font-weight: 500" id="phone">abc </label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-sm-4">Date of Birth: </label>
+                    <label class="control-label col-sm-4 primary-font">Date of Birth: </label>
                     <div class="col-sm-4 div-info">
-                        <label class="view-label prevent-break-line" id="dob">abc </label>
+                        <label class="view-label prevent-break-line primary-font" style="font-weight: 500" id="dob">abc </label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -91,7 +92,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
                         <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
                     </div>
                     <div class="modal-body">
