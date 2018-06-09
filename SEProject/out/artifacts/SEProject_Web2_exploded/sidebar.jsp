@@ -4,7 +4,8 @@
         <div class="sidebar-header">
             <h3>Bootstrap Sidebar</h3>
             <a href="/get-my-profile" id="profile-ava">
-                <img src="image/profile.png" class="center img-responsive" alt="profilepic" style="border-radius: 50%" id="sidebar-avatar">
+                <img src="image/profile.png" class="center img-responsive" alt="profilepic"
+                     style="border-radius: 50%;height: 34px;width: 34px;" id="sidebar-avatar">
             </a>
         </div>
 

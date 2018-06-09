@@ -67,6 +67,7 @@ $(document).ready(function () {
         };
 
         chat.listChat = function () {
+            $(".message_write").hide();
             $('#pleaseWaitDialog').modal();
             $.ajax({
                 url: "/get-chat-room-list",
@@ -160,16 +161,16 @@ $(document).ready(function () {
                     search_key: $("#search-chat-room-key").val()
                 },
                 success: function (response) {
+                    console.log(response);
                     if (response["verify_token"]) {
                         if (response["success"]) {
                             var htmlText = "";
                             response["room_list"].forEach(function (friend) {
-                                var time = friend['sending_time'] != null ? chat.checkTime(friend["sending_time"]) : "";
-                                htmlText += "<li class=\"left clearfix  contact-box\" data-room-id='" + friend['roomID'] + "'>\n" +
-                                    "                     <span class=\"chat-img pull-left\">\n" +
+                                var time = friend['sending_time'] == null ? "" : chat.checkTime(friend['sending_time']);
+                                htmlText += "<li class=\"left clearfix contact-box\" data-room-id='" + friend['roomID'] + "'>\n" +
+                                    "                     <div class=\"chat-img pull-left\" style='display: block'>\n" +
                                     chat.roomAvatar(friend["user_list"]) +
-                                    +
-                                        "                     </span>\n" +
+                                    "                     </div>\n" +
                                     "                            <div class=\"chat-body clearfix\">\n" +
                                     "                                <div class=\"header_sec\" style='overflow: hidden'>\n" +
                                     "                                    <strong class=\"primary-font\" style='white-space: nowrap'>";
@@ -805,6 +806,7 @@ $(document).ready(function () {
         });
 
         $("body").on("click", ".contact-box", function (e) {
+            $(".message_write").show();
             $("#list-chat li").css("background-color", "");
             $(this).css("background-color", "#dddddd");
             $(this).find(".contact_sec strong").css("font-weight", 500);
@@ -819,7 +821,8 @@ $(document).ready(function () {
         $("body").on("click", "#send-message", function (e) {
             e.preventDefault();
             var message = $.trim($("#message-content").val());
-            Chat.sendMessage(message);
+            if (message.length > 0)
+                Chat.sendMessage(message);
 
         });
 
@@ -827,7 +830,8 @@ $(document).ready(function () {
             if (e.which == 13) {
                 e.preventDefault();
                 var message = $.trim($("#message-content").val());
-                Chat.sendMessage(message);
+                if (message.length > 0)
+                    Chat.sendMessage(message);
             }
         });
 

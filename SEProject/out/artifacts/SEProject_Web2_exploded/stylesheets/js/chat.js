@@ -43,10 +43,9 @@ $(document).ready(function () {
 
         chat.roomAvatar = function (userList) {
             var avaCreate = "";
-            console.log(userList);
             if (userList.length == 1) {
                 avaCreate = "                     <img src=\"" + userList[0]["profile_picture"] + "\"\n" +
-                    "                          alt=\"User Avatar\" class=\"img-circle\">\n";
+                    "                          alt=\"User Avatar\" class=\"img-circle single-ava\">\n";
             }
 
 
@@ -54,7 +53,7 @@ $(document).ready(function () {
                 avaCreate +=
                     "<div>" +
                     "<div class='left-ava'>" + "                     <img src=\"" + window.localStorage.getItem("profile_picture") + "\"\n" +
-                    "                          alt=\"User Avatar\" class=\"img-circle-left\">\n" +
+                    "                          alt=\"User Avatar\" class=\"img-circle-left \">\n" +
                     "</div>" +
                     "<div class='right-ava-top'>" + "                     <img src=\"" + userList[0]["profile_picture"] + "\"\n" +
                     "                          alt=\"User Avatar\" class=\"img-circle-right-top\">\n" +
@@ -68,6 +67,7 @@ $(document).ready(function () {
         };
 
         chat.listChat = function () {
+            $(".message_write").hide();
             $('#pleaseWaitDialog').modal();
             $.ajax({
                 url: "/get-chat-room-list",
@@ -161,16 +161,16 @@ $(document).ready(function () {
                     search_key: $("#search-chat-room-key").val()
                 },
                 success: function (response) {
+                    console.log(response);
                     if (response["verify_token"]) {
                         if (response["success"]) {
                             var htmlText = "";
                             response["room_list"].forEach(function (friend) {
-                                var time = friend['sending_time'] != null ? chat.checkTime(friend["sending_time"]) : "";
-                                htmlText += "<li class=\"left clearfix  contact-box\" data-room-id='" + friend['roomID'] + "'>\n" +
-                                    "                     <span class=\"chat-img pull-left\">\n" +
-                                    "                     <img src=\"image/profile.png\"\n" +
-                                    "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
-                                    "                     </span>\n" +
+                                var time = friend['sending_time'] == null ? "" : chat.checkTime(friend['sending_time']);
+                                htmlText += "<li class=\"left clearfix contact-box\" data-room-id='" + friend['roomID'] + "'>\n" +
+                                    "                     <div class=\"chat-img pull-left\" style='display: block'>\n" +
+                                    chat.roomAvatar(friend["user_list"]) +
+                                    "                     </div>\n" +
                                     "                            <div class=\"chat-body clearfix\">\n" +
                                     "                                <div class=\"header_sec\" style='overflow: hidden'>\n" +
                                     "                                    <strong class=\"primary-font\" style='white-space: nowrap'>";
@@ -235,6 +235,18 @@ $(document).ready(function () {
             });
         };
 
+        chat.getImageURL = function (id, array) {
+            var returnVal;
+            array.forEach(function (a) {
+                if (a["userID"] == id) {
+                    returnVal = [a["profile_picture"], a["user_name"]];
+                }
+            });
+            return returnVal;
+        };
+
+        chat.roomUserList;
+
         chat.getRecentMessage = function (id) {
             $('#pleaseWaitDialog').modal();
             $.ajax({
@@ -253,13 +265,14 @@ $(document).ready(function () {
                             var time;
                             var previousUserID = -1;
                             $("#list-message").data("previousUserSentID", previousUserID);
+                            chat.roomUserList = response["userInfo_list"];
                             response["message_list"].forEach(function (mess) {
                                 var time = chat.checkTime(mess["sending_time"]);
                                 if (mess["from_userID"] != previousUserID) {
                                     if (mess["from_userID"] == userID) {
                                         htmlText = "<li class=\"left clearfix admin_chat\">\n" +
                                             "                     <span class=\"chat-img1 pull-right\">\n" +
-                                            "                     <img src=\"image/profile.png\"\n" +
+                                            "                     <img src=\"" + window.localStorage.getItem("profile_picture") + "\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                             "                     </span>\n" +
                                             "                            <div class=\"chat-body1 clearfix\">\n" +
@@ -271,9 +284,11 @@ $(document).ready(function () {
                                     }
 
                                     else {
+                                        var messinfo = chat.getImageURL(mess["from_userID"], response["userInfo_list"]);
+                                        console.log(messinfo);
                                         htmlText = "<li class=\"left clearfix\">\n" +
-                                            "                     <span class=\"chat-img1 pull-left\">\n" +
-                                            "                     <img src=\"image/profile.png\"\n" +
+                                            "                     <span class=\"chat-img1 pull-left\" title=\"" + messinfo[1] + "\">\n" +
+                                            "                     <img src=\"" + messinfo[0] + "\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                             "                     </span>\n" +
                                             "                            <div class=\"chat-body1 clearfix\">\n" +
@@ -394,7 +409,7 @@ $(document).ready(function () {
             if (userID != previousUserID) {
                 htmlText += "<li class=\"left clearfix admin_chat\">\n" +
                     "                     <span class=\"chat-img1 pull-right\">\n" +
-                    "                     <img src=\"image/profile.png\"\n" +
+                    "                     <img src=\"" + window.localStorage.getItem("profile_picture") + "\"\n" +
                     "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                     "                     </span>\n" +
                     "                            <div class=\"chat-body1 clearfix\">\n" +
@@ -453,10 +468,11 @@ $(document).ready(function () {
             var previousUserID = $("#list-message").data("previousUserSentID");
             var htmlText = $("#list-message").html();
             if (mess["from_userID"] != previousUserID) {
-
+                var messinfo = chat.getImageURL(mess["from_userID"], chat.roomUserList);
+                console.log(messinfo);
                 htmlText += "<li class=\"left clearfix\">\n" +
-                    "                     <span class=\"chat-img1 pull-left\">\n" +
-                    "                     <img src=\"image/profile.png\"\n" +
+                    "                     <span class=\"chat-img1 pull-left\" title=\"" + messinfo[1] + "\">\n" +
+                    "                     <img src=\"" + messinfo[0] + "\"\n" +
                     "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                     "                     </span>\n" +
                     "                            <div class=\"chat-body1 clearfix\">\n" +
@@ -540,9 +556,30 @@ $(document).ready(function () {
                     if (response["verify_token"]) {
                         if (response["success"]) {
                             var htmlText = "<ul class='list-unstyled' id='friends-select'>";
+                            chat.roomUserList = [];
                             response["friend_list"].forEach(function (friend) {
-                                htmlText += "<li class='left clearfix'><div class='pull-left'> <input type='checkbox' data-name=" + friend['user_name'] + " value=\"" + friend["userID"] + "\">" +
-                                    "</div> <div class='pull-left'>" + friend['user_name'] + "</div> </li>";
+                                chat.roomUserList.push({
+                                    "userID": friend['userID'],
+                                    "user_name": friend['user_name'],
+                                    "profile_picture": friend['profile_picture']
+                                });
+
+                                htmlText += "<li class=\"left clearfix\" data-id='" + friend['userID'] + "'>\n" +
+                                    "<div class='pull-left'> <input type='checkbox' data-name=" + friend['user_name'] + " value=\"" + friend["userID"] + "\">" +
+                                    "</div>" +
+                                    "                     <span class=\"chat-img pull-left\">\n" +
+                                    "                     <img src=\"" + friend["profile_picture"] + "\"\n" +
+                                    "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
+                                    "                     </span>\n" +
+                                    "                            <div class=\"chat-body clearfix\">\n" +
+                                    "                                <div class=\"header_sec\">\n" +
+                                    "                                    <strong class=\"primary-font\" style='font-weight: 500'>" + friend['user_name'] + "</strong>\n" +
+                                    "                                </div>\n" +
+                                    "                                <div class=\"contact_sec\">\n" +
+                                    "                                    <strong class=\"primary-font\" style='font-weight: 500'>" + friend['email'] + "</strong>\n" +
+                                    "                                </div>\n" +
+                                    "                            </div>\n" +
+                                    "                        </li>"
                             });
                             htmlText += "</ul>";
                             $("#newChatRoom .modal-dialog .modal-content .modal-body").html(htmlText);
@@ -564,6 +601,30 @@ $(document).ready(function () {
             })
         };
 
+        chat.newRoomAvatar = function (userList) {
+            var avaCreate = "";
+            if (userList.length == 1) {
+                avaCreate = "                     <img src=\"" + chat.getImageURL(userList[0], chat.roomUserList)[0] + "\"\n" +
+                    "                          alt=\"User Avatar\" class=\"img-circle single-ava\">\n";
+            }
+
+
+            else if (userList.length >= 2) {
+                avaCreate +=
+                    "<div>" +
+                    "<div class='left-ava'>" + "                     <img src=\"" + window.localStorage.getItem("profile_picture") + "\"\n" +
+                    "                          alt=\"User Avatar\" class=\"img-circle-left \">\n" +
+                    "</div>" +
+                    "<div class='right-ava-top'>" + "                     <img src=\"" + chat.getImageURL(userList[0], chat.roomUserList)[0] + "\"\n" +
+                    "                          alt=\"User Avatar\" class=\"img-circle-right-top\">\n" +
+                    "</div>" +
+                    "<div class='right-ava-bottom'>" + "                     <img src=\"" + chat.getImageURL(userList[1], chat.roomUserList)[0] + "\"\n" +
+                    "                          alt=\"User Avatar\" class=\"img-circle-right-bottom\">\n" +
+                    "</div>" +
+                    "</div>";
+            }
+            return avaCreate;
+        };
         chat.createChatRoom = function () {
             var userSelected = [];
             var userName = [];
@@ -589,8 +650,7 @@ $(document).ready(function () {
                             else {
                                 htmlText += "<li class=\"left clearfix contact-box\" data-room-id='" + response['roomID'] + "'>\n" +
                                     "                     <span class=\"chat-img pull-left\">\n" +
-                                    "                     <img src=\"image/profile.png\"\n" +
-                                    "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
+                                    chat.newRoomAvatar(userSelected) +
                                     "                     </span>\n" +
                                     "                            <div class=\"chat-body clearfix\">\n" +
                                     "                                <div class=\"header_sec\" style='overflow: hidden'>\n" +
@@ -660,7 +720,7 @@ $(document).ready(function () {
                                     if (mess["from_userID"] == userID) {
                                         htmlText = "<li class=\"left clearfix admin_chat\">\n" +
                                             "                     <span class=\"chat-img1 pull-right\">\n" +
-                                            "                     <img src=\"image/profile.png\"\n" +
+                                            "                     <img src=\"" + window.localStorage.getItem("profile_picture") + "\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                             "                     </span>\n" +
                                             "                            <div class=\"chat-body1 clearfix\">\n" +
@@ -672,9 +732,13 @@ $(document).ready(function () {
                                     }
 
                                     else {
+                                        console.log(chat.roomUserList);
+                                        console.log(mess["from_userID"]);
+                                        var messinfo = chat.getImageURL(mess["from_userID"], chat.roomUserList);
+                                        console.log(messinfo);
                                         htmlText = "<li class=\"left clearfix\">\n" +
-                                            "                     <span class=\"chat-img1 pull-left\">\n" +
-                                            "                     <img src=\"image/profile.png\"\n" +
+                                            "                     <span class=\"chat-img1 pull-left\" title=\"" + messinfo[1] + "\">\n" +
+                                            "                     <img src=\"" + messinfo[0] + "\"\n" +
                                             "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                             "                     </span>\n" +
                                             "                            <div class=\"chat-body1 clearfix\">\n" +
@@ -742,7 +806,7 @@ $(document).ready(function () {
         });
 
         $("body").on("click", ".contact-box", function (e) {
-            $("#list-chat li").css("background-color", "white");
+            $(".message_write").show();
             $("#list-chat li").css("background-color", "");
             $(this).css("background-color", "#dddddd");
             $(this).find(".contact_sec strong").css("font-weight", 500);
@@ -757,7 +821,8 @@ $(document).ready(function () {
         $("body").on("click", "#send-message", function (e) {
             e.preventDefault();
             var message = $.trim($("#message-content").val());
-            Chat.sendMessage(message);
+            if (message.length > 0)
+                Chat.sendMessage(message);
 
         });
 
@@ -765,7 +830,8 @@ $(document).ready(function () {
             if (e.which == 13) {
                 e.preventDefault();
                 var message = $.trim($("#message-content").val());
-                Chat.sendMessage(message);
+                if (message.length > 0)
+                    Chat.sendMessage(message);
             }
         });
 

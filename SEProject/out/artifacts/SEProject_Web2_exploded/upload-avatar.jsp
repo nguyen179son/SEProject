@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="icon" href="image/favico.jpg">
     <title>Upload avatar</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -18,6 +19,7 @@
             src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
     <link rel="stylesheet" href="stylesheets/css/avatar.css">
+    <link rel="stylesheet" href="stylesheets/js/sidebar.js">
     <script src="stylesheets/js/avatar.js"></script>
 </head>
 <body>

@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+    <link rel="icon" href="image/favico.jpg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Log in page</title>

@@ -113,7 +113,7 @@ public class ChatRoom {
                 ObjectNode roomNodeJSON = mapper.createObjectNode();
                 ArrayNode userArrayJSON = mapper.createArrayNode();
 
-                sql = "Select chat_room.userID, user_name from chat_room, user_info" +
+                sql = "Select chat_room.userID, user_name, profile_picture from chat_room, user_info" +
                         " Where chat_room.userID != " + id +
                         " and chat_room.userID = user_info.userID " +
                         "and roomID = " +  rs1.getInt("roomID");
@@ -122,6 +122,7 @@ public class ChatRoom {
                     ObjectNode userNodeJSON = mapper.createObjectNode();
                     userNodeJSON.put("userID", rs2.getInt("userID"));
                     userNodeJSON.put("user_name", rs2.getString("user_name"));
+                    userNodeJSON.put("profile_picture", rs2.getString("profile_picture"));
                     userArrayJSON.add(userNodeJSON);
                 }
 
