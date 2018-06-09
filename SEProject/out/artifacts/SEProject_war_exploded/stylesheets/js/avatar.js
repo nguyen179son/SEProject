@@ -52,7 +52,7 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response["verify_token"]) {
                         if (response["success"]) {
-                            window.location = "/get-my-profile";
+                            window.location = "/profile";
                         }
                         else {
                             alert("Upload failed!!! Please try again later.");

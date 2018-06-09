@@ -59,7 +59,7 @@ $(document).ready(function () {
                     if (response["verify_token"]) {
                         if (response["success"]) {
                             if (response["valid"]) {
-                                window.location = "/get-my-profile";
+                                window.location = "/profile";
                             }
                             else {
                                 var htmlText = "";

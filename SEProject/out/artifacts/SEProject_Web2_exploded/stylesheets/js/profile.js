@@ -46,7 +46,7 @@ $(document).ready(function () {
     }(window.jQuery, window, document));
 
     $(function () {
-        $("#edit-profile").attr("href", "/edit-my-profile");
+        $("#edit-profile").attr("href", "/edit-profile");
         $('body').onload = Profile.getDetail();
     });
 });
