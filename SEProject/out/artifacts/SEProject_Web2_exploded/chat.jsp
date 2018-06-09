@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="icon" href="image/favico.jpg">
+    <link rel="icon" href="image/HomepageIcon.jpg">
     <title>Chat</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,7 +108,7 @@
     </div>
     <div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" hidden>
         <div class="modal-body">
-            <div id="ajax_loader">
+            <div id="ajax_loader" style="margin-left: 5%; padding: 2% 19%;">
                 <img src="image/loading.gif" style="display: block;margin-left: auto;
                  margin-right: auto;
                  max-height: 5%; max-width: 5%; padding-top: 30%;">

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <link rel="icon" href="image/favico.jpg">
+    <link rel="icon" href="image/HomepageIcon.jpg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Profile</title>
@@ -40,7 +40,7 @@
                 <div class="col-sm-2"></div>
                 <label class="control-label col-sm-2">Update Avatar</label>
                 <div class="col-sm-6 pull-right">
-                    <a href="/upload-profile-picture" class="btn btn-primary">Change avatar</a>
+                    <a href="/profile-picture" class="btn btn-primary">Change avatar</a>
                 </div>
             </div>
             <div class="form-group">
@@ -82,14 +82,14 @@
                     <a href="#" id="edit-profile" class="btn btn-primary">Save</a>
                 </div>
                 <div class="col-sm-2 padding-top-10">
-                    <a href="/get-my-profile" class="btn btn-danger" id="cancel">cancel</a>
+                    <a href="/profile" class="btn btn-danger" id="cancel">cancel</a>
                 </div>
             </div>
         </form>
     </div>
     <div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" hidden>
         <div class="modal-body">
-            <div id="ajax_loader">
+            <div id="ajax_loader" style="margin-left: 5%; padding: 2% 19%;">
                 <img src="image/loading.gif" style="display: block;margin-left: auto;
                  margin-right: auto;
                  max-height: 5%; max-width: 5%; padding-top: 30%;">

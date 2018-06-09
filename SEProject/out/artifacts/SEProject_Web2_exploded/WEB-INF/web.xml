@@ -5,7 +5,7 @@
          version="3.1">
 
     <welcome-file-list>
-        <welcome-file>Contact.jsp</welcome-file>
+        <welcome-file>chat.jsp</welcome-file>
     </welcome-file-list>
 
 
@@ -65,6 +65,17 @@
 
 
     <servlet>
+        <servlet-name>password</servlet-name>
+        <servlet-class>Controller.registration.GetNewPassword</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>password</servlet-name>
+        <url-pattern>/password</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>get_my_profile</servlet-name>
         <servlet-class>Controller.myprofile.GetMyProfile</servlet-class>
     </servlet>
@@ -76,13 +87,35 @@
 
 
     <servlet>
-        <servlet-name>upload_profile_picture</servlet-name>
+        <servlet-name>profile</servlet-name>
+        <servlet-class>Controller.myprofile.GetMyProfile</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>upload_profile_picture_API</servlet-name>
         <servlet-class>Controller.myprofile.UploadProfilePicture</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>upload_profile_picture</servlet-name>
+        <servlet-name>upload_profile_picture_API</servlet-name>
         <url-pattern>/upload-profile-picture</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>upload_profile_picture_VIEW</servlet-name>
+        <servlet-class>Controller.myprofile.UploadProfilePicture</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>upload_profile_picture_VIEW</servlet-name>
+        <url-pattern>/profile-picture</url-pattern>
     </servlet-mapping>
 
 
@@ -95,6 +128,19 @@
         <servlet-name>edit_my_profile</servlet-name>
         <url-pattern>/edit-my-profile</url-pattern>
     </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>edit_profile</servlet-name>
+        <servlet-class>Controller.myprofile.EditMyProfile</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>edit_profile</servlet-name>
+        <url-pattern>/edit-profile</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>api/change_pass_word</servlet-name>
@@ -130,6 +176,17 @@
 
 
     <servlet>
+        <servlet-name>contact</servlet-name>
+        <servlet-class>Controller.friend.management.GetFriendList</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>contact</servlet-name>
+        <url-pattern>/contact</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>get_friend_profile</servlet-name>
         <servlet-class>Controller.friend.management.GetFriendProfile</servlet-class>
     </servlet>
@@ -138,7 +195,6 @@
         <servlet-name>get_friend_profile</servlet-name>
         <url-pattern>/get-friend-profile</url-pattern>
     </servlet-mapping>
-
 
 
     <servlet>
@@ -208,6 +264,17 @@
 
 
     <servlet>
+        <servlet-name>request</servlet-name>
+        <servlet-class>Controller.friend.request.GetRequestList</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>request</servlet-name>
+        <url-pattern>/request</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>remove_friend_request</servlet-name>
         <servlet-class>Controller.friend.request.RemoveFriendRequest</servlet-class>
     </servlet>
@@ -263,6 +330,17 @@
 
 
     <servlet>
+        <servlet-name>chat</servlet-name>
+        <servlet-class>Controller.chatroom.GetChatRoomList</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>chat</servlet-name>
+        <url-pattern>/chat</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>search_chat_room</servlet-name>
         <servlet-class>Controller.chatroom.SearchChatRoom</servlet-class>
     </servlet>
@@ -304,5 +382,7 @@
         <servlet-name>seen_message</servlet-name>
         <url-pattern>/seen-message</url-pattern>
     </servlet-mapping>
+
+
 
 </web-app>

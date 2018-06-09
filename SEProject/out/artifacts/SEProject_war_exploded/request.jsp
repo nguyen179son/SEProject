@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-    <link rel="icon" href="image/favico.jpg">
-    <title>Contact</title>
+    <link rel="icon" href="image/HomepageIcon.jpg">
+    <title>Friend requests</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -12,9 +12,9 @@
     <script data-require="bootstrap@*" data-semver="3.1.1"
             src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
-    <link rel="stylesheet" href="./stylesheets/css/Contact.css">
+    <link rel="stylesheet" href="./stylesheets/css/Request.css">
     <script src="stylesheets/js/sidebar.js"></script>
-    <script src="stylesheets/js/contact.js"></script>
+    <script src="stylesheets/js/Request.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -24,18 +24,18 @@
             <div class="row" id="left-row">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="  search-query form-control" placeholder="Search friends"
-                               id="search_friend_name"/>
-                        <button class="btn btn-danger" type="button" id="searchFriends">
+                        <input type="text" class="  search-query form-control" placeholder="Search Users"
+                               id="search_user_name"/>
+                        <button class="btn btn-danger" type="button" id="searchUsers">
                             <span class=" glyphicon glyphicon-search"></span>
                         </button>
                     </div>
                 </div>
-                <div class="member_list" id="member">
+                <div class="member_list" id="member" style="overflow-x: auto">
                     <div id="mem-list">
 
-                        <ul class="list-unstyled" id="listFriend">
-                        </ul>
+                    <ul class="list-unstyled" id="listFriend">
+                    </ul>
                     </div>
                 </div>
             </div>
@@ -49,41 +49,33 @@
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-sm-4 primary-font">Name: </label>
+                    <label class="control-label col-sm-4">Name: </label>
                     <div class="col-sm-4 div-info">
-                        <label class="view-label prevent-break-line primary-font" style="font-weight: 500" id="nick-name">abc</label>
+                        <label class="view-label prevent-break-line" id="nick-name">abc</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-sm-4 primary-font">Email: </label>
+                    <label class="control-label col-sm-4">Email: </label>
                     <div class="col-sm-4 div-info">
-                        <label class="view-label prevent-break-line primary-font" style="font-weight: 500" id="email">abc </label>
+                        <label class="view-label prevent-break-line" id="email">abc </label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-sm-4 primary-font">Phone Number: </label>
+                    <label class="control-label col-sm-4">Phone Number: </label>
                     <div class="col-sm-4 div-info">
-                        <label class="view-label prevent-break-line primary-font" style="font-weight: 500" id="phone">abc </label>
+                        <label class="view-label prevent-break-line" id="phone">abc </label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-sm-4 primary-font">Date of Birth: </label>
+                    <label class="control-label col-sm-4">Date of Birth: </label>
                     <div class="col-sm-4 div-info">
-                        <label class="view-label prevent-break-line primary-font" style="font-weight: 500" id="dob">abc </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-10" id="div-delete-friend">
-                        <button class="btn btn-danger" id="delete-friend" data-record-id="0"
-                                data-record-title="Delete Friend" data-toggle="modal" data-target="#confirm-delete">
-                            Delete
-                        </button>
+                        <label class="view-label prevent-break-line" id="dob">abc </label>
                     </div>
                 </div>
             </div>
@@ -93,7 +85,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
                     </div>
                     <div class="modal-body">
@@ -111,7 +103,7 @@
     </div>
     <div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" hidden>
         <div class="modal-body">
-            <div id="ajax_loader">
+            <div id="ajax_loader" style="margin-left: 5%; padding: 2% 19%;">
                 <img src="image/loading.gif" style="display: block;margin-left: auto;
                  margin-right: auto;
                  max-height: 5%; max-width: 5%; padding-top: 30%;">
@@ -119,6 +111,9 @@
         </div>
     </div>
 </div>
+<div>
 
+
+</div>
 </body>
 </html>
