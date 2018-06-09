@@ -14,6 +14,7 @@ public class DatabaseConnection {
     public static Connection getConnection() throws Exception{
         if(source == null) {
             source = new org.apache.commons.dbcp.BasicDataSource();
+            ((BasicDataSource) source).setMaxIdle(3);
             ((BasicDataSource) source).setDriverClassName(DRIVER);
             ((BasicDataSource) source).setUsername(USERNAME);
             ((BasicDataSource) source).setPassword(PASSWORD);
