@@ -3,7 +3,8 @@ var Sidebar = (function ($, window, document) {
 
 
     sidebar.loadAva = function () {
-        $("#sidebar-avatar").attr("src",window.localStorage.getItem("profile_picture"));
+        console.log(1);
+        $("#sidebar-avatar").attr("src", window.localStorage.getItem("profile_picture"));
     };
 
     return sidebar;

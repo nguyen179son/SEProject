@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="icon" href="image/favico.jpg">
     <title>Change Password</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,10 +20,7 @@
             src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
     <link rel="stylesheet" href="./stylesheets/css/change-password.css">
-<<<<<<< HEAD
     <script src="stylesheets/js/sidebar.js"></script>
-=======
->>>>>>> 54004b290b319d93335a3dc35243a4dd3736548a
     <script src="stylesheets/js/change-password.js"></script>
 </head>
 <body>

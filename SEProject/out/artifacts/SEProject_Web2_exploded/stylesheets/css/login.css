@@ -2,7 +2,7 @@
 /* CSS Document */
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
 }
 
 img {
@@ -53,7 +53,7 @@ input[type=text], input[type=password] {
     border-radius: 4px;
     box-sizing: border-box;
     text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
     font-size: 14px;
     line-height: 1.42857143;
     -webkit-tap-highlight-color: rgba(0,0,0,0);

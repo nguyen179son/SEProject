@@ -106,7 +106,7 @@
     border: 1px solid #dddddd;
 }
 
-.chat-img img {
+.chat-img .img-circle {
     height: 34px;
     width: 34px;
 }
@@ -309,4 +309,8 @@
     width: 200px;
     height: 200px;
     margin: 5% 40%;
+}
+
+.primary-font {
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
 }

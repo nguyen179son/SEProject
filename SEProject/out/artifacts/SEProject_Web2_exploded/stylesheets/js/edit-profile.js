@@ -16,6 +16,8 @@ $(document).ready(function () {
                     if (response["verify_token"]) {
                         if (response["success"]) {
 
+                            $("#profile").attr("src",window.localStorage.getItem("profile_picture"));
+
                             $("#email").val(response['email']);
 
                             $("#nick-name").val(response['user_name']);

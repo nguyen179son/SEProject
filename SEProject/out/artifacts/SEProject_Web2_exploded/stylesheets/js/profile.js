@@ -14,7 +14,7 @@ $(document).ready(function () {
                     console.log(response);
                     if (response["verify_token"]) {
                         if (response["success"]) {
-
+                            $("#profile-pic").attr("src",window.localStorage.getItem("profile_picture"));
                             $("#email").text(response['email']);
                             $("#email").css("font-weight", 500);
 

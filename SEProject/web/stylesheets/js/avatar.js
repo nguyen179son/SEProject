@@ -50,13 +50,12 @@ $(document).ready(function () {
                     imageBase64: image
                 },
                 success: function (response) {
-                    console.log(response);
                     if (response["verify_token"]) {
                         if (response["success"]) {
-                            console.log(1);
+                            window.location = "/get-my-profile";
                         }
                         else {
-                            console.log(2);
+                            alert("Upload failed!!! Please try again later.");
                         }
                     }
                     else {
@@ -72,6 +71,7 @@ $(document).ready(function () {
     }(window.jQuery, window, document));
 
     $(function () {
+        $("body").onload = $("#sidebar-avatar").attr("src", window.localStorage.getItem("profile_picture"));
         $("body").on("change", ".btn-file :file", function () {
             var input = $(this),
                 label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
