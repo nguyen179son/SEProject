@@ -3,11 +3,6 @@ package Model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import jdk.nashorn.api.scripting.JSObject;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import Helper.Convertor;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -18,7 +13,6 @@ import sun.misc.BASE64Decoder;
 
 import javax.imageio.ImageIO;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
@@ -120,14 +114,12 @@ public class User {
         boolean returnValue = true;
         try {
             conn = DatabaseConnection.getConnection();
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "INSERT into user_info (email, password, user_name, confirm_code, confirm)" +
-                    " VALUES (\"" + email + "\",\"" + password + "\",\"" + name + "\",\"" + confirmationCode + "\",\"" + "0" +
+            sql = "INSERT into user_info (email, password, user_name, confirm_code, profile_picture, confirm)" +
+                    " VALUES (\"" + email + "\",\"" + password + "\",\"" + name + "\",\"" + confirmationCode + "\",\"" + "/image/profile/profile.png" + "\",\"" + "0" +
                     "\")";
-            int rs = stmt.executeUpdate(sql);
+            stmt.executeUpdate(sql);
             EmailSender.send(email, confirmationCode);
 
             stmt.close();
@@ -157,28 +149,32 @@ public class User {
         return returnValue;
     }
 
-    public static ObjectNode toUserJSON(ResultSet rs){
+    public static ObjectNode toJSON(ResultSet rs){
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();
+        ObjectNode returnJSON = mapper.createObjectNode();
         try {
-            objectNode1.put("userID", rs.getInt("userID"));
-            objectNode1.put("user_name", rs.getString("user_name"));
-            objectNode1.put("email", rs.getString("email"));
-            objectNode1.put("phone_number", rs.getString("phone_number"));
-            objectNode1.put("DOB", rs.getString("DOB"));
-            objectNode1.put("profile_picture", rs.getString("profile_picture"));
-            objectNode1.put("confirm_code", rs.getString("confirm_code"));
-            objectNode1.put("confirm", rs.getBoolean("confirm"));
-            objectNode1.put("password", rs.getBoolean("password"));
+            returnJSON.put("userID", rs.getInt("userID"));
+            returnJSON.put("user_name", rs.getString("user_name"));
+            returnJSON.put("email", rs.getString("email"));
+            if(rs.getObject("phone_number") == null)
+                returnJSON.put("phone_number", "");
+            else returnJSON.put("phone_number", rs.getString("phone_number"));
+            if(rs.getObject("DOB") == null)
+                returnJSON.put("DOB", "");
+            else returnJSON.put("DOB", rs.getString("DOB"));
+            returnJSON.put("profile_picture", rs.getString("profile_picture"));
+            returnJSON.put("confirm_code", rs.getString("confirm_code"));
+            returnJSON.put("confirm", rs.getBoolean("confirm"));
+            returnJSON.put("password", rs.getBoolean("password"));
         }
         catch (SQLException e){
             return null;
         }
-        return objectNode1;
+        return returnJSON;
     }
 
     public static ObjectNode getProfile(String email) {
-        ObjectNode objectNode1 = null;
+        ObjectNode returnJSON = null;
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -187,7 +183,7 @@ public class User {
             String sql = "SELECT * from user_info WHERE email = " + "\"" + email + "\"";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()){
-                objectNode1 = User.toUserJSON(rs);
+                returnJSON = User.toJSON(rs);
             }
         } catch (SQLException se) {
             //Handle errors for JDBC
@@ -212,12 +208,12 @@ public class User {
             }//end finally try
         }//end try
 
-        return objectNode1;
+        return returnJSON;
     }
 
     public static ObjectNode getProfile(int id) {
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();
+        ObjectNode returnJSON = mapper.createObjectNode();
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -226,7 +222,7 @@ public class User {
             String sql = "SELECT * from user_info WHERE userID = " + id;
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()){
-                objectNode1 = User.toUserJSON(rs);
+                returnJSON = User.toJSON(rs);
             }
         } catch (SQLException se) {
             //Handle errors for JDBC
@@ -252,7 +248,7 @@ public class User {
             }//end finally try
         }//end try
 
-        return objectNode1;
+        return returnJSON;
     }
 
     public static boolean exist(int id) {
@@ -327,7 +323,7 @@ public class User {
 
     public static ObjectNode getFriendList(int id) {
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();
+        ObjectNode returnJSON = mapper.createObjectNode();
         ArrayNode arrayNode = mapper.createArrayNode();
 
         Connection conn = null;
@@ -345,8 +341,12 @@ public class User {
                 friendNode.put("userID", rs.getInt("userID"));
                 friendNode.put("user_name", rs.getString("user_name"));
                 friendNode.put("email", rs.getString("email"));
-                friendNode.put("phone_number", rs.getString("phone_number"));
-                friendNode.put("DOB", rs.getString("DOB"));
+                if(rs.getObject("phone_number") == null)
+                    friendNode.put("phone_number", "");
+                else friendNode.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    friendNode.put("DOB", "");
+                else friendNode.put("DOB", rs.getString("DOB"));
                 friendNode.put("profile_picture", rs.getString("profile_picture"));
                 friendNode.put("favorite", rs.getBoolean("favorite"));
                 arrayNode.add(friendNode);
@@ -373,13 +373,13 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        objectNode1.put("friend_list", arrayNode);
-        return objectNode1;
+        returnJSON.put("friend_list", arrayNode);
+        return returnJSON;
     }
 
     public static ObjectNode searchFriend(int id, String friend_name) {
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();
+        ObjectNode returnJSON = mapper.createObjectNode();
         ArrayNode arrayNode = mapper.createArrayNode();
 
         Connection conn = null;
@@ -399,8 +399,12 @@ public class User {
                 friendNode.put("userID", rs.getInt("userID"));
                 friendNode.put("user_name", rs.getString("user_name"));
                 friendNode.put("email", rs.getString("email"));
-                friendNode.put("phone_number", rs.getString("phone_number"));
-                friendNode.put("DOB", rs.getString("DOB"));
+                if(rs.getObject("phone_number") == null)
+                    friendNode.put("phone_number", "");
+                else friendNode.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    friendNode.put("DOB", "");
+                else friendNode.put("DOB", rs.getString("DOB"));
                 friendNode.put("profile_picture", rs.getString("profile_picture"));
                 friendNode.put("favorite", rs.getBoolean("favorite"));
                 arrayNode.add(friendNode);
@@ -427,8 +431,8 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        objectNode1.put("friend_list", arrayNode);
-        return objectNode1;
+        returnJSON.put("friend_list", arrayNode);
+        return returnJSON;
     }
 
     public static boolean checkFriend(int userID_1, int userID_2){
@@ -470,7 +474,7 @@ public class User {
 
     public static ObjectNode getFriendProfile(int userID, int friendID) {
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();
+        ObjectNode returnJSON = mapper.createObjectNode();
 
         Connection conn = null;
         Statement stmt = null;
@@ -484,13 +488,17 @@ public class User {
 
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()){
-                objectNode1.put("userID", rs.getInt("userID"));
-                objectNode1.put("user_name", rs.getString("user_name"));
-                objectNode1.put("email", rs.getString("email"));
-                objectNode1.put("phone_number", rs.getString("phone_number"));
-                objectNode1.put("DOB", rs.getString("DOB"));
-                objectNode1.put("profile_picture", rs.getString("profile_picture"));
-                objectNode1.put("favorite", rs.getBoolean("favorite"));
+                returnJSON.put("userID", rs.getInt("userID"));
+                returnJSON.put("user_name", rs.getString("user_name"));
+                returnJSON.put("email", rs.getString("email"));
+                if(rs.getObject("phone_number") == null)
+                    returnJSON.put("phone_number", "");
+                else returnJSON.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    returnJSON.put("DOB", "");
+                else returnJSON.put("DOB", rs.getString("DOB"));
+                returnJSON.put("profile_picture", rs.getString("profile_picture"));
+                returnJSON.put("favorite", rs.getBoolean("favorite"));
             }
         } catch (SQLException se) {
             //Handle errors for JDBC
@@ -514,7 +522,7 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        return objectNode1;
+        return returnJSON;
     }
 
     public static boolean addFavorite(int userID, int friendID){
@@ -740,7 +748,7 @@ public class User {
 
     public static ObjectNode getRequestList(int id) {
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();
+        ObjectNode returnJSON = mapper.createObjectNode();
         ArrayNode arrayNode = mapper.createArrayNode();
 
         Connection conn = null;
@@ -758,8 +766,12 @@ public class User {
                 friendNode.put("userID", rs.getInt("userID"));
                 friendNode.put("user_name", rs.getString("user_name"));
                 friendNode.put("email", rs.getString("email"));
-                friendNode.put("phone_number", rs.getString("phone_number"));
-                friendNode.put("DOB", rs.getString("DOB"));
+                if(rs.getObject("phone_number") == null)
+                    friendNode.put("phone_number", "");
+                else friendNode.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    friendNode.put("DOB", "");
+                else friendNode.put("DOB", rs.getString("DOB"));
                 friendNode.put("profile_picture", rs.getString("profile_picture"));
                 arrayNode.add(friendNode);
             }
@@ -785,8 +797,8 @@ public class User {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        objectNode1.put("request_list", arrayNode);
-        return objectNode1;
+        returnJSON.put("request_list", arrayNode);
+        return returnJSON;
     }
 
     public static boolean removeFriendRequest(int userID, int friendID){
@@ -911,8 +923,12 @@ public class User {
                 userNode.put("userID", rs.getInt("userID"));
                 userNode.put("user_name", rs.getString("user_name"));
                 userNode.put("email", rs.getString("email"));
-                userNode.put("phone_number", rs.getString("phone_number"));
-                userNode.put("DOB", rs.getString("DOB"));
+                if(rs.getObject("phone_number") == null)
+                    userNode.put("phone_number", "");
+                else userNode.put("phone_number", rs.getString("phone_number"));
+                if(rs.getObject("DOB") == null)
+                    userNode.put("DOB", "");
+                else userNode.put("DOB", rs.getString("DOB"));
                 userNode.put("profile_picture", rs.getString("profile_picture"));
 
                 flag = false;

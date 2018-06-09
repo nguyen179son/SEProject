@@ -44,7 +44,7 @@
         <div class="col-sm-8 message_section">
             <div class="row" id="profile-div" hidden>
                 <input type="text" hidden id="id">
-                <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile">
+                <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile-picture">
 
                 <div class="form-group">
                     <div class="col-sm-3"></div>

@@ -15,6 +15,7 @@ public class Validation {
 
 
     public static boolean loginValidation(String user_name, String password) {
+        if (user_name == null || password == null) return false;
         //Connection conn = null;
         Connection conn = null;
         Statement stmt = null;
@@ -57,6 +58,7 @@ public class Validation {
     }
 
     public static boolean loginValidation(int userID, String password) {
+        if (password == null) return  false;
         //Connection conn = null;
         Connection conn = null;
         Statement stmt = null;
@@ -230,6 +232,7 @@ public class Validation {
     }
 
     public static boolean passwordConfirm(String password, String confirm_password) {
+        if(password == null || confirm_password == null) return false;
         return password.equals(confirm_password);
     }
 

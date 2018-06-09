@@ -32,16 +32,11 @@ $(document).ready(function () {
                     if (response["verify_token"]) {
                         if (response["success"]) {
                             var htmlText = "";
-                            var imgLink;
                             response["friend_list"].forEach(function (friend) {
-                                imgLink = "./image/profile.png";
-                                if (Sidebar.checkExist(friend["userID"])) {
-                                    imgLink = "./image/profile/" + friend["userID"];
-                                }
                                 if (friend["favorite"]) {
                                     htmlText += "<li class=\"left clearfix contact-box contact-box contact-box\" data-id='" + friend['userID'] + "'>\n" +
                                         "                     <span class=\"chat-img pull-left\">\n" +
-                                        "                     <img src=\""+imgLink+"\"\n" +
+                                        "                     <img src=\""+friend["profile_picture"]+"\"\n" +
                                         "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                         "                     </span>\n" +
                                         "                            <div class=\"chat-body clearfix\">\n" +
@@ -59,7 +54,7 @@ $(document).ready(function () {
                                 else {
                                     htmlText += "<li class=\"left clearfix contact-box contact-box contact-box\" data-id='" + friend['userID'] + "'>\n" +
                                         "                     <span class=\"chat-img pull-left\">\n" +
-                                        "                     <img src=\""+imgLink+"\"\n" +
+                                        "                     <img src=\""+friend["profile_picture"]+"\"\n" +
                                         "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                         "                     </span>\n" +
                                         "                            <div class=\"chat-body clearfix\">\n" +
@@ -138,7 +133,7 @@ $(document).ready(function () {
                                 if (friend["favorite"]) {
                                     htmlText += "<li class=\"left clearfix contact-box contact-box contact-box\" data-id='" + friend['userID'] + "'>\n" +
                                         "                     <span class=\"chat-img pull-left\">\n" +
-                                        "                     <img src=\""+imgLink+"\"\n" +
+                                        "                     <img src=\""+friend["profile_picture"]+"\"\n" +
                                         "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                         "                     </span>\n" +
                                         "                            <div class=\"chat-body clearfix\">\n" +
@@ -156,7 +151,7 @@ $(document).ready(function () {
                                 else {
                                     htmlText += "<li class=\"left clearfix contact-box contact-box contact-box\" data-id='" + friend['userID'] + "'>\n" +
                                         "                     <span class=\"chat-img pull-left\">\n" +
-                                        "                     <img src=\""+imgLink+"\"\n" +
+                                        "                     <img src=\""+friend["profile_picture"]+"\"\n" +
                                         "                          alt=\"User Avatar\" class=\"img-circle\">\n" +
                                         "                     </span>\n" +
                                         "                            <div class=\"chat-body clearfix\">\n" +
@@ -207,6 +202,7 @@ $(document).ready(function () {
                     if (response["verify_token"]) {
                         if (response["success"]) {
                             $("#profile-div").show();
+                            $("#profile-picture").attr("src",response["profile_picture"]);
                             $("#nick-name").html(response["user_name"]);
                             $("#email").html(response["email"]);
                             $("#phone").html(response["phone_number"] == null ? "" : response["phone_number"]);

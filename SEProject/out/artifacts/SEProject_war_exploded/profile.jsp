@@ -12,6 +12,7 @@
           href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
     <script data-require="bootstrap@*" data-semver="3.1.1"
             src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/css/profile.css">
     <link rel="stylesheet" href="./stylesheets/css/sidebar.css">
     <link rel="stylesheet" href="./stylesheets/css/Contact.css">
     <script src="stylesheets/js/sidebar.js"></script>
@@ -27,7 +28,7 @@
     <%@include file="sidebar.jsp" %>
     <div id="content">
         <input type="text" hidden id="id">
-        <img src="image/profile.png" class="center img-responsive" alt="profilepic" id="profile">
+        <img src="image/profile.png" class="center img-responsive center-profile-picture" alt="profilepic" id="profile-pic">
 
         <div class="form-group">
             <div class="col-sm-3" style="float:left"></div>

@@ -16,30 +16,38 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "check-confirmation-code")
 public class ConfirmationCode extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String email = request.getParameter("email");
         String confirmationCode = request.getParameter("confirmation_code");
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
 
         if (Validation.checkConfirmationCode(email, confirmationCode)) {
             User.confirmAccount(email);                                        //update database
             ObjectNode userInfoJson = User.getProfile(email);        //user_infor
             //generate token
             String token = JWTHandler.generateToken(userInfoJson.get("userID").toString(), 7);
-            objectNode1.put("success", true);
-            objectNode1.put("token", token);
+            returnJSON.put("success", true);
+            returnJSON.put("token", token);
         } else {
-            objectNode1.put("success", false);
+            returnJSON.put("success", false);
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         request.setAttribute("email", email);

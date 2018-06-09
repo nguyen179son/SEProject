@@ -16,41 +16,43 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "get-request-list")
 public class GetRequestList extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String token = request.getParameter("token");
 
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode1 = mapper.createObjectNode();                 //return data
+        ObjectNode returnJSON = mapper.createObjectNode();                 //return data
         int userID = JWTHandler.verifyToken(token);
 
         if (userID < 0) {
-            if(userID == -1 || userID == -2) {                              //verifying token fails
-                objectNode1.put("verify_token", false);
-            }
-            else {                                                          //internal error from server
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", false);
-            }
+            returnJSON.put("verify_token", false);
         }
         else {
-            objectNode1 = User.getRequestList(userID);
-            if (objectNode1 == null){                                         //internal error from server
-                objectNode1 = mapper.createObjectNode();
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", false);
+            returnJSON = User.getRequestList(userID);
+            if (returnJSON == null){                                         //internal error from server
+                returnJSON = mapper.createObjectNode();
+                returnJSON.put("verify_token", true);
+                returnJSON.put("success", false);
             }
             else {
-                objectNode1.put("verify_token", true);
-                objectNode1.put("success", true);
+                returnJSON.put("verify_token", true);
+                returnJSON.put("success", true);
             }
         }
 
         PrintWriter wr = response.getWriter();
-        wr.write(objectNode1.toString());
+        wr.write(returnJSON.toString());
         wr.flush();
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       processRequest(request, response);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("Request.jsp").forward(request, response);
     }

@@ -46,7 +46,7 @@ $(document).ready(function () {
                                         "                                        <i class=\"fa fa-star\" style=\"color: yellow;\"></i></a></strong>\n" +
                                         "                                </div>\n" +
                                         "                                <div class=\"contact_sec\">\n" +
-                                        "                                    <strong class=\"primary-font\">" + friend['email'] + "</strong>\n" +
+                                        "                                    <strong class=\"primary-font\" style='font-weight: 500'>" + friend['email'] + "</strong>\n" +
                                         "                                </div>\n" +
                                         "                            </div>\n" +
                                         "                        </li>"
@@ -64,7 +64,7 @@ $(document).ready(function () {
                                         "                                        <i class=\"fa fa-star\"></i> </a> </strong>\n" +
                                         "                                </div>\n" +
                                         "                                <div class=\"contact_sec\">\n" +
-                                        "                                    <strong class=\"primary-font\">" + friend['email'] + "</strong>\n" +
+                                        "                                    <strong class=\"primary-font\" style='font-weight: 500'>" + friend['email'] + "</strong>\n" +
                                         "                                </div>\n" +
                                         "                            </div>\n" +
                                         "                        </li>"
@@ -143,7 +143,7 @@ $(document).ready(function () {
                                         "                                        <i class=\"fa fa-star\" style=\"color: yellow;\"></i></a></strong>\n" +
                                         "                                </div>\n" +
                                         "                                <div class=\"contact_sec\">\n" +
-                                        "                                    <strong class=\"primary-font\">" + friend['email'] + "</strong>\n" +
+                                        "                                    <strong class=\"primary-font\" style='font-weight: 500'>" + friend['email'] + "</strong>\n" +
                                         "                                </div>\n" +
                                         "                            </div>\n" +
                                         "                        </li>"
@@ -161,7 +161,7 @@ $(document).ready(function () {
                                         "                                        <i class=\"fa fa-star\"></i> </a> </strong>\n" +
                                         "                                </div>\n" +
                                         "                                <div class=\"contact_sec\">\n" +
-                                        "                                    <strong class=\"primary-font\">" + friend['email'] + "</strong>\n" +
+                                        "                                    <strong class=\"primary-font\" style='font-weight: 500'>" + friend['email'] + "</strong>\n" +
                                         "                                </div>\n" +
                                         "                            </div>\n" +
                                         "                        </li>"
@@ -284,6 +284,8 @@ $(document).ready(function () {
         });
 
         $("body").on("click", ".contact-box", function (e) {
+            $("#listFriend li").css("background-color", "");
+            $(this).css("background-color", "#dddddd");
             Contact.getFriendProfile($(this).data("id"));
             e.stopPropagation();
         });
@@ -291,8 +293,6 @@ $(document).ready(function () {
         $('#confirm-delete').on('click', '.btn-ok', function (e) {
             var $modalDiv = $(e.delegateTarget);
             var id = $(this).data('recordId');
-            // $.ajax({url: '/api/record/' + id, type: 'DELETE'})
-            // $.post('/api/record/' + id).then()
             Contact.deleteFriend(id, $modalDiv);
             setTimeout(function () {
                 $modalDiv.modal('hide').removeClass('loading');

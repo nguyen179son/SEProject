@@ -337,3 +337,52 @@
     right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
     overflow-y: scroll;
 }
+
+.left-ava {
+    width: 17px;
+    overflow: hidden;
+    float: left;
+}
+
+.right-ava {
+    width: 17px;
+    height: 17px;
+    float: left;
+    overflow: hidden;
+}
+.right-ava-top {
+    width: 17px;
+    height: 17px;
+    overflow: hidden;
+    display: block;
+}
+.right-ava-bottom {
+    width: 17px;
+    height: 17px;
+    overflow: hidden;
+    display: block;
+}
+
+.right-ava-2 {
+    width: 17px;
+    height: 34px;
+    float: left;
+    overflow: hidden;
+}
+
+.img-circle-left {
+    border-bottom-left-radius: 50%;
+    border-top-left-radius: 50%;
+}
+
+.img-circle-right {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.img-circle-right-top {
+    border-top-right-radius: 50%;
+}
+.img-circle-right-bottom {
+    border-bottom-right-radius: 50%;
+}
