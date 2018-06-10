@@ -23,6 +23,9 @@ public class DatabaseConnection {
         Connection conn = null;
         if(source == null) {
             source = new org.apache.commons.dbcp.BasicDataSource();
+            ((BasicDataSource) source).setMaxIdle(4);
+            ((BasicDataSource) source).setMaxActive(4);
+            ((BasicDataSource) source).setMaxWait(10000);
             ((BasicDataSource) source).setDriverClassName(DRIVER);
             ((BasicDataSource) source).setUsername(USERNAME);
             ((BasicDataSource) source).setPassword(PASSWORD);
