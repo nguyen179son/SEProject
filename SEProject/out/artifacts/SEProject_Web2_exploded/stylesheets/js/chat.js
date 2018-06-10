@@ -1,4 +1,4 @@
-var ws = new WebSocket("ws://localhost:8080/websocket?token=" + localStorage.getItem("token"));
+var ws = new WebSocket("ws://202.182.118.224:8080/websocket?token=" + localStorage.getItem("token"));
 $.ajax({
     url: "/verify-token",
     async: false,
