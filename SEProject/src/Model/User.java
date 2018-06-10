@@ -996,6 +996,143 @@ public class User {
     }
 
     public static boolean editProfile(int userID, String userName, String DOB, String phoneNumber){
+        if (DOB == null){
+            if(phoneNumber == null)
+                return editProfileUserName(userID, userName);
+            else
+                return editProfilePhoneNumber(userID, userName, phoneNumber);
+        }
+        else{
+            if(phoneNumber == null)
+                return editProfileDOB(userID, userName, DOB);
+            else
+                return editProfileAll(userID, userName, DOB, phoneNumber);
+        }
+    }
+
+    public static boolean editProfileUserName(int userID, String userName){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            String sql = "UPDATE user_info "
+                    + "SET user_name = ?, DOB = NULL, phone_number = NULL "
+                    + "WHERE userID = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userName);
+            pstmt.setInt(2, userID);
+
+            pstmt.executeUpdate();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
+
+    public static boolean editProfileDOB(int userID, String userName, String DOB){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            String sql = "UPDATE user_info "
+                    + "SET user_name = ?, DOB = ?, phone_number = NULL "
+                    + "WHERE userID = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userName);
+            pstmt.setString(2, DOB);
+            pstmt.setInt(3, userID);
+
+            pstmt.executeUpdate();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
+
+    public static boolean editProfilePhoneNumber(int userID, String userName, String phoneNumber){
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.createStatement();
+            String sql = "UPDATE user_info "
+                    + "SET user_name = ?, phone_number = ?, DOB = NULL "
+                    + "WHERE userID = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userName);
+            pstmt.setString(2, phoneNumber);
+            pstmt.setInt(3, userID);
+
+            pstmt.executeUpdate();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        } finally {
+            //finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }// nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        return true;
+    }
+
+    public static boolean editProfileAll(int userID, String userName, String DOB, String phoneNumber){
         Connection conn = null;
         Statement stmt = null;
         try {
