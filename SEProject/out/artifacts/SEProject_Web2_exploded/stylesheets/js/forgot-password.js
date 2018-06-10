@@ -29,11 +29,26 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response["success"]) {
-                    window.location = "/login"
+                    if (response["valid"]) {
+                        window.location = "/login"
+                    }
+                    else {
+                        var htmlText = "";
+                        response["error_message"].forEach(function (errorMess, i, array) {
+                            if (i < array.length - 1) {
+                                htmlText += errorMess + "<br>";
+                            }
+                            else {
+                                htmlText += errorMess;
+                            }
+
+                        });
+                        $("#error").html(htmlText);
+
+                        $("#error").show();
+                    }
                 }
                 else {
-                    $("#error").show();
-                    $("#error").html(response.error_message);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {

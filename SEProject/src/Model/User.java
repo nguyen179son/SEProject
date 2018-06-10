@@ -996,14 +996,14 @@ public class User {
     }
 
     public static boolean editProfile(int userID, String userName, String DOB, String phoneNumber){
-        if (DOB == null){
-            if(phoneNumber == null)
+        if (DOB == null || DOB.equals("")){
+            if(phoneNumber == null || phoneNumber.equals(""))
                 return editProfileUserName(userID, userName);
             else
                 return editProfilePhoneNumber(userID, userName, phoneNumber);
         }
         else{
-            if(phoneNumber == null)
+            if(phoneNumber == null || phoneNumber.equals(""))
                 return editProfileDOB(userID, userName, DOB);
             else
                 return editProfileAll(userID, userName, DOB, phoneNumber);
