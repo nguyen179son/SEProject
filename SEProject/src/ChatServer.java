@@ -56,6 +56,7 @@ public class ChatServer {
         JsonNode messageJSON = mapper.readTree(message);
         ObjectNode returnMessageJSON = mapper.createObjectNode();
         Timestamp sendingTime = new Timestamp(System.currentTimeMillis());
+        System.out.println(sendingTime);
 
         returnMessageJSON.put("roomID", messageJSON.get("roomID").asInt());
         returnMessageJSON.put("from_userID", (Integer) session.getUserProperties().get("userID"));

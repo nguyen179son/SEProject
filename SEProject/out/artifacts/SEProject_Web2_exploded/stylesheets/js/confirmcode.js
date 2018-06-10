@@ -22,12 +22,14 @@ $(document).ready(function () {
             url: "/check-confirmation-code",
             type: "post",
             data: {
-                email: $("#email").val(),
+                email: window.localStorage.getItem("email"),
                 confirmation_code: $("#confirmation_code").val()
             },
             success: function (response) {
                 if (response["success"]) {
                     window.localStorage.setItem("token", response["token"]);
+                    window.localStorage.setItem("userID",response["userID"]);
+                    window.localStorage.setItem("profile_picture",response["profile_picture"]);
                     window.location = "/"
                 }
                 else {

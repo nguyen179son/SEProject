@@ -1,6 +1,6 @@
 $.ajax({
     url: "/verify-token",
-    async:false,
+    async: false,
     type: "post",
     data: {
         token: window.localStorage.getItem("token")
@@ -28,13 +28,28 @@ $(document).ready(function () {
                 confirm_password: $("#confirm_password").val()
             },
             success: function (response) {
-                console.log(response);
                 if (response["success"]) {
-                    window.location = "/"
+                    if (response["valid"]) {
+                        window.location = "/login"
+                    }
+                    else {
+                        var htmlText = "";
+                        response["error_message"].forEach(function (errorMess, i, array) {
+                            if (i < array.length - 1) {
+                                htmlText += errorMess + "<br>";
+                            }
+                            else {
+                                htmlText += errorMess;
+                            }
+
+                        });
+                        $("#error").html(htmlText);
+
+                        $("#error").show();
+                    }
                 }
                 else {
-                    $("#error").show();
-                    $("#error").html(response.error_message);
+                    alert("Internal error");
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {

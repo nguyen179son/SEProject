@@ -20,15 +20,24 @@ public class DatabaseConnection {
 
     private static DataSource source = null;
     public static Connection getConnection() throws Exception{
+        Connection conn = null;
         if(source == null) {
             source = new org.apache.commons.dbcp.BasicDataSource();
-            ((BasicDataSource) source).setMinIdle(0);
             ((BasicDataSource) source).setDriverClassName(DRIVER);
             ((BasicDataSource) source).setUsername(USERNAME);
             ((BasicDataSource) source).setPassword(PASSWORD);
             ((BasicDataSource) source).setUrl(URL);
         }
-        return source.getConnection();
+        try {
+            conn = source.getConnection();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            ((BasicDataSource) source).close();
+            source = null;
+            conn = getConnection();
+        }
+        return conn;
     }
 
 }

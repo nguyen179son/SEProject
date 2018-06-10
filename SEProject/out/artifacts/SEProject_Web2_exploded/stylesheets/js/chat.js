@@ -430,6 +430,7 @@ $(document).ready(function () {
             }
 
             $("#list-message").html(htmlText);
+            $(".chat_area").scrollTop(9999);
         };
 
         chat.handleMessage = function (message) {

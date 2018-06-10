@@ -24,7 +24,7 @@ $(document).ready(function () {
 
                             $("#phone").val(response['phone_number']);
 
-                            $("#dob").val(response['DOB']);
+                            $("#datepicker").val(response['DOB']);
                         }
                         else {
                             alert("INTERNAL ERROR");
@@ -51,7 +51,7 @@ $(document).ready(function () {
                 data: {
                     token: window.localStorage.getItem("token"),
                     user_name: $("#nick-name").val(),
-                    DOB: $("#dob").val(),
+                    DOB: $("#datepicker").val(),
                     phone_number: $("#phone").val()
                 },
                 success: function (response) {

@@ -80,7 +80,7 @@
     <div class="col-sm-4"></div>
     <div class="col-sm-6">
         <button class="btn btn-primary btn-lg" id="reset-password"> Reset Password</button>
-        <a href="#" class="btn btn-danger btn-lg" id="cancel">Cancel</a>
+        <a href="/login" class="btn btn-danger btn-lg" id="cancel">Cancel</a>
     </div>
 </div>
 

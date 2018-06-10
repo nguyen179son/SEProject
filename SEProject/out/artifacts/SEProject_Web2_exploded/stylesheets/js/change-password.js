@@ -37,7 +37,7 @@ $(document).ready(function () {
                         if (response["success"]) {
                             var time = 1000;
                             if (response["valid"]) {
-                                $("#error").hide()
+                                $("#error").hide();
                                 $("#alert").html("Password updated successfully");
                                 $("#alert").show();
                                 $('#alert').delay(1000).fadeOut(400);

@@ -22,6 +22,8 @@ public class ConfirmationCode extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String email = request.getParameter("email");
         String confirmationCode = request.getParameter("confirmation_code");
+        System.out.println(request.getParameter("email"));
+        System.out.println(request.getParameter("confirmation_code"));
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode returnJSON = mapper.createObjectNode();                 //return data
@@ -33,6 +35,8 @@ public class ConfirmationCode extends HttpServlet {
             String token = JWTHandler.generateToken(userInfoJson.get("userID").toString(), 7);
             returnJSON.put("success", true);
             returnJSON.put("token", token);
+            returnJSON.put("userID", userInfoJson.get("userID").asInt());
+            returnJSON.put("profile_picture", userInfoJson.get("profile_picture").textValue());
         } else {
             returnJSON.put("success", false);
         }

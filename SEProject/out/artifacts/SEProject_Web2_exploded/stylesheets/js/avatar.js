@@ -52,6 +52,7 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response["verify_token"]) {
                         if (response["success"]) {
+                            window.localStorage.setItem("profile_picture", "image/profile/"+window.localStorage.getItem("userID") )
                             window.location = "/profile";
                         }
                         else {
@@ -59,6 +60,7 @@ $(document).ready(function () {
                         }
                     }
                     else {
+                        window.location="/login";
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
