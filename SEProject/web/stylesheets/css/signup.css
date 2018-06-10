@@ -54,3 +54,8 @@ label {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 
 }
+
+#error {
+    margin-right: 15%;
+    margin-left: 15%;
+}

@@ -16,6 +16,9 @@ $(document).ready(function () {
         $("body").onload = Sidebar.loadAva();
         $("body").on("click", "#log-out", function () {
             window.localStorage.removeItem("token");
+            window.localStorage.removeItem("userID");
+            window.localStorage.removeItem("profile_picture");
+            window.localStorage.removeItem("email");
             window.location = "/";
         });
 

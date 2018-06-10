@@ -19,6 +19,7 @@ $(document).ready(function () {
 
 
     $("body").on("click", "#login_button", function () {
+        window.localStorage.setItem("email", $("#email").val());
         $("#pleaseWaitDialog").modal();
         $.ajax({
             url: "/login",
@@ -36,6 +37,9 @@ $(document).ready(function () {
                         window.location = response["redirect_url"];
                         window.localStorage.setItem("userID",response["userID"]);
                         window.localStorage.setItem("profile_picture",response["profile_picture"]);
+                    }
+                    else {
+                        window.location = "/check-confirmation-code"
                     }
                 }
                 else {
