@@ -24,6 +24,9 @@ public class EditMyProfile extends HttpServlet {
         String userName = request.getParameter("user_name");
         String DOB = request.getParameter("DOB");
         String phoneNumber = request.getParameter("phone_number");
+        System.out.println(request.getParameter("DOB"));
+        System.out.println(request.getParameter("phone_number"));
+
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode returnJSON = mapper.createObjectNode();                 //return data
