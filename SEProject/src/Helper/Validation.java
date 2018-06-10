@@ -245,7 +245,7 @@ public class Validation {
     }
 
     public static boolean phoneNumberValidation(String phoneNumber) {
-        if (phoneNumber == null || phoneNumber.equals("")) return true;
+        if (phoneNumber == null) return true;
         Pattern VALID_PASSWORD = Pattern.compile("\\(?([0-9]{3})\\)?([ .-]?)([0-9]{3})\\2([0-9]{4})");
         Matcher matcher = VALID_PASSWORD.matcher(phoneNumber);
         if (matcher.find())
@@ -256,7 +256,7 @@ public class Validation {
     }
 
     public static boolean dobValidation(String DOB) {
-        if (DOB == null || DOB.equals("")) return true;
+        if (DOB == null) return true;
         String[] components = DOB.split("-");
         if (components.length != 3) return false;
         try {
