@@ -21,15 +21,85 @@ $(document).ready(function () {
     var Chat = (function ($, window, document) {
         var chat = {};
 
+        chat.plusHour = function (hour, zone, date, month, year) {
+            var m30 = [4, 6, 9, 11];
+            var m31 = [1, 3, 5, 7, 8, 10, 12];
+            var m2 = [2];
+            hour -= zone;
+            if (hour > 24) {
+                if (year % 4 != 0) {
+                    hour -= 24;
+                    if ($.inArray(month, m30) && date==30) {
+                        date =1;
+                        month +=1
+                    }
+                    else if ($.inArray(month, m31) && date==31) {
+                        if (month == 12) {
+                            month =1;
+                            year +=1;
+                            date =1;
+                        }
+                        else {
+                            month +=1;
+                            date =1;
+                        }
+                    }
+                    else if ($.inArray(month, m2) && date==29) {
+                        date =1;
+                        month +=1
+                    }
+                    else {
+                        date +=1;
+                    }
+                }
+                else {
+                    hour -= 24;
+                    if ($.inArray(month, m30) && date==30) {
+                        date =1;
+                        month +=1
+                    }
+                    else if ($.inArray(month, m31) && date==31) {
+                        if (month == 12) {
+                            month =1;
+                            year +=1;
+                            date =1;
+                        }
+                        else {
+                            month +=1;
+                            date =1;
+                        }
+                    }
+                    else if ($.inArray(month, m2) && date==28) {
+                        date =1;
+                        month +=1
+                    }
+                    else {
+                        date +=1;
+                    }
+                }
+            }
+            return [hour, zone, date, month, year];
+        };
+
         chat.checkTime = function (t) {
+            var offset = new Date().getTimezoneOffset()/60;
             var splitedTime = t.split(" ");
             var date1 = splitedTime[0].split("-");
             var time1 = splitedTime[1].split(":");
+
 
             var curdate = new Date();
             var date2 = curdate.getDate();
             var month2 = curdate.getMonth() + 1;
             var year2 = curdate.getFullYear();
+
+            var GMT = chat.plusHour(time1, offset, date1[2],date1[1],date1[0]);
+            time1[0] = GMT[0];
+            date1[2] = GMT[2];
+            date1[1] = GMT[3];
+            date1[0] = GMT[4];
+
+
 
             if (date2 == date1[2] && month2 == date1[1] && year2 == date1[0]) {
                 return time1[0] + ":" + time1[1];
@@ -430,7 +500,8 @@ $(document).ready(function () {
             }
 
             $("#list-message").html(htmlText);
-            $(".chat_area").scrollTop(9999);
+            $(".chat_area").scrollTop(99999);
+
         };
 
         chat.handleMessage = function (message) {
@@ -491,7 +562,6 @@ $(document).ready(function () {
                     "                            </div>\n" +
                     "                        </li>";
             }
-
             $("#list-message").html(htmlText);
 
             $("#list-message").data("previousUserSentID", mess["from_userID"]);
@@ -499,6 +569,7 @@ $(document).ready(function () {
             $("#list-message").data("numOfMess", numOfMess + 1);
             $("li[data-room-id='" + room + "'] .chat-body .contact_sec strong").html(mess["message"]);
             $("li[data-room-id='" + room + "'] .chat-body .header_sec .pull-right").html(time);
+            $(".chat_area").scrollTop(99999);
 
             $.ajax({
                 url: "/seen-message",
